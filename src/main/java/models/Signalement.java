@@ -17,20 +17,26 @@ public class Signalement {
     private Utilisateur utilisateur;
     private Date dateSignalement;
     private String description ;
+    private double longitude ;
+    private double latitude;
 
-    public Signalement(Long id, TypeSignalement type, Utilisateur utilisateur, Date dateSignalement, String description) {
+    public Signalement(Long id, TypeSignalement type, Utilisateur utilisateur, Date dateSignalement, String description, double longitude, double latitude) {
         this.id = id;
         this.type = type;
         this.utilisateur = utilisateur;
         this.dateSignalement = dateSignalement;
         this.description = description;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
-    public Signalement(TypeSignalement type, Utilisateur utilisateur, Date dateSignalement, String description) {
+    public Signalement(TypeSignalement type, Utilisateur utilisateur, Date dateSignalement, String description, double longitude, double latitude) {
         this.type = type;
         this.utilisateur = utilisateur;
         this.dateSignalement = dateSignalement;
         this.description = description;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     public Signalement() {
@@ -74,5 +80,21 @@ public class Signalement {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 }
