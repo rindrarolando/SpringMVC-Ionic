@@ -1,4 +1,4 @@
-package models;
+package com.projet.cloudmobile.models;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,6 +14,8 @@ public class Utilisateur {
     private String email;
     private Date dtn;
 
+
+
     public Utilisateur(Long id, String username, String password, String email, Date dtn) {
         this.id = id;
         this.username = username;
@@ -27,6 +29,10 @@ public class Utilisateur {
         this.password = password;
         this.email = email;
         this.dtn = dtn;
+    }
+
+    public Utilisateur(Long id){
+        this.id=id;
     }
 
     public Utilisateur() {
@@ -71,4 +77,6 @@ public class Utilisateur {
     public void setDtn(Date dtn) {
         this.dtn = dtn;
     }
+
+
 }

@@ -1,4 +1,4 @@
-package models;
+package com.projet.cloudmobile.models;
 
 import javax.persistence.*;
 

@@ -1,4 +1,5 @@
-package models;
+package com.projet.cloudmobile.models;
+
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,6 +20,8 @@ public class Signalement {
     private String description ;
     private double longitude ;
     private double latitude;
+
+
 
     public Signalement(Long id, TypeSignalement type, Utilisateur utilisateur, Date dateSignalement, String description, double longitude, double latitude) {
         this.id = id;
@@ -97,4 +100,6 @@ public class Signalement {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
+
+
 }

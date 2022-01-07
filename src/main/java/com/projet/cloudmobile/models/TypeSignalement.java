@@ -1,4 +1,4 @@
-package models;
+package com.projet.cloudmobile.models;
 
 import javax.persistence.*;
 
@@ -7,7 +7,9 @@ import javax.persistence.*;
 public class TypeSignalement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int id ;
+
     private String designation ;
 
     public TypeSignalement(int id, String designation) {
@@ -37,4 +39,6 @@ public class TypeSignalement {
     public void setDesignation(String designation) {
         this.designation = designation;
     }
+
+
 }

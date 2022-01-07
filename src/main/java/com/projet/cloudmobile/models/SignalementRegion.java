@@ -1,4 +1,4 @@
-package models;
+package com.projet.cloudmobile.models;
 
 import javax.persistence.*;
 
@@ -64,4 +64,6 @@ public class SignalementRegion {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+
 }
