@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name = "signalementregion")
 public class SignalementRegion {
     @Id
+    @Column(columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne(cascade = CascadeType.ALL)

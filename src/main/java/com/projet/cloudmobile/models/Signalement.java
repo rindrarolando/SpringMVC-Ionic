@@ -8,6 +8,7 @@ import java.util.Date;
 @Table(name = "signalement")
 public class Signalement {
     @Id
+    @Column(columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne(cascade = CascadeType.ALL)

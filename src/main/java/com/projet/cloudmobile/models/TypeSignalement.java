@@ -5,11 +5,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "typesignalement")
 public class TypeSignalement {
+
     @Id
+    @Column(columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private int id ;
-
     private String designation ;
 
     public TypeSignalement(int id, String designation) {

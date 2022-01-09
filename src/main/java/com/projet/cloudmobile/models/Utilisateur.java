@@ -7,6 +7,7 @@ import java.util.Date;
 @Table(name = "utilisateur")
 public class Utilisateur {
     @Id
+    @Column(columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;

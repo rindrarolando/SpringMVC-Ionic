@@ -6,6 +6,7 @@ import javax.persistence.*;
 @Table(name = "region")
 public class Region {
     @Id
+    @Column(columnDefinition = "serial")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id ;
     private String designation ;
