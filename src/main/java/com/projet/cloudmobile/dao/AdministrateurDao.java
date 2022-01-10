@@ -20,6 +20,7 @@ public class AdministrateurDao {
                 em.merge(admin);
             }*/
 
+
             String query = "insert into administrateur(id,identifiant,motdepasse) values (DEFAULT,:identifiant,md5(:motdepasse))";
             Query jpqlQuery = em.createNativeQuery(query)
                     .setParameter("identifiant", "Admin1")
