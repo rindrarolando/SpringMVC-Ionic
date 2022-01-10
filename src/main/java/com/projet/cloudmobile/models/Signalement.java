@@ -21,10 +21,11 @@ public class Signalement {
     private String description ;
     private double longitude ;
     private double latitude;
+    private String etat;
 
 
 
-    public Signalement(Long id, TypeSignalement type, Utilisateur utilisateur, Date dateSignalement, String description, double longitude, double latitude) {
+    public Signalement(Long id, TypeSignalement type, Utilisateur utilisateur, Date dateSignalement, String description, double longitude, double latitude, String etat) {
         this.id = id;
         this.type = type;
         this.utilisateur = utilisateur;
@@ -32,15 +33,17 @@ public class Signalement {
         this.description = description;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.etat = etat;
     }
 
-    public Signalement(TypeSignalement type, Utilisateur utilisateur, Date dateSignalement, String description, double longitude, double latitude) {
+    public Signalement(TypeSignalement type, Utilisateur utilisateur, Date dateSignalement, String description, double longitude, double latitude, String etat) {
         this.type = type;
         this.utilisateur = utilisateur;
         this.dateSignalement = dateSignalement;
         this.description = description;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.etat = etat;
     }
 
     public Signalement() {
@@ -101,6 +104,10 @@ public class Signalement {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
+
+    public String getEtat(){return etat;}
+
+    public String setEtat(){return etat;}
 
 
 }
