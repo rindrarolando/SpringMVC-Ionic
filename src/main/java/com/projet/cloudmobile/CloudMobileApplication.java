@@ -41,8 +41,8 @@ public class CloudMobileApplication {
 		Signalement s = new Signalement(new Long(1),new TypeSignalement(1,"Test"), new Utilisateur(new Long(1)), date,"Modification ok",47.516667,-18.933333);
 		dao.insert(s);*/
 
-		TypeSignalement tt = new TypeSignalement(2,"Route en mauvais état");
-		TypeSignalementDao dao = new TypeSignalementDao();
+		//TypeSignalement tt = new TypeSignalement(2,"Route en mauvais état");
+		//TypeSignalementDao dao = new TypeSignalementDao();
 
 		//dao.remove(3);
 
