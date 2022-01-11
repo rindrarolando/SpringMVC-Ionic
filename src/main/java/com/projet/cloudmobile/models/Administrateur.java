@@ -1,8 +1,10 @@
 package com.projet.cloudmobile.models;
 
+import org.hibernate.annotations.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+
 
 @Entity
 @Table(name = "administrateur")
