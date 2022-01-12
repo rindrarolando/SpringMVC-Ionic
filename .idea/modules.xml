@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Projet-Cloud-mobile.iml" filepath="$PROJECT_DIR$/.idea/Projet-Cloud-mobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../cloud-mobile.iml" filepath="$PROJECT_DIR$/../cloud-mobile.iml" />
     </modules>
   </component>
 </project>

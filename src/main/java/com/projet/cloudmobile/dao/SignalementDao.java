@@ -2,6 +2,7 @@ package com.projet.cloudmobile.dao;
 
 import com.projet.cloudmobile.models.*;
 import org.springframework.transaction.annotation.Transactional;
+import sun.misc.Signal;
 
 import javax.persistence.*;
 import java.util.List;
@@ -31,8 +32,9 @@ public class SignalementDao {
         tx.commit();
     }
 
+    @Transactional
     public Signalement getSignalement(Long id){
-        Signalement r = em.find(Signalement.class,id);
+        Signalement r =  em.find(Signalement.class,id);
         if (r == null) {
             throw new EntityNotFoundException("Id not found :"
                     + id);

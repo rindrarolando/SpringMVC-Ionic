@@ -17,8 +17,8 @@ import java.util.List;
 public class CloudMobileApplication {
 
 	public static void main(String[] args) throws ParseException {
-		//SpringApplication.run(CloudMobileApplication.class, args);
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "connection");
+		SpringApplication.run(CloudMobileApplication.class, args);
+		//EntityManagerFactory emf = Persistence.createEntityManagerFactory( "connection");
 
 		//Signalement s = new Signalement(new TypeSignalement(1,"Test"), new Utilisateur(new Long(1)), new Date("2022-01-06"),"Description",47.516667,-18.933333);
 
@@ -45,6 +45,9 @@ public class CloudMobileApplication {
 		//TypeSignalementDao dao = new TypeSignalementDao();
 
 		//dao.remove(3);
+
+		Signalement s = new SignalementDao().getSignalement(1L);
+		System.out.println(s.getDescription());
 
 	}
 
