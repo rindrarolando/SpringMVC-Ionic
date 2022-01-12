@@ -1,9 +1,9 @@
-package com.projet.cloudmobile.controller;
+package com.projet.cloudmobile.controllerAPI;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/typesignalement")
-public class TypeSignalementController {
+@RequestMapping("/administrateur")
+public class AdministrateurRestController {
 }

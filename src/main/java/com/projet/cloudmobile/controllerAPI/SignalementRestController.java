@@ -1,4 +1,4 @@
-package com.projet.cloudmobile.controller;
+package com.projet.cloudmobile.controllerAPI;
 
 import com.projet.cloudmobile.dao.SignalementDao;
 import com.projet.cloudmobile.models.Signalement;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/signalement")
-public class SignalementController {
+public class SignalementRestController {
     @CrossOrigin
     @GetMapping("/getSignalements")
     public List<Signalement> getSignalements(){
