@@ -46,8 +46,8 @@ public class CloudMobileApplication {
 
 		//dao.remove(3);
 
-		Signalement s = new SignalementDao().getSignalement(1L);
-		System.out.println(s.getDescription());
+		//Signalement s = new SignalementDao().getSignalement(1L);
+		//System.out.println(s.getDescription());
 
 	}
 
