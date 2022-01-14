@@ -5,6 +5,7 @@ import com.projet.cloudmobile.models.*;
 import com.projet.cloudmobile.models.TypeSignalement;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -13,7 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-@SpringBootApplication
+//@SpringBootApplication
+@SpringBootApplication(exclude = { ErrorMvcAutoConfiguration.class })
 public class CloudMobileApplication {
 
 	public static void main(String[] args) throws ParseException {

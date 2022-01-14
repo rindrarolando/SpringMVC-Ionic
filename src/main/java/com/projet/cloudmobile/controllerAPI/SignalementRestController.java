@@ -22,4 +22,12 @@ public class SignalementRestController {
         s= new SignalementDao().getSignalement(Long.valueOf(id));
         return s ;
     }
+
+    @CrossOrigin
+    @GetMapping("/deleteSignalement")
+    public String deleteSignalement(@RequestParam(value = "id")String id){
+        SignalementDao s = new SignalementDao();
+         s.remove(Long.valueOf(id));
+         return "Signalement avec l'ID = "+id+" est effacer ";
+    }
 }
