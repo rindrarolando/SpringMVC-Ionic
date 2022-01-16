@@ -30,4 +30,11 @@ public class SignalementRestController {
          s.remove(Long.valueOf(id));
          return "Signalement avec l'ID = "+id+" est effacer ";
     }
+
+    @CrossOrigin
+    @GetMapping("/getNewSignalement")
+    public List<Signalement> getNewSignalement(){
+        SignalementDao s = new SignalementDao();
+        return s.getNewSignalement();
+    }
 }

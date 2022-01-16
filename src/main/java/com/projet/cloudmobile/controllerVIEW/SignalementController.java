@@ -9,4 +9,9 @@ public class SignalementController {
     public String exemple(){
         return "listeSignalement";
     }
+
+    @RequestMapping("/NouveauxSignalements")
+    public String nouveauxSignalements(){
+        return "NouveauxSignalements";
+    }
 }

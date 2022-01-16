@@ -23,6 +23,10 @@ public class SignalementDao {
         return em.createQuery("select c from Signalement c").getResultList();
     }
 
+    public List<Signalement> getNewSignalement(){
+        return em.createQuery("select c from Signalement c where c.etat='Nouveau'").getResultList();
+    }
+
     @Transactional
     public void remove(Long id) {
         Signalement t = em.find(Signalement.class,id);
