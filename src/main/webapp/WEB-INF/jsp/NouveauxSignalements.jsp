@@ -26,7 +26,7 @@
    <base href="ESSAi.html" />
 </head>
 
-<body ng-app="myapp" ng-controller="listeSignControl">
+<body ng-app="myapp" ng-controller="listeSignControl" data-ng-init="getSignalement(1)">
    
     <div class="preloader">
         <div class="lds-ripple">
@@ -148,7 +148,6 @@
                                                         <th class="border-top-0">Id</th>
                                                         <th class="border-top-0">Date du signalement</th>
                                                         <th class="border-top-0">Description</th>
-                                                        
                                                         <th class="border-top-0">Type</th>
                                                         <th class="border-top-0">Region</th>
                                                     </tr>
@@ -159,7 +158,7 @@
                                                         <td>{{x.dateSignalement | date:'dd/MM/yyyy'}}</td>
                                                         <td>{{x.description}}</td>
                                                         <td>{{x.type.designation}}</td>
-                                                        <td><form action="ESSAI2.html?id={{x.id}}" method="post"><button type="submit"class="btn btn-primary">Attribuer</button></form></td>
+                                                        <td><form action={{'Signalement?id='+x.id}} method="post"><button type="submit"class="btn btn-primary">Attribuer</button></form></td>
                                                         <td><button type="button" class="btn btn-danger">Supprimer</button></td>
                                                     </tr>
                                                 </tbody>
