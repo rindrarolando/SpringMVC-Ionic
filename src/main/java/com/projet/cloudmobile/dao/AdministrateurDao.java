@@ -1,9 +1,13 @@
 package com.projet.cloudmobile.dao;
 
+import com.projet.cloudmobile.connection.Rescue;
 import com.projet.cloudmobile.models.Administrateur;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class AdministrateurDao {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory( "connection");
@@ -31,16 +35,35 @@ public class AdministrateurDao {
             tx.commit();
         }
 
-    @Transactional
-    public void initAdministrator2(){
-        tx.begin();
-        String query = "insert into administrateur(id,identifiant,motdepasse) values (DEFAULT,:identifiant,md5(:motdepasse))";
-        Query jpqlQuery = em.createNativeQuery(query)
-                .setParameter("identifiant", "Admin2")
-                .setParameter("motdepasse","admin2");
-        em.joinTransaction();
-        jpqlQuery.executeUpdate();
+        @Transactional
+        public void initAdministrator2(){
+            tx.begin();
+            String query = "insert into administrateur(id,identifiant,motdepasse) values (DEFAULT,:identifiant,md5(:motdepasse))";
+            Query jpqlQuery = em.createNativeQuery(query)
+                    .setParameter("identifiant", "Admin2")
+                    .setParameter("motdepasse","admin2");
+            em.joinTransaction();
+            jpqlQuery.executeUpdate();
 
-        tx.commit();
-    }
+            tx.commit();
+        }
+
+        public Administrateur checkAdmin(String ident , String mdp){
+            Administrateur admin = null;
+            try {
+                Connection c = Rescue.connectToDatabase();
+                Statement stmt = c.createStatement();
+                ResultSet res = stmt.executeQuery("select * from administrateur where identifiant='"+ident
+                        +"' and motdepasse=md5('"+mdp+"')");
+                while(res.next()){
+                    int id = res.getInt("id");
+                    String identifiant = res.getString("identifiant");
+                    String password = res.getString("motdepasse");
+                    admin = new Administrateur(id,identifiant,password);
+                }
+                return admin;
+            }catch (Exception e){
+                return null;
+            }
+        }
 }
