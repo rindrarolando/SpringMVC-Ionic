@@ -19,8 +19,9 @@
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
   
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
-    <script src="js/angular.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
     <script src="js/angular-route.js"></script>
+    <script src="jsGraphDisplay.1.0.js"></script>
     <script type="text/javascript">
  var appname = angular.module('myapp', []);
 
@@ -50,7 +51,28 @@
             });
           }
 
-        }
+
+
+          // 1) Création d'un objet jsGraphDisplay
+          var graph = new jsGraphDisplay();
+
+          // 2) Ajout des données
+          graph.DataAdd({
+          data: [
+          	[4, 21],
+          	[8, 23],
+          	[12, 26],
+          	[16, 25],
+          	[20, 20],
+          	[24, 22],
+          	[28, 27],
+          	[32, 35]
+          ]
+          });
+
+          // 3) Affichage du résultat
+          graph.Draw('graphExemple1');
+
 
 
         ]);
@@ -209,6 +231,7 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                            <svg id="graphExemple1" width="600" height="300">
                                         </div>
                                     </div>
                                 </div>

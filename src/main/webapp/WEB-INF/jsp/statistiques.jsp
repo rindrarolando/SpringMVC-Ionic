@@ -19,6 +19,8 @@
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
   
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
     <script src="js/angular-route.js"></script>
     <script type="text/javascript">
@@ -105,6 +107,34 @@
 
                              });
                       }
+
+
+$scope.getGraph=function(val1,val2,val3){
+                const ctx = document.getElementById('graph1').getContext('2d');
+                var data = {
+                    labels: ['Route abimé','Accident de la route','Ordures'],
+                    datasets: [
+                        {
+                        label: 'Statistiques des cas de problemes',
+                        backgroundColor: '#000000',
+                        data: [val1,val2,val3]
+                        }
+                    ]
+                }
+                var options = {
+                    responsive: true,
+                }
+
+
+                var config = {
+                    type: 'line',
+                    data: data,
+                    options: options
+                }
+                var graph1 = new Chart(ctx, config)
+}
+
+        $scope.getGraph($scope.number1,$scope.number2,$scope.number3);
 
 
         }
@@ -236,7 +266,7 @@
                                     <div class="white-box">
                                         
                                         <h3 class="box-title">Statistique global  :</h3>
-
+                                                <p><canvas id="graph1"></canvas></p>
                                                 <p class="text-muted"> Dans les {{problemes1}} il y a {{nombre1}} problemes dont {{enCours1}} qui sont En cours de traitement et {{nouveau1}} nouveaux signalements</p>
                                                 <p class="text-muted"> Dans les {{problemes2}} il y a {{nombre2}} problemes dont {{enCours2}} qui sont En cours de traitement et {{nouveau2}} nouveaux signalements</p>
                                                 <p class="text-muted"> Dans les {{problemes3}} il y a {{nombre3}} problemes dont {{enCours3}} qui sont En cours de traitement et {{nouveau3}} nouveaux signalements</p>
@@ -310,3 +340,6 @@
 </body>
 
 </html>
+<script>
+
+</script>
