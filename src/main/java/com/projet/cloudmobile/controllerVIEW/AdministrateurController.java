@@ -14,9 +14,9 @@ import javax.servlet.http.HttpSession;
 public class AdministrateurController {
 
     @RequestMapping("/Tables")
-    public String tables(){
+    public String tables() {
         return "Tables";
-
+    }
 
     @RequestMapping("/")
     public String acceuil(HttpServletRequest request){
