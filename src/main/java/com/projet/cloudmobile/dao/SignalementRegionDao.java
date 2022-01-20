@@ -43,4 +43,20 @@ public class SignalementRegionDao {
         em.remove(t);
         tx.commit();
     }
+
+    //Statistique par rapport au region
+    public Long getStatReg(Long id){
+        long sigos = (Long) em.createQuery("select count(e) from SignalementRegion e where e.region.id= :idregion").setParameter("idregion", id).getSingleResult();
+        return sigos;
+    }
+    public Long getStatRegC(Long id){
+        String s = "En cours";
+        long sigos = (Long) em.createQuery("select count(e) from SignalementRegion e where e.region.id= :idregion and e.signalement.etat= :state").setParameter("idregion", id).setParameter("state", s).getSingleResult();
+        return sigos;
+    }
+    public Long getStatRegN(Long id){
+        String s = "Nouveau";
+        long sigos = (Long) em.createQuery("select count(e) from SignalementRegion e where e.region.id= :idregion and e.signalement.etat= :state").setParameter("idregion", id).setParameter("state", s).getSingleResult();
+        return sigos;
+    }
 }

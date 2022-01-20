@@ -10,12 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 public class SignalementController {
     @RequestMapping("/listeSignalement")
     public String exemple(){
-        return "listeSignalement";
+        return "liste";
     }
 
     @RequestMapping("/NouveauxSignalements")
     public String nouveauxSignalements(){
         return "NouveauxSignalements";
+    }
+
+    @RequestMapping("/stat")
+    public String getStatistique(){
+        return "statistiques";
     }
 
     @RequestMapping("/Signalement")
