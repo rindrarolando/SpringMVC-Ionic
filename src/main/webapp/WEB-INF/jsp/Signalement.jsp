@@ -87,15 +87,26 @@
                
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        
                         <li class="sidebar-item pt-2">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#"
-                                aria-expanded="false">
-                                <i class="far fa-clock" aria-hidden="true"></i>
-                                <span class="hide-menu">Exemple lien</span>
-                            </a>
-                        
-                        
+                                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/NouveauxSignalements"
+                                                        aria-expanded="false">
+                                                        <i class="fas fa-bug" aria-hidden="true"></i>
+                                                        <span class="hide-menu">Nouveaux Signalements</span>
+                                                    </a>
+                                                <li class="sidebar-item">
+                                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/stat"
+                                                        aria-expanded="false">
+                                                        <i class="fa fa-table" aria-hidden="true"></i>
+                                                        <span class="hide-menu">Statistiques</span>
+                                                    </a>
+                                                </li>
+                                                <li class="sidebar-item">
+                                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/listeSignalement"
+                                                        aria-expanded="false">
+                                                        <i class="fa fa-table" aria-hidden="true"></i>
+                                                        <span class="hide-menu">Liste des signalements</span>
+                                                     </a>
+                                                </li>
                     </ul>
 
                 </nav>
@@ -116,7 +127,7 @@
                             <ol class="breadcrumb ms-auto">
                                
                             </ol>
-                            <a href="https://www.wrappixel.com/templates/ampleadmin/" target="_blank"
+                            <a href="/logout"
                                 class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">Se deconnecter</a>
                         </div>
                     </div>

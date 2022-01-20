@@ -46,7 +46,6 @@ public class SignalementRegionDao {
         tx.commit();
     }
 
-<<<<<<< Updated upstream
     //Statistique par rapport au region
     public Long getStatReg(Long id){
         long sigos = (Long) em.createQuery("select count(e) from SignalementRegion e where e.region.id= :idregion").setParameter("idregion", id).getSingleResult();
@@ -57,11 +56,12 @@ public class SignalementRegionDao {
         long sigos = (Long) em.createQuery("select count(e) from SignalementRegion e where e.region.id= :idregion and e.signalement.etat= :state").setParameter("idregion", id).setParameter("state", s).getSingleResult();
         return sigos;
     }
-    public Long getStatRegN(Long id){
+    public Long getStatRegN(Long id) {
         String s = "Nouveau";
         long sigos = (Long) em.createQuery("select count(e) from SignalementRegion e where e.region.id= :idregion and e.signalement.etat= :state").setParameter("idregion", id).setParameter("state", s).getSingleResult();
         return sigos;
-=======
+    }
+
     public List<Signalement> getSignalementByFilter(Long idRegion , Long idType , String etat , Date debut , Date fin){
 
         List<Signalement>  sig = null;
@@ -90,6 +90,6 @@ public class SignalementRegionDao {
                 .setParameter("fin",fin)
                 .getResultList();
         return sig;
->>>>>>> Stashed changes
+
     }
 }

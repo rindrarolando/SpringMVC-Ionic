@@ -25,7 +25,6 @@ public class SignalementDao {
         return em.createQuery("select c from Signalement c").getResultList();
     }
 
-<<<<<<< Updated upstream
     //Statistique par rapport au type de problemes
     public long getStatEtat1(){
        long sig = (Long) em.createQuery("select count(c) from Signalement c where c.type.id=1").getSingleResult();
@@ -105,7 +104,7 @@ public class SignalementDao {
     public List<Signalement> getNewSignalement(){
         return em.createQuery("select c from Signalement c where c.etat='Nouveau'").getResultList();
     }
-=======
+
     public List<Signalement> getSignalementByUtil(String name){
         String names = name;
         List<Signalement>  sig = null;
@@ -124,8 +123,6 @@ public class SignalementDao {
                 .getResultList();
         return sigo;
     }
-
->>>>>>> Stashed changes
 
     @Transactional
     public void remove(Long id) {
