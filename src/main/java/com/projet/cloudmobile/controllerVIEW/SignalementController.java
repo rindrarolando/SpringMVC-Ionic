@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SignalementController {
     @RequestMapping("/listeSignalement")
     public String exemple(){
+<<<<<<< Updated upstream
         return "liste";
     }
 
@@ -27,5 +28,8 @@ public class SignalementController {
     public String signalement(HttpServletRequest request,@RequestParam(value = "id")String id){
         request.setAttribute("id",1);
         return "Signalement";
+=======
+        return "statistique";
+>>>>>>> Stashed changes
     }
 }

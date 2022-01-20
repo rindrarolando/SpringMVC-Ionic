@@ -33,6 +33,7 @@ public class SignalementRestController {
     }
 
     @CrossOrigin
+<<<<<<< Updated upstream
     @GetMapping("/getNewSignalement")
     public List<Signalement> getNewSignalement(){
         SignalementDao s = new SignalementDao();
@@ -115,5 +116,21 @@ public class SignalementRestController {
         return s.getStatEtat3T();
     }
 
+=======
+    @GetMapping("/SignalementByUtil")
+    public List<Signalement> getSignalementByUtil(@RequestParam(value = "username")String username){
+
+        return new SignalementDao().getSignalementByUtil(username);
+
+    }
+
+    @CrossOrigin
+    @GetMapping("/statistiqueEtat")
+    public List<Signalement> getStatistiqueEtat(){
+
+        return new SignalementDao().getStatEtat();
+
+    }
+>>>>>>> Stashed changes
 
 }

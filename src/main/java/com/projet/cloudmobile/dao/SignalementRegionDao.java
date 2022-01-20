@@ -4,7 +4,9 @@ import com.projet.cloudmobile.models.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class SignalementRegionDao {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory( "connection");
@@ -44,6 +46,7 @@ public class SignalementRegionDao {
         tx.commit();
     }
 
+<<<<<<< Updated upstream
     //Statistique par rapport au region
     public Long getStatReg(Long id){
         long sigos = (Long) em.createQuery("select count(e) from SignalementRegion e where e.region.id= :idregion").setParameter("idregion", id).getSingleResult();
@@ -58,5 +61,35 @@ public class SignalementRegionDao {
         String s = "Nouveau";
         long sigos = (Long) em.createQuery("select count(e) from SignalementRegion e where e.region.id= :idregion and e.signalement.etat= :state").setParameter("idregion", id).setParameter("state", s).getSingleResult();
         return sigos;
+=======
+    public List<Signalement> getSignalementByFilter(Long idRegion , Long idType , String etat , Date debut , Date fin){
+
+        List<Signalement>  sig = null;
+        String operatorRegion = "=";
+        String operatorType = "=";
+        String operatorEtat = "=";
+
+        if (idRegion == -1) {
+            operatorRegion = "!=";
+        }
+
+        if(idType == -1){
+            operatorType = "!=";
+        }
+
+        if (Objects.equals(etat, "tout")){
+            operatorEtat = "!=";
+        }
+
+        sig = em
+                .createQuery("select e.signalement from SignalementRegion e join e.signalement on e.id = e.signalement.id where e.region.id "+operatorRegion+" :idRegion and e.signalement.type "+operatorType+" :idType and e.signalement.etat "+operatorEtat+" :etat and e.signalement.dateSignalement >= :debut and e.signalement.dateSignalement <= :fin", Signalement.class)
+                .setParameter("idRegion", idRegion)
+                .setParameter("idType",idType)
+                .setParameter("etat",etat)
+                .setParameter("debut",debut)
+                .setParameter("fin",fin)
+                .getResultList();
+        return sig;
+>>>>>>> Stashed changes
     }
 }

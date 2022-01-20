@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sun.misc.Signal;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,6 +25,7 @@ public class SignalementDao {
         return em.createQuery("select c from Signalement c").getResultList();
     }
 
+<<<<<<< Updated upstream
     //Statistique par rapport au type de problemes
     public long getStatEtat1(){
        long sig = (Long) em.createQuery("select count(c) from Signalement c where c.type.id=1").getSingleResult();
@@ -103,6 +105,27 @@ public class SignalementDao {
     public List<Signalement> getNewSignalement(){
         return em.createQuery("select c from Signalement c where c.etat='Nouveau'").getResultList();
     }
+=======
+    public List<Signalement> getSignalementByUtil(String name){
+        String names = name;
+        List<Signalement>  sig = null;
+        sig = em
+                .createQuery("select c from Signalement c where c.utilisateur.username = :names", Signalement.class)
+                .setParameter("names", names)
+                .getResultList();
+        return sig;
+    }
+
+
+    public List<Signalement> getStatEtat(){
+        List<Signalement> sigo = null;
+        sigo = em
+                .createQuery("select c.type.designation,count(*) as total from Signalement c group by c.type.designation", Signalement.class)
+                .getResultList();
+        return sigo;
+    }
+
+>>>>>>> Stashed changes
 
     @Transactional
     public void remove(Long id) {
@@ -122,4 +145,5 @@ public class SignalementDao {
         }
         return r;
     }
+
 }
