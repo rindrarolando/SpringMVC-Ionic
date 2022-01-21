@@ -223,7 +223,7 @@ $scope.getGraph=function(val1,val2,val3){
                                     <span class="hide-menu">Regions</span>
                                 </a>
                             </form>
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables"
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?utilisateur=1"
                                     aria-expanded="false">
                                     <i class="fa fa-table" aria-hidden="true"></i>
                                     <span class="hide-menu">Utilisateur</span>
