@@ -88,6 +88,7 @@
                     <ul id="sidebarnav">
                         
                         <li class="sidebar-item pt-2">
+
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/NouveauxSignalements"
                                 aria-expanded="false">
                                 <i class="fas fa-bug" aria-hidden="true"></i>
@@ -96,10 +97,22 @@
                         
                             <p class="text-center">Tables</p>
                             <li class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="basic-table.html"
+                            <form action="/Tables?region=1" method="post">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?region=1"
                                     aria-expanded="false">
                                     <i class="fa fa-table" aria-hidden="true"></i>
-                                    <span class="hide-menu">Basic Table</span>
+                                    <span class="hide-menu">Regions</span>
+                                </a>
+                            </form>
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables"
+                                    aria-expanded="false">
+                                    <i class="fa fa-table" aria-hidden="true"></i>
+                                    <span class="hide-menu">Utilisateur</span>
+                                </a>
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?typeSignalement=1"
+                                    aria-expanded="false">
+                                    <i class="fa fa-table" aria-hidden="true"></i>
+                                    <span class="hide-menu">Type de signalement</span>
                                 </a>
                             </li>
                     </ul>

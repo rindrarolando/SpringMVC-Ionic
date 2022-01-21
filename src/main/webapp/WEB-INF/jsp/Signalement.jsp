@@ -203,7 +203,7 @@
                                         <label class="col-sm-12">Selectionner la region correspondante :</label>
                                         <div class="col-sm-12 border-bottom">
                                             <select class="form-select shadow-none p-0 border-0 form-control-line" ng-model="idregion">
-                                                <option ng-repeat="region in lregions" value="{{region.id}}">{{region.description}}</option>
+                                                <option ng-repeat="region in lregions" value="{{region.id}}">{{region.designation}}</option>
                                             </select>
                                         </div>
                                     </div>

@@ -14,10 +14,10 @@ public class SignalementRegionDao {
     @Transactional
     public void insert(SignalementRegion s){
         tx.begin();
-        if(s.getId()==0){
-            em.persist(s);
-        }else{
+        if(s.getId()==null){
             em.merge(s);
+        }else{
+            em.persist(s);
         }
         tx.commit();
     }

@@ -107,7 +107,7 @@ public class Signalement {
 
     public String getEtat(){return etat;}
 
-    public String setEtat(){return etat;}
+    public void setEtat(String etat){this.etat=etat;}
 
 
 }

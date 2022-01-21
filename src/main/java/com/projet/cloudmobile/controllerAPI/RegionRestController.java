@@ -4,20 +4,25 @@ import com.projet.cloudmobile.dao.RegionDao;
 import com.projet.cloudmobile.dao.SignalementDao;
 import com.projet.cloudmobile.models.Region;
 import com.projet.cloudmobile.models.Signalement;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/region")
 public class RegionRestController {
-
+    @CrossOrigin
     @GetMapping("/getRegions")
     public List<Region> getAllRegions(){
         RegionDao r = new RegionDao();
         return r.getAllRegions();
+    }
+
+    @CrossOrigin
+    @GetMapping("/modifier")
+    public Region getRegion(@RequestParam("id")String id){
+        RegionDao r = new RegionDao();
+        Region ret = r.getRegion(Integer.parseInt(id));
+        return ret;
     }
 }

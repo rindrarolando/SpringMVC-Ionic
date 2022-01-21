@@ -1,9 +1,6 @@
 package com.projet.cloudmobile.dao;
 
-import com.projet.cloudmobile.models.Region;
-import com.projet.cloudmobile.models.Signalement;
-import com.projet.cloudmobile.models.SignalementRegion;
-import com.projet.cloudmobile.models.TypeSignalement;
+import com.projet.cloudmobile.models.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -39,6 +36,15 @@ public class TypeSignalementDao {
         Signalement r = em.find(Signalement.class,id);
         if (r == null) {
             throw new EntityNotFoundException("ID not found : "
+                    + id);
+        }
+        return r;
+    }
+
+    public TypeSignalement getTypeSignalement(int id){
+        TypeSignalement r = em.find(TypeSignalement.class,id);
+        if (r == null) {
+            throw new EntityNotFoundException("Id not found :"
                     + id);
         }
         return r;

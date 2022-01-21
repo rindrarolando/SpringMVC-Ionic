@@ -14,9 +14,14 @@ import javax.servlet.http.HttpSession;
 public class AdministrateurController {
 
     @RequestMapping("/Tables")
-    public String tables(){
+    public String tables() {
         return "Tables";
+    }
 
+    @RequestMapping("/Modifier")
+    public String modifier() {
+        return "Modifier";
+    }
 
     @RequestMapping("/")
     public String acceuil(HttpServletRequest request){
