@@ -1,6 +1,5 @@
 package com.projet.cloudmobile.models;
 
-import org.hibernate.annotations.Entity;
 import javax.persistence.*;
 
 

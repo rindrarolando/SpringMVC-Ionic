@@ -15,9 +15,6 @@ public class CloudMobileApplication {
 	public static void main(String[] args) throws ParseException {
 		SpringApplication.run(CloudMobileApplication.class, args);
 		//EntityManagerFactory emf = Persistence.createEntityManagerFactory( "connection");
-
-
-
 	}
 
 }

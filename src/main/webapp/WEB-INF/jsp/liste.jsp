@@ -19,14 +19,72 @@
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
   
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
-    <script src="js/angular.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
     <script src="js/angular-route.js"></script>
-    <script src="js/controlleur.js"></script> 
+    <script src="jsGraphDisplay.1.0.js"></script>
+    <script type="text/javascript">
+ var appname = angular.module('myapp', []);
+
+        appname.controller('listeSignalement', ['$scope','$http',
+        function($scope,$http) {
+
+//Afficher la liste des signalement
+          $scope.afficheListeSignalement=function(){
+            $http.get('/signalement/getSignalements').then(function (response) {
+              $scope.signalement = response.data;
+            });
+          }
+
+          $scope.afficheListeSignalement();
+
+//Modifier un signalement par son ID
+          //$scope.editSignalement=function(sign){
+            //$http.get('/signalement/deleteSignalement').then(function (response) {
+              //$scope.signalement = response.data;
+            //});
+          //}
+
+//Effacer un signalement par son ID
+          $scope.editSignalement=function(sign){
+            $http.get('/signalement/deleteSignalement?id='+sign.id+'').then(function (response) {
+              $scope.deleteComplete = response.data;
+            });
+          }
+
+
+
+          // 1) Création d'un objet jsGraphDisplay
+          var graph = new jsGraphDisplay();
+
+          // 2) Ajout des données
+          graph.DataAdd({
+          data: [
+          	[4, 21],
+          	[8, 23],
+          	[12, 26],
+          	[16, 25],
+          	[20, 20],
+          	[24, 22],
+          	[28, 27],
+          	[32, 35]
+          ]
+          });
+
+          // 3) Affichage du résultat
+          graph.Draw('graphExemple1');
+
+
+
+        ]);
+
+
+
+    </script>
    <link href="css/style.min.css" rel="stylesheet">
    <base href="ESSAi.html" />
 </head>
 
-<body ng-app="myapp" ng-controller="listeSignControl" data-ng-init="getSignalement(1)">
+<body ng-app="myapp" ng-controller="listeSignalement">
    
     <div class="preloader">
         <div class="lds-ripple">
@@ -88,48 +146,25 @@
                     <ul id="sidebarnav">
                         
                         <li class="sidebar-item pt-2">
-
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/NouveauxSignalements"
-                            aria-expanded="false">
+                                aria-expanded="false">
                                 <i class="fas fa-bug" aria-hidden="true"></i>
                                 <span class="hide-menu">Nouveaux Signalements</span>
                             </a>
-                        
-                            <p class="text-center">Tables</p>
-                            <li class="sidebar-item">
-                            <form action="/Tables?region=1" method="post">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?region=1"
-                                    aria-expanded="false">
-                                    <i class="fa fa-table" aria-hidden="true"></i>
-                                    <span class="hide-menu">Regions</span>
-                                </a>
-                            </form>
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables"
-                                    aria-expanded="false">
-                                    <i class="fa fa-table" aria-hidden="true"></i>
-                                    <span class="hide-menu">Utilisateur</span>
-                                </a>
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?typeSignalement=1"
-                                    aria-expanded="false">
-                                    <i class="fa fa-table" aria-hidden="true"></i>
-                                    <span class="hide-menu">Type de signalement</span>
-                                </a>
-                            </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/stat"
-                            aria-expanded="false">
+                                aria-expanded="false">
                                 <i class="fa fa-table" aria-hidden="true"></i>
                                 <span class="hide-menu">Statistiques</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/listeSignalement"
-                             aria-expanded="false">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/listeSignalement"
+                                aria-expanded="false">
                                 <i class="fa fa-table" aria-hidden="true"></i>
                                 <span class="hide-menu">Liste des signalements</span>
                              </a>
                         </li>
-
                     </ul>
 
                 </nav>
@@ -167,8 +202,9 @@
                                 <div class="col-sm-12">
                                     <div class="white-box">
                                         
-                                        <h3 class="box-title">Les nouveaux signalements :</h3>
-                                        <p class="text-muted">Add class <code>.table</code></p>
+                                        <h3 class="box-title">Liste des signalements :</h3>
+                                        <p class="box-title">{{ deleteComplete }}</p>
+                                        <p class="text-muted"></p>
                                         <div class="table-responsive">
                                             <table class="table text-nowrap">
                                                 <thead>
@@ -177,20 +213,25 @@
                                                         <th class="border-top-0">Date du signalement</th>
                                                         <th class="border-top-0">Description</th>
                                                         <th class="border-top-0">Type</th>
-                                                        <th class="border-top-0">Region</th>
+                                                        <th class="border-top-0">Longitude</th>
+                                                        <th class="border-top-0">Latitude</th>
+                                                        <th class="border-top-0">actions</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr ng-repeat="x in data">
+                                                    <tr ng-repeat="x in signalement">
                                                         <td>{{x.id}}</td>
                                                         <td>{{x.dateSignalement | date:'dd/MM/yyyy'}}</td>
                                                         <td>{{x.description}}</td>
                                                         <td>{{x.type.designation}}</td>
-                                                        <td><form action={{'Signalement?id='+x.id}} method="post"><button type="submit"class="btn btn-primary">Attribuer</button></form></td>
-                                                        <td><button type="button" class="btn btn-danger">Supprimer</button></td>
+                                                        <td>{{x.longitude}}</td>
+                                                        <td>{{x.latitude}}</td>
+                                                        <td><form action={{'Signalement?id='+x.id}} method="post"><button type="submit"class="btn btn-primary">Modifier</button></form></td>
+                                                        <td><button type="button" class="btn btn-danger" ng-click="deleteSignalement(x)" >Supprimer</button></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                            <svg id="graphExemple1" width="600" height="300">
                                         </div>
                                     </div>
                                 </div>

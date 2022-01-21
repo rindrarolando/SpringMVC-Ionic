@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 
 public class Rescue {
-    static String url="jdbc:postgresql://ec2-3-224-157-224.compute-1.amazonaws.com:5432/d6nonnvm58ivpd";
-    static String user="uojpoqhycqlmne";
-    static String password="b9b7d3b5bc58e3f4425e814e7326dfd6fee7bef2c517a9210ea86b9325883e77";
+    static String url="jdbc:postgresql://ec2-3-224-157-224.compute-1.amazonaws.com:5432/dcpib1t8jth58k";
+    static String user="cfkbextluneeyz";
+    static String password="cd54ebb16c7b0a98d9b07698c56fdf83d17a4f120985bc4339dde5455ebc8b9d";
 
     public static Connection connectToDatabase(){
         try{
