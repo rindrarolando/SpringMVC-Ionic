@@ -130,4 +130,10 @@ public class SignalementRestController {
 
     }
 
+    @CrossOrigin
+    @GetMapping("/signalementRegion")
+    public List<Signalement> getSignalementByRegion(@RequestParam(value="id")String id){
+        return new SignalementDao().getSignalementByRegion(Integer.parseInt(id));
+    }
+
 }

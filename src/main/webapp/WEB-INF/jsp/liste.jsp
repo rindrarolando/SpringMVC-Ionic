@@ -122,10 +122,7 @@
 
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
                         <li class="sidebar-item pt-2">
 
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/NouveauxSignalements"
@@ -134,7 +131,6 @@
                                 <span class="hide-menu">Nouveaux Signalements</span>
                             </a>
 
-<<<<<<< Updated upstream
                             <p class="text-center">Tables</p>
                             <li class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" href="basic-table.html"
@@ -143,7 +139,7 @@
                                     <span class="hide-menu">Basic Table</span>
                                 </a>
                             </li>
-=======
+
                             <li class="sidebar-item">
                             <form action="/Tables?region=1" method="post">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?region=1"
@@ -177,7 +173,7 @@
                                 <span class="hide-menu">Liste des signalements</span>
                              </a>
                         </li>
->>>>>>> Stashed changes
+
                     </ul>
 
                 </nav>

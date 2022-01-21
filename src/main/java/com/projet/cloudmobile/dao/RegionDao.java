@@ -24,7 +24,6 @@ public class RegionDao {
 
     public List<Region> getAllRegions(){
         return em.createQuery("select r from Region r").getResultList();
-
     }
 
     public Region getRegion(int id){
