@@ -94,7 +94,6 @@
                                                     <span class="hide-menu">Nouveaux Signalements</span>
                                                 </a>
 
-                                                <p class="text-center">Tables</p>
                                                 <li class="sidebar-item">
                                                 <form action="/Tables?region=1" method="post">
                                                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?region=1"

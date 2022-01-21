@@ -207,27 +207,47 @@ $scope.getGraph=function(val1,val2,val3){
                
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        
                         <li class="sidebar-item pt-2">
-                                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/NouveauxSignalements"
-                                                        aria-expanded="false">
-                                                        <i class="fas fa-bug" aria-hidden="true"></i>
-                                                        <span class="hide-menu">Nouveaux Signalements</span>
-                                                    </a>
-                                                <li class="sidebar-item">
-                                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/stat"
-                                                        aria-expanded="false">
-                                                        <i class="fa fa-table" aria-hidden="true"></i>
-                                                        <span class="hide-menu">Statistiques</span>
-                                                    </a>
-                                                </li>
-                                                <li class="sidebar-item">
-                                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/listeSignalement"
-                                                        aria-expanded="false">
-                                                        <i class="fa fa-table" aria-hidden="true"></i>
-                                                        <span class="hide-menu">Liste des signalements</span>
-                                                     </a>
-                                                </li>
+
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/NouveauxSignalements"
+                            aria-expanded="false">
+                                <i class="fas fa-bug" aria-hidden="true"></i>
+                                <span class="hide-menu">Nouveaux Signalements</span>
+                            </a>
+
+                            <li class="sidebar-item">
+                            <form action="/Tables?region=1" method="post">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?region=1"
+                                    aria-expanded="false">
+                                    <i class="fa fa-table" aria-hidden="true"></i>
+                                    <span class="hide-menu">Regions</span>
+                                </a>
+                            </form>
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables"
+                                    aria-expanded="false">
+                                    <i class="fa fa-table" aria-hidden="true"></i>
+                                    <span class="hide-menu">Utilisateur</span>
+                                </a>
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?typeSignalement=1"
+                                    aria-expanded="false">
+                                    <i class="fa fa-table" aria-hidden="true"></i>
+                                    <span class="hide-menu">Type de signalement</span>
+                                </a>
+                            </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/stat"
+                            aria-expanded="false">
+                                <i class="fa fa-table" aria-hidden="true"></i>
+                                <span class="hide-menu">Statistiques</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/listeSignalement"
+                             aria-expanded="false">
+                                <i class="fa fa-table" aria-hidden="true"></i>
+                                <span class="hide-menu">Liste des signalements</span>
+                             </a>
+                        </li>
                     </ul>
 
                 </nav>

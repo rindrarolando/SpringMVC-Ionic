@@ -122,14 +122,19 @@
 
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
                         <li class="sidebar-item pt-2">
+
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/NouveauxSignalements"
-                                aria-expanded="false">
+                            aria-expanded="false">
                                 <i class="fas fa-bug" aria-hidden="true"></i>
                                 <span class="hide-menu">Nouveaux Signalements</span>
                             </a>
 
+<<<<<<< Updated upstream
                             <p class="text-center">Tables</p>
                             <li class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" href="basic-table.html"
@@ -138,6 +143,41 @@
                                     <span class="hide-menu">Basic Table</span>
                                 </a>
                             </li>
+=======
+                            <li class="sidebar-item">
+                            <form action="/Tables?region=1" method="post">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?region=1"
+                                    aria-expanded="false">
+                                    <i class="fa fa-table" aria-hidden="true"></i>
+                                    <span class="hide-menu">Regions</span>
+                                </a>
+                            </form>
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables"
+                                    aria-expanded="false">
+                                    <i class="fa fa-table" aria-hidden="true"></i>
+                                    <span class="hide-menu">Utilisateur</span>
+                                </a>
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?typeSignalement=1"
+                                    aria-expanded="false">
+                                    <i class="fa fa-table" aria-hidden="true"></i>
+                                    <span class="hide-menu">Type de signalement</span>
+                                </a>
+                            </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/stat"
+                            aria-expanded="false">
+                                <i class="fa fa-table" aria-hidden="true"></i>
+                                <span class="hide-menu">Statistiques</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/listeSignalement"
+                             aria-expanded="false">
+                                <i class="fa fa-table" aria-hidden="true"></i>
+                                <span class="hide-menu">Liste des signalements</span>
+                             </a>
+                        </li>
+>>>>>>> Stashed changes
                     </ul>
 
                 </nav>
