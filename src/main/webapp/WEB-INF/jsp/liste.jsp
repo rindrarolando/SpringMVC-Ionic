@@ -131,15 +131,6 @@
                                 <span class="hide-menu">Nouveaux Signalements</span>
                             </a>
 
-                            <p class="text-center">Tables</p>
-                            <li class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="basic-table.html"
-                                    aria-expanded="false">
-                                    <i class="fa fa-table" aria-hidden="true"></i>
-                                    <span class="hide-menu">Basic Table</span>
-                                </a>
-                            </li>
-
                             <li class="sidebar-item">
                             <form action="/Tables?region=1" method="post">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?region=1"
