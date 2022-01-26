@@ -29,6 +29,16 @@ public class SignalementController {
         }
     }
 
+    @RequestMapping("/smoke")
+    public String smoke(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        if(session.getAttribute("admin")!=null){
+            return "hehe";
+        }else {
+            return "/";
+        }
+    }
+
     @RequestMapping("/stat")
     public String getStatistique(HttpServletRequest request){
         HttpSession session = request.getSession();

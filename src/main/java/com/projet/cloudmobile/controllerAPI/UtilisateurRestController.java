@@ -27,4 +27,31 @@ public class UtilisateurRestController {
         Utilisateur ret = u.getUtilisateur(Long.parseLong(id));
         return ret;
     }
+
+    @CrossOrigin
+    @GetMapping("/inscription")
+    public boolean makeInscription(@RequestParam("username")String username, @RequestParam("password")String password,@RequestParam("email")String email){
+       UtilisateurDao u = new UtilisateurDao();
+       return u.checkInscription(username,password,email);
+    }
+
+    @CrossOrigin
+    @GetMapping("/login")
+    public Utilisateur loginUtilisateur(@RequestParam("email")String email ,@RequestParam("password")String password){
+        UtilisateurDao u = new UtilisateurDao();
+        return u.checkLogin(email,password);
+
+        /*
+        if -1 utilisateur not there if != -1 utilisateur there
+        long i = -1;
+        if(u.checkLogin(email,password) != null){
+            i = u.checkLogin(email,password).getId();
+            return i;
+        }
+        else{
+            return i;
+        }*/
+
+    }
+
 }

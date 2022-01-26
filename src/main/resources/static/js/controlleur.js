@@ -16,6 +16,8 @@ function($scope,$http) {
 
 ]);
 
+
+
 appname.controller('testControl', ['$scope','$http','$location','$window',
 function($scope,$http,$location,$window) {
   $scope.getSignalement=function(){

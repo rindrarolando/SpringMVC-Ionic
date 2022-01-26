@@ -1,10 +1,18 @@
 package com.projet.cloudmobile.dao;
 
+import com.projet.cloudmobile.connection.Rescue;
 import com.projet.cloudmobile.models.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.Normalizer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class UtilisateurDao {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory( "connection");
@@ -33,6 +41,76 @@ public class UtilisateurDao {
                     + id);
         }
         return r;
+    }
+
+    public static boolean isValid(String email)
+    {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
+    }
+
+    public static boolean hasDiacritics(String s) {
+        // Decompose any á into a and combining-'.
+        String s2 = Normalizer.normalize(s, Normalizer.Form.NFD);
+        return s2.matches("(?s).*\\p{InCombiningDiacriticalMarks}.*");
+        //return !s2.equals(s);
+    }
+
+    @Transactional
+    public void insertWithMd5(String username, String password, String email){
+        tx.begin();
+        long millis = System.currentTimeMillis();
+        Date dtn = new java.sql.Date(millis);
+        String query = "insert into utilisateur(id,dtn,email,password,username) values (DEFAULT,:dtn,:email,md5(:password),:username)";
+        Query jpqlQuery = em.createNativeQuery(query)
+                .setParameter("dtn",dtn)
+                .setParameter("email",email)
+                .setParameter("password",password)
+                .setParameter("username",username);
+        em.joinTransaction();
+        jpqlQuery.executeUpdate();
+
+        tx.commit();
+    }
+
+    public static boolean checkInscription(String username, String password, String email) {
+        if(isValid(email) == true && hasDiacritics(password) == false && password.length() >= 8){
+            UtilisateurDao u = new UtilisateurDao();
+            u.insertWithMd5(username,password,email);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public Utilisateur checkLogin(String email, String password){
+        Utilisateur u = null;
+        try {
+            Connection c = Rescue.connectToDatabase();
+            Statement stmt = c.createStatement();
+            ResultSet res = stmt.executeQuery("select * from utilisateur where email='"+email+"' and password=md5('"+password+"')");
+            while(res.next()){
+                long id = res.getLong("id");
+                String emails = res.getString("email");
+                String passwords = res.getString("password");
+                String username = res.getString("username");
+                String date = res.getString("dtn");
+                Date d = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+
+                u = new Utilisateur(id,username,passwords,emails,d);
+            }
+            return u;
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Transactional

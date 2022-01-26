@@ -1,11 +1,18 @@
 package com.projet.cloudmobile.models;
 
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "signalement")
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
+
 public class Signalement {
     @Id
     @Column(columnDefinition = "serial")

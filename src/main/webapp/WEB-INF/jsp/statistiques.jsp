@@ -19,10 +19,9 @@
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
   
     <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
-    <script src="js/angular-route.js"></script>
     <script type="text/javascript">
         var appname = angular.module('myApp', []);
 
@@ -107,34 +106,183 @@
 
                              });
                       }
+                    //START REAL STAT
+        $scope.getNouveau=function(){        //GRAPHIQUE TYPE_SIGNALEMENT
+                                      $http.get('/signalement/statistique/region/nouveau').then(function (response) {
+                                      json = response.data;
+                                        var chartjsData = [];
+                                              for (var i = 0; i < json.length; i++) {
+                                                 chartjsData.push(json[i].total);
+                                              }
+                                        return chartjsData;
+
+                                      });
+                                    }
+
+                $scope.getTermine=function(){        //GRAPHIQUE TYPE_SIGNALEMENT
+                                              $http.get('/signalement/statistique/region/termine').then(function (response) {
+                                              json = response.data;
+                                                var chartjsData = [];
+                                                      for (var i = 0; i < json.length; i++) {
+                                                         chartjsData.push(json[i].total);
+                                                      }
+                                                return chartjsData;
+
+                                              });
+                                            }
 
 
-$scope.getGraph=function(val1,val2,val3){
-                const ctx = document.getElementById('graph1').getContext('2d');
-                var data = {
-                    labels: ['Route abimé','Accident de la route','Ordures'],
-                    datasets: [
-                        {
-                        label: 'Statistiques des cas de problemes',
-                        backgroundColor: '#000000',
-                        data: [val1,val2,val3]
-                        }
-                    ]
-                }
-                var options = {
-                    responsive: true,
-                }
+                  $scope.getChartReg=function(){        //GRAPHIQUE TYPE_SIGNALEMENT
+                    $http.get('/signalement/statistique/region/encours').then(function (response) {
+                    json = response.data;
+                    var chartjsData2 = $scope.getNouveau();
+                    var chartjsData3 = $scope.getTermine;
+                      var chartjsData = [];
+                            for (var i = 0; i < json.length; i++) {
+                               chartjsData.push(json[i].total);
+                            }
+
+                            var chartjsLabels = [];
+                            for (var i = 0; i < json.length; i++) {
+                               chartjsLabels.push(json[i].type);
+                            }
+
+                      const ctx = document.getElementById('graphRegion').getContext('2d');
+                                      var data = {
+                                          labels: chartjsLabels,
+                                          datasets: [
+                                              {
+                                              label: 'En cours',
+                                              borderColor: '#d8f4ff',
+                                              data: chartjsData,
+                                              fill: true,
+                                              tension: 0.1
+                                              },
+                                              {
+                                               label: 'Nouveau',
+                                               borderColor: "#110f48",
+                                               data: chartjsData2,
+                                               fill: true,
+                                               tension: 0.1
+                                              },
+                                              {
+                                               label: 'Termine',
+                                               borderColor: "#f8f8fa",
+                                               data: chartjsData3,
+                                               fill: true,
+                                               tension: 0.1
+                                              }
+                                          ]
+                                      }
+                                      var options = {
+                                          responsive: true,
+                                      }
 
 
-                var config = {
-                    type: 'line',
-                    data: data,
-                    options: options
-                }
-                var graph1 = new Chart(ctx, config)
-}
+                                      var config = {
+                                          type: 'line',
+                                          data: data,
+                                          options: options
+                                      }
+                                      var graphRegion = new Chart(ctx, config)
 
-        $scope.getGraph($scope.number1,$scope.number2,$scope.number3);
+                    });
+                  }
+                  $scope.getChartReg();
+
+
+
+
+
+
+                  //Chart graphRegion en line
+                  $scope.getChart=function(){
+                              $http.get('/signalement/statistique/type').then(function (response) {
+
+                              json = response.data;
+
+
+                                var chartjsData = [];
+                                      for (var i = 0; i < json.length; i++) {
+                                         chartjsData.push(json[i].total);
+                                      }
+
+
+
+                                var chartjsLabels = [];
+                                    for (var i = 0; i < json.length; i++) {
+                                         chartjsLabels.push(json[i].region);
+                                      }
+
+                                const ctx = document.getElementById('graph1').getContext('2d');
+                                                var data = {
+                                                    labels: chartjsLabels,
+                                                    datasets: [
+                                                        {
+                                                        label: 'Statistiques des Problemes a Madagascar',
+                                                        backgroundColor: '#d8f4ff',
+                                                        data: chartjsData
+                                                        }
+                                                    ]
+                                                }
+                                                var options = {
+                                                    responsive: true,
+                                                }
+
+
+                                                var config = {
+                                                    type: 'pie',
+                                                    data: data,
+                                                    options: options
+                                                }
+                                                var graph1 = new Chart(ctx, config)
+
+                              });
+
+                            }
+                            $scope.getChart();
+
+                            //GRAPHIQUE Utilisateur
+                            $scope.getGraphUtil=function(){
+                                        $http.get('/signalement/statistique/utilisateur').then(function (response) {
+                                        json = response.data;
+                                          var chartjsData = [];
+                                                for (var i = 0; i < json.length; i++) {
+                                                   chartjsData.push(json[i].total);
+                                                }
+
+                                                var chartjsLabels = [];
+                                                for (var i = 0; i < json.length; i++) {
+                                                   chartjsLabels.push(json[i].name);
+                                                }
+
+                                          const ctx = document.getElementById('graphUser').getContext('2d');
+                                                          var data = {
+                                                              labels: chartjsLabels,
+                                                              datasets: [
+                                                                  {
+                                                                  label: 'Utilisateur les plus actifs',
+                                                                  backgroundColor: "#f8f8fa",
+                                                                  data: chartjsData
+                                                                  }
+                                                              ]
+                                                          }
+                                                          var options = {
+                                                              responsive: true,
+                                                          }
+
+
+                                                          var config = {
+                                                              type: 'line',
+                                                              data: data,
+                                                              options: options
+                                                          }
+                                                          var graphUser = new Chart(ctx, config)
+
+                                        });
+                                      }
+                                      $scope.getGraphUtil();
+                    //END REAL STAT
 
 
         }
@@ -286,49 +434,24 @@ $scope.getGraph=function(val1,val2,val3){
                                     <div class="white-box">
                                         
                                         <h3 class="box-title">Statistique global  :</h3>
-                                                <p><canvas id="graph1"></canvas></p>
+                                                <p>Statistiques des problemes et type a Madagascar: </p>
+                                                <p><canvas id="graph1" width="10" height="5"></canvas></p>
                                                 <p class="text-muted"> Dans les {{problemes1}} il y a {{nombre1}} problemes dont {{enCours1}} qui sont En cours de traitement et {{nouveau1}} nouveaux signalements</p>
                                                 <p class="text-muted"> Dans les {{problemes2}} il y a {{nombre2}} problemes dont {{enCours2}} qui sont En cours de traitement et {{nouveau2}} nouveaux signalements</p>
                                                 <p class="text-muted"> Dans les {{problemes3}} il y a {{nombre3}} problemes dont {{enCours3}} qui sont En cours de traitement et {{nouveau3}} nouveaux signalements</p>
-                                        <div class="table-responsive">
-                                            <table class="table text-nowrap">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="border-top-0">Problemes</th>
-                                                        <th class="border-top-0">Nombre de signalement</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>{{problemes1}}</td>
-                                                        <td>{{nombre1}}</td>
-                                                    </tr>
-                                                   <tr>
-                                                    <td>{{problemes2}}</td>
-                                                    <td>{{nombre2}}</td>
-                                                   </tr>
-                                                    <tr>
-                                                     <td>{{problemes3}}</td>
-                                                       <td>{{nombre3}}</td>
-                                                      </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="form-group mb-4">
-                                                  <label class="col-sm-12">Statistique specifique sur une region  :</label>
-                                                     <div class="col-sm-12 border-bottom">
-                                                         <select class="form-select shadow-none p-0 border-0 form-control-line" ng-model="idregion">
-                                                               <option ng-repeat="region in lregions" value="{{region.id}}">{{region.description}}</option>
-                                                        </select>
-                                                     </div>
-                                                </div>
-                                                <div class="form-group mb-4">
-                                                   <div class="col-sm-12">
-                                                      <button class="btn btn-success" ng-click="getStatistics()">valider</button>
-                                                   </div>
-                                                </div>
 
-                                                <p>Dans ce region il y a {{ nbr }} signalement effectuée.</p>
+                                                <p>Statistiques par region et problemes: </p>
+                                                <p><canvas id="graphRegion" width="10" height="5"></canvas></p>
+
+                                                <p>Statistiques the top 10 best user: </p>
+                                                <p><canvas id="graphUser" width="10" height="5"></canvas></p>
+
+
+                                        <div class="form-group mb-4">
+
+                                        </div>
+
+
                                     </div>
                                 </div>
                             </div>
