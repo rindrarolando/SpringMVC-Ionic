@@ -15,6 +15,7 @@ public class SignalementRestController {
     @CrossOrigin
     @GetMapping("/getSignalements")
     public List<Signalement> getSignalements(){
+
         return new SignalementDao().getAllSignalement();
     }
 

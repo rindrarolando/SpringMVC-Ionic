@@ -6,11 +6,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.sql.Connection;
+<<<<<<< Updated upstream
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+=======
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.Statement;
+>>>>>>> Stashed changes
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -120,5 +126,25 @@ public class UtilisateurDao {
         tx.begin();
         em.remove(t);
         tx.commit();
+    }
+
+    public static Utilisateur getUserById(int id){
+        Utilisateur user = null;
+        try {
+            Connection c = Rescue.connectToDatabase();
+            Statement stmt = c.createStatement();
+            ResultSet res = stmt.executeQuery("select * from utilisateur where id='"+id+"'");
+            while(res.next()){
+                int i = res.getInt("id");
+                String username = res.getString("username");
+                String password = res.getString("password");
+                String mail = res.getString("email");
+                Date date = res.getDate("dtn");
+                user = new Utilisateur((long) i,username,password,mail,date);
+            }
+            return user;
+        }catch (Exception e){
+            return null;
+        }
     }
 }

@@ -3,35 +3,28 @@ package com.projet.cloudmobile.dao;
 import com.projet.cloudmobile.connection.Rescue;
 import com.projet.cloudmobile.models.Administrateur;
 import com.projet.cloudmobile.models.Tokenadmin;
-import org.springframework.transaction.annotation.Transactional;
+import com.projet.cloudmobile.models.Tokenuser;
+import com.projet.cloudmobile.models.Utilisateur;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import java.security.MessageDigest;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.Formatter;
 
-public class TokenDao {
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory( "connection");
-    EntityManager em = emf.createEntityManager();
-    EntityTransaction tx = em.getTransaction();
-
-    public String insertTokenAdmin(Administrateur admin){
+public class TokenUserDao {
+    public String insertTokenUser(Utilisateur user){
         Connection conn = null;
         try {
-            String token = createToken(admin.getId());
+            String token = createToken(user.getId());
             Date creation = Date.valueOf(LocalDate.now());
             Date expiration = Date.valueOf(LocalDate.now().plusDays(3));
-            String role = "administrateur";
+            String role = "utilisateur";
 
             conn = Rescue.connectToDatabase();
-            PreparedStatement pst = conn.prepareStatement("INSERT INTO tokenadmin "
-                    + "(id,idadmin,token,date_creation,date_expiration,role) "
+            PreparedStatement pst = conn.prepareStatement("INSERT INTO tokenuser "
+                    + "(id,iduser,token,date_creation,date_expiration,role) "
                     + "VALUES ( DEFAULT, ? , ? , ? , ? , ?) ");
-            pst.setInt(1, admin.getId());
+            pst.setLong(1, user.getId());
             pst.setString(2, token);
             pst.setDate(3,creation);
             pst.setDate(4,expiration);
@@ -43,12 +36,12 @@ public class TokenDao {
         }
     }
 
-    public void deleteTokenAdmin(String token, int id) throws Exception{
+    public void deleteTokenUser(String token, int id) throws Exception{
         Connection conn = null;
         try {
 
             conn = Rescue.connectToDatabase();
-            PreparedStatement pst = conn.prepareStatement("DELETE FROM tokenadmin WHERE token=? AND idadmin=?");
+            PreparedStatement pst = conn.prepareStatement("DELETE FROM tokenuser WHERE token=? AND iduser=?");
             pst.setString(1, token);
             pst.setInt(2,id);
 
@@ -59,14 +52,15 @@ public class TokenDao {
         }
     }
 
-    public boolean isValidTokenAdmin(String token) throws Exception{
+    public boolean isValidTokenUser(String token) throws Exception{
+
         Connection conn = null;
         PreparedStatement pst = null;
         ResultSet resultat = null;
         String requete = null;
         try{
             conn = Rescue.connectToDatabase();
-            requete = "SELECT * FROM tokenadmin where token=? and date_expiration<current_date";
+            requete = "SELECT * FROM tokenuser where token=? and date_expiration<current_date";
             pst = conn.prepareStatement(requete);
             pst.setString(1, token);
             resultat = pst.executeQuery();
@@ -88,21 +82,21 @@ public class TokenDao {
         }
     }
 
-    public Tokenadmin getTokenAdmin(String token){
-        Tokenadmin token_result = null;
+    public Tokenuser getTokenUser(String token){
+        Tokenuser token_result = null;
         try {
             Connection c = Rescue.connectToDatabase();
             Statement stmt = c.createStatement();
-            ResultSet res = stmt.executeQuery("select * from tokenadmin where token='"+token+"'");
+            ResultSet res = stmt.executeQuery("select * from tokenuser where token='"+token+"'");
             while(res.next()){
                 int id = res.getInt("id");
-                int idadmin = res.getInt("idadmin");
-                Administrateur admin = AdministrateurDao.getAdminById(idadmin);
+                int iduser = res.getInt("iduser");
+                Utilisateur user = UtilisateurDao.getUserById(iduser);
                 String tok = res.getString("token");
                 Date cr = res.getDate("date_creation");
                 Date exp = res.getDate("date_expiration");
                 String role = res.getString("role");
-                token_result = new Tokenadmin(id,admin,tok,cr,exp,role);
+                token_result = new Tokenuser(id,user,tok,cr,exp,role);
             }
             return token_result;
         }catch (Exception e){
@@ -110,7 +104,7 @@ public class TokenDao {
         }
     }
 
-    public String createToken(int id) throws Exception{
+    public String createToken(Long id) throws Exception{
         String token = null;
         Date timest = Date.valueOf(LocalDate.now());
         String timestamp = String.valueOf(timest);
