@@ -6,6 +6,8 @@ import com.projet.cloudmobile.dao.UtilisateurDao;
 import com.projet.cloudmobile.models.Region;
 import com.projet.cloudmobile.models.Signalement;
 import com.projet.cloudmobile.models.Utilisateur;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,9 +32,13 @@ public class UtilisateurRestController {
 
     @CrossOrigin
     @GetMapping("/inscription")
-    public boolean makeInscription(@RequestParam("username")String username, @RequestParam("password")String password,@RequestParam("email")String email){
+    public ResponseEntity<Boolean> makeInscription(@RequestParam("username")String username, @RequestParam("password")String password, @RequestParam("email")String email){
        UtilisateurDao u = new UtilisateurDao();
-       return u.checkInscription(username,password,email);
+       if(u.checkInscription(username,password,email)==true){
+           return new ResponseEntity<Boolean>(u.checkInscription(username,password,email),HttpStatus.ACCEPTED);
+       }else{
+           return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+       }
     }
 
     @CrossOrigin

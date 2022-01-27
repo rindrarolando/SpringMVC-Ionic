@@ -30,25 +30,49 @@ public class SignalementRestController {
 
     @CrossOrigin
     @GetMapping("/getSignalement")
-    public Signalement getSignalement(@RequestParam(value = "id")String id){
-        Signalement s = new Signalement();
-        s= new SignalementDao().getSignalement(Long.valueOf(id));
-        return s ;
+    public ResponseEntity<Signalement> getSignalement(@RequestHeader("tokekn") String token,@RequestParam(value = "id")String id){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<Signalement>(new SignalementDao().getSignalement(Long.valueOf(id)), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @CrossOrigin
     @GetMapping("/deleteSignalement")
-    public String deleteSignalement(@RequestParam(value = "id")String id){
-        SignalementDao s = new SignalementDao();
-         s.remove(Long.valueOf(id));
-         return "Signalement avec l'ID = "+id+" est effacer ";
+    public ResponseEntity deleteSignalement(@RequestHeader("token")String token,@RequestParam(value = "id")String id){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                new SignalementDao().remove(Long.valueOf(id));
+                return new ResponseEntity(HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @CrossOrigin
     @GetMapping("/getNewSignalement")
-    public List<Signalement> getNewSignalement(){
-        SignalementDao s = new SignalementDao();
-        return s.getNewSignalement();
+    public ResponseEntity<List<Signalement>> getNewSignalement(@RequestHeader("token") String token){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<List<Signalement>>(new SignalementDao().getNewSignalement(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @CrossOrigin
@@ -128,18 +152,32 @@ public class SignalementRestController {
     }
 
     @GetMapping("/SignalementByUtil")
-    public List<Signalement> getSignalementByUtil(@RequestParam(value = "username")String username){
-
-        return new SignalementDao().getSignalementByUtil(username);
-
+    public ResponseEntity<List<Signalement>> getSignalementByUtil(@RequestHeader("token")String token,@RequestParam(value = "username")String username){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<List<Signalement>>(new SignalementDao().getSignalementByUtil(username), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @CrossOrigin
     @GetMapping("/statistiqueEtat")
-    public List<Signalement> getStatistiqueEtat(){
-
-        return new SignalementDao().getStatEtat();
-
+    public ResponseEntity<List<Signalement>> getStatistiqueEtat(@RequestHeader("token")String token){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<List<Signalement>>(new SignalementDao().getStatEtat(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @CrossOrigin

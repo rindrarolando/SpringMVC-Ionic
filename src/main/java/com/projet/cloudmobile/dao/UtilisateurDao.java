@@ -5,18 +5,15 @@ import com.projet.cloudmobile.models.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.security.MessageDigest;
 import java.sql.Connection;
-<<<<<<< Updated upstream
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
-=======
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.Statement;
->>>>>>> Stashed changes
+import java.util.Formatter;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -146,5 +143,31 @@ public class UtilisateurDao {
         }catch (Exception e){
             return null;
         }
+    }
+
+    public String createToken(int id) throws Exception{
+        String token = null;
+        java.sql.Date timest = java.sql.Date.valueOf(LocalDate.now());
+        String timestamp = String.valueOf(timest);
+        String peps = "this_is_secret";
+        token = cript(timestamp+peps+id);
+        return token;
+    }
+
+    public String cript(String st) throws Exception {
+        MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+        crypt.reset();
+        crypt.update(st.getBytes("UTF-8"));
+        return byteToHex(crypt.digest());
+    }
+
+    private static String byteToHex(final byte[] hash) {
+        Formatter formatter = new Formatter();
+        for (byte b : hash) {
+            formatter.format("%02x", b);
+        }
+        String result = formatter.toString();
+        formatter.close();
+        return result;
     }
 }
