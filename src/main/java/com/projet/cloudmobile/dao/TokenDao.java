@@ -88,6 +88,36 @@ public class TokenDao {
         }
     }
 
+    public boolean isAdminToken(String token) throws SQLException {
+        Connection conn = null;
+        PreparedStatement pst = null;
+        ResultSet resultat = null;
+        String requete = null;
+        try{
+            conn = Rescue.connectToDatabase();
+            requete = "SELECT * FROM tokenadmin where token=? and role=?";
+            pst = conn.prepareStatement(requete);
+            pst.setString(1, token);
+            pst.setString(2,"administrateur");
+            resultat = pst.executeQuery();
+
+            if(resultat.next()){
+                return true;
+            }else {
+                return false;
+            }
+        }catch(Exception ex) {
+            return false;
+        }finally{
+            if(conn!=null) {
+                conn.close();
+            }
+            if(pst!=null) {
+                pst.close();
+            }
+        }
+    }
+
     public Tokenadmin getTokenAdmin(String token){
         Tokenadmin token_result = null;
         try {

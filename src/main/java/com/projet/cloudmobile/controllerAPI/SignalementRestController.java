@@ -1,11 +1,12 @@
 package com.projet.cloudmobile.controllerAPI;
 
 import com.projet.cloudmobile.dao.SignalementDao;
+import com.projet.cloudmobile.dao.TokenDao;
 import com.projet.cloudmobile.models.Signalement;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,9 +15,17 @@ import java.util.Objects;
 public class SignalementRestController {
     @CrossOrigin
     @GetMapping("/getSignalements")
-    public List<Signalement> getSignalements(){
-
-        return new SignalementDao().getAllSignalement();
+    public ResponseEntity<List<Signalement>> getSignalements(@RequestHeader("token") String token){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<List<Signalement>>(new SignalementDao().getAllSignalement(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @CrossOrigin
@@ -137,77 +146,6 @@ public class SignalementRestController {
     @GetMapping("/signalementRegion")
     public List<Signalement> getSignalementByRegion(@RequestParam(value="id")String id){
         return new SignalementDao().getSignalementByRegion(Integer.parseInt(id));
-    }
-
-
-    //STATISTIQUE REGION
-    @CrossOrigin
-    @GetMapping("/statistique/region")
-    public ArrayList<HashMap<String, Object>> getStatReg(){
-
-        return new SignalementDao().getStatistiqueRegion();
-
-    }
-    @CrossOrigin
-    @GetMapping("/statistique/region/encours")
-    public ArrayList<HashMap<String, Object>> getStatReg1(){
-
-        return new SignalementDao().getStatistiqueRegion1();
-
-    }
-    @CrossOrigin
-    @GetMapping("/statistique/region/nouveau")
-    public ArrayList<HashMap<String, Object>> getStatReg2(){
-
-        return new SignalementDao().getStatistiqueRegion2();
-
-    }
-    @CrossOrigin
-    @GetMapping("/statistique/region/termine")
-    public ArrayList<HashMap<String, Object>> getStatReg3(){
-
-        return new SignalementDao().getStatistiqueRegion3();
-
-    }
-
-
-    //STATISTIQUE TYPE
-    @CrossOrigin
-    @GetMapping("/statistique/type")
-    public ArrayList<HashMap<String, Object>> getStatType(){
-
-        return new SignalementDao().getStatistiqueType();
-
-    }
-    @CrossOrigin
-    @GetMapping("/statistique/type/encours")
-    public ArrayList<HashMap<String, Object>> getStatType1(){
-
-        return new SignalementDao().getStatistiqueTypeCas1();
-
-    }
-    @CrossOrigin
-    @GetMapping("/statistique/type/nouveau")
-    public ArrayList<HashMap<String, Object>> getStatType2(){
-
-        return new SignalementDao().getStatistiqueTypeCas2();
-
-    }
-    @CrossOrigin
-    @GetMapping("/statistique/type/termine")
-    public ArrayList<HashMap<String, Object>> getStatType3(){
-
-        return new SignalementDao().getStatistiqueTypeCas3();
-
-    }
-
-    //STATISTIQUE UTILISATEUR
-    @CrossOrigin
-    @GetMapping("/statistique/utilisateur")
-    public ArrayList<HashMap<String, Object>> getStatUtil(){
-
-        return new SignalementDao().getStatistiqueUtil();
-
     }
 
 }
