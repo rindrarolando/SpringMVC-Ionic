@@ -77,78 +77,174 @@ public class SignalementRestController {
 
     @CrossOrigin
     @GetMapping("/statEtat1")
-    public long getStatE1(){
-        SignalementDao s = new SignalementDao();
-        return s.getStatEtat1();
+    public ResponseEntity<Long> getStatE1(@RequestHeader("token")String token){SignalementDao s = new SignalementDao();
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat1(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @CrossOrigin
     @GetMapping("/statEtat2")
-    public long getStatE2(){
-        SignalementDao s = new SignalementDao();
-        return s.getStatEtat2();
+    public ResponseEntity<Long> getStatE2(@RequestHeader("token")String token){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat2(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @CrossOrigin
     @GetMapping("/statEtat3")
-    public long getStatE3(){
-        SignalementDao s = new SignalementDao();
-        return s.getStatEtat3();
+    public ResponseEntity<Long> getStatE3(@RequestHeader("token")String token){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat3(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @CrossOrigin
     @GetMapping("/statEtat1N")
-    public long getStatE1N(){
-        SignalementDao s = new SignalementDao();
-        return s.getStatEtat1N();
+    public ResponseEntity<Long> getStatE1N(@RequestHeader("token")String token){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat1N(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @CrossOrigin
     @GetMapping("/statEtat2N")
-    public long getStatE2N(){
-        SignalementDao s = new SignalementDao();
-        return s.getStatEtat2N();
+    public ResponseEntity<Long> getStatE2N(@RequestHeader("token")String token){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat2N(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @CrossOrigin
     @GetMapping("/statEtat3N")
-    public long getStatE3N(){
-        SignalementDao s = new SignalementDao();
-        return s.getStatEtat3N();
+    public ResponseEntity<Long> getStatE3N(@RequestHeader("token")String token){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat3N(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @CrossOrigin
     @GetMapping("/statEtat1E")
-    public long getStatE1E(){
-        SignalementDao s = new SignalementDao();
-        return s.getStatEtat1E();
+    public ResponseEntity<Long> getStatE1E(@RequestHeader("token")String token){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat1E(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @CrossOrigin
     @GetMapping("/statEtat2E")
-    public long getStatE2E(){
-        SignalementDao s = new SignalementDao();
-        return s.getStatEtat2E();
+    public ResponseEntity<Long> getStatE2E(@RequestHeader("token")String token){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat2E(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @CrossOrigin
     @GetMapping("/statEtat3E")
-    public long getStatE3E(){
-        SignalementDao s = new SignalementDao();
-        return s.getStatEtat3E();
+    public ResponseEntity<Long> getStatE3E(@RequestHeader("token")String token){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat3E(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @CrossOrigin
     @GetMapping("/statEtat1T")
-    public long getStatE1T(){
-        SignalementDao s = new SignalementDao();
-        return s.getStatEtat1T();
+    public ResponseEntity<Long> getStatE1T(@RequestHeader("token")String token){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat1T(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @CrossOrigin
     @GetMapping("/statEtat2T")
-    public long getStatE2T(){
-        SignalementDao s = new SignalementDao();
-        return s.getStatEtat2T();
+    public ResponseEntity<Long> getStatE2T(@RequestHeader("token")String token){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat2T(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
     @CrossOrigin
     @GetMapping("/statEtat3T")
-    public long getStatE3T(){
-        SignalementDao s = new SignalementDao();
-        return s.getStatEtat3T();
+    public ResponseEntity<Long> getStatE3T(@RequestHeader("token")String token){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat3T(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/SignalementByUtil")

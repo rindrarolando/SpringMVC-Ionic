@@ -6,10 +6,12 @@ import com.projet.cloudmobile.dao.UtilisateurDao;
 import com.projet.cloudmobile.models.Region;
 import com.projet.cloudmobile.models.Signalement;
 import com.projet.cloudmobile.models.Utilisateur;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -32,32 +34,27 @@ public class UtilisateurRestController {
 
     @CrossOrigin
     @GetMapping("/inscription")
-    public ResponseEntity<Boolean> makeInscription(@RequestParam("username")String username, @RequestParam("password")String password, @RequestParam("email")String email){
+    public ResponseEntity makeInscription(@RequestParam("username")String username, @RequestParam("password")String password, @RequestParam("email")String email){
        UtilisateurDao u = new UtilisateurDao();
-       if(u.checkInscription(username,password,email)==true){
-           return new ResponseEntity<Boolean>(u.checkInscription(username,password,email),HttpStatus.ACCEPTED);
+       if(UtilisateurDao.check(username,password,email)==true){
+           u.inscription(username,password,email);
+           return new ResponseEntity(HttpStatus.ACCEPTED);
        }else{
-           return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+           return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
        }
     }
 
     @CrossOrigin
     @GetMapping("/login")
-    public Utilisateur loginUtilisateur(@RequestParam("email")String email ,@RequestParam("password")String password){
+    public ResponseEntity loginUtilisateur(@RequestParam("email")String email ,@RequestParam("password")String password) throws Exception {
         UtilisateurDao u = new UtilisateurDao();
-        return u.checkLogin(email,password);
-
-        /*
-        if -1 utilisateur not there if != -1 utilisateur there
-        long i = -1;
-        if(u.checkLogin(email,password) != null){
-            i = u.checkLogin(email,password).getId();
-            return i;
+        if(u.checkLoginInformations(email, password)==true){
+            Utilisateur user = u.login(email, password);
+            u.insertTokenUser(user);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else{
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        else{
-            return i;
-        }*/
-
     }
 
 }

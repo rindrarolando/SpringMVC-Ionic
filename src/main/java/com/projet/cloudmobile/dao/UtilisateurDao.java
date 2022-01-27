@@ -6,9 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.security.MessageDigest;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -83,10 +81,9 @@ public class UtilisateurDao {
         tx.commit();
     }
 
-    public static boolean checkInscription(String username, String password, String email) {
+    public static boolean check(String username, String password, String email) {
         if(isValid(email) == true && hasDiacritics(password) == false && password.length() >= 8){
-            UtilisateurDao u = new UtilisateurDao();
-            u.insertWithMd5(username,password,email);
+
             return true;
         }
         else{
@@ -94,7 +91,14 @@ public class UtilisateurDao {
         }
     }
 
-    public Utilisateur checkLogin(String email, String password){
+    public void inscription(String username, String password, String email) {
+        if(UtilisateurDao.check(username,password,email)==true){
+            UtilisateurDao u = new UtilisateurDao();
+            u.insertWithMd5(username,password,email);
+        }
+    }
+
+    public Utilisateur login(String email, String password){
         Utilisateur u = null;
         try {
             Connection c = Rescue.connectToDatabase();
@@ -113,6 +117,46 @@ public class UtilisateurDao {
             return u;
         }catch (Exception e){
             return null;
+        }
+    }
+
+    public boolean checkLoginInformations(String email, String password){
+        Utilisateur u = null;
+        try {
+            Connection c = Rescue.connectToDatabase();
+            Statement stmt = c.createStatement();
+            ResultSet res = stmt.executeQuery("select * from utilisateur where email='"+email+"' and password=md5('"+password+"')");
+            if(res.next()){
+                return true;
+            }else{
+                return false;
+            }
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public void insertTokenUser(Utilisateur user) throws SQLException {
+        Connection conn = null;
+        try {
+            UtilisateurDao dao = new UtilisateurDao();
+            String token = dao.createToken(user.getId());
+            java.sql.Date creation = java.sql.Date.valueOf(LocalDate.now());
+            java.sql.Date expiration = java.sql.Date.valueOf(LocalDate.now().plusDays(3));
+            String role = "utilisateur";
+
+            conn = Rescue.connectToDatabase();
+            PreparedStatement pst = conn.prepareStatement("INSERT INTO tokenuser "
+                    + "(id,iduser,token,date_creation,date_expiration,role) "
+                    + "VALUES ( DEFAULT, ? , ? , ? , ? , ?) ");
+            pst.setLong(1, user.getId());
+            pst.setString(2, token);
+            pst.setDate(3,creation);
+            pst.setDate(4,expiration);
+            pst.setString(5,role);
+            pst.executeUpdate();
+        } catch (Exception e) {
+            conn.rollback();
         }
     }
 
@@ -145,7 +189,7 @@ public class UtilisateurDao {
         }
     }
 
-    public String createToken(int id) throws Exception{
+    public String createToken(Long id) throws Exception{
         String token = null;
         java.sql.Date timest = java.sql.Date.valueOf(LocalDate.now());
         String timestamp = String.valueOf(timest);
