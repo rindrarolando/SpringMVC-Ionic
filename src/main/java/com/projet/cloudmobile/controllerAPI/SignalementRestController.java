@@ -34,9 +34,10 @@ public class SignalementRestController {
     @CrossOrigin
     @GetMapping("/deleteSignalement")
     public ResponseEntity deleteSignalement(@RequestParam(value = "id")String id){
+        SignalementDao s = new SignalementDao();
+        s.remove(Long.valueOf(id));
+        return new ResponseEntity(HttpStatus.ACCEPTED);
 
-                return new ResponseEntity(HttpStatus.ACCEPTED);
-            
 
     }
 
