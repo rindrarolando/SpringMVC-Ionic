@@ -18,10 +18,7 @@ public class CloudMobileApplication {
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(CloudMobileApplication.class, args);
 		//EntityManagerFactory emf = Persistence.createEntityManagerFactory( "connection");
-		TokenDao dao = new TokenDao();
-		Administrateur administrateur = new Administrateur(1,"admin","admin");
-		Tokenadmin token =dao.getTokenAdmin("c676eb098896c47353a6e029a866cd59e4d97fe5");
-		dao.deleteTokenAdmin(token.getToken(),administrateur.getId());
+
 	}
 
 }

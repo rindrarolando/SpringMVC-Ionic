@@ -25,8 +25,11 @@
    <link href="css/style.min.css" rel="stylesheet">
    <base href="ESSAi.html" />
 </head>
-
-<body ng-app="myapp" ng-controller="listeSignControl" data-ng-init="getSignalement(1)">
+<%
+    HttpSession session = request.getSession();
+    String token = session.getAttribute("token");
+%>
+<body ng-app="myapp" ng-controller="listeSignControl" >
    
     <div class="preloader">
         <div class="lds-ripple">

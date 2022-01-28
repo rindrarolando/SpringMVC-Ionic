@@ -6,12 +6,14 @@ appname.config(['$locationProvider',function($locationProvider) {
 
 appname.controller('listeSignControl', ['$scope','$http',
 function($scope,$http) {
-  $scope.getSignalements=function(){ 
-    $http.get('http://localhost:8080/signalement/getNewSignalement').then(function (response) {
+  $scope.getSignalements=function($args){
+    $http.get('http://localhost:8080/signalement/getNewSignalement',{
+        headers : {'token':'Basic 60a584b2119b9981549147e91d1a78a03c0d6cd6=='}
+    }).then(function (response) {
       $scope.data=response.data; 
     });
   }
-  $scope.getSignalements();
+
 }
 
 ]);
