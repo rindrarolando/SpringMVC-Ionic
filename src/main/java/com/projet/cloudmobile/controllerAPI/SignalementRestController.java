@@ -25,33 +25,18 @@ public class SignalementRestController {
 
     @CrossOrigin
     @GetMapping("/getSignalement")
-    public ResponseEntity<Signalement> getSignalement(@RequestHeader("token") String token,@RequestParam(value = "id")String id){
-        TokenDao dao = new TokenDao();
-        try{
-            if(dao.isAdminToken(token)==true) {
+    public ResponseEntity<Signalement> getSignalement(@RequestParam(value = "id")String id){
+
                 return new ResponseEntity<Signalement>(new SignalementDao().getSignalement(Long.valueOf(id)), HttpStatus.ACCEPTED);
-            }else{
-                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-            }
-        }catch(Exception e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
     }
 
     @CrossOrigin
     @GetMapping("/deleteSignalement")
-    public ResponseEntity deleteSignalement(@RequestHeader("token")String token,@RequestParam(value = "id")String id){
-        TokenDao dao = new TokenDao();
-        try{
-            if(dao.isAdminToken(token)==true) {
-                new SignalementDao().remove(Long.valueOf(id));
+    public ResponseEntity deleteSignalement(@RequestParam(value = "id")String id){
+
                 return new ResponseEntity(HttpStatus.ACCEPTED);
-            }else{
-                return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-            }
-        }catch(Exception e){
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
+            
 
     }
 
