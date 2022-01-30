@@ -22,38 +22,23 @@
     <script src="js/angular.min.js"></script>
     <script src="js/angular-route.js"></script>
     <script type="text/javascript">
+    <script type="text/javascript">
  var appname = angular.module('myapp', []);
 
-        appname.controller('listeSignalement', ['$scope','$http',
-        function($scope,$http) {
-
-//Afficher la liste des signalement
-          $scope.afficheListeSignalement=function(){
-            $http.get('/signalement/getSignalements').then(function (response) {
-              $scope.signalement = response.data;
-            });
-          }
-
-          $scope.afficheListeSignalement();
-
-//Modifier un signalement par son ID
-          //$scope.editSignalement=function(sign){
-            //$http.get('/signalement/deleteSignalement').then(function (response) {
-              //$scope.signalement = response.data;
-            //});
-          //}
-
-//Effacer un signalement par son ID
-          $scope.editSignalement=function(sign){
-            $http.get('/signalement/deleteSignalement?id='+sign.id+'').then(function (response) {
-              $scope.deleteComplete = response.data;
-            });
-          }
-
-        }
+        appname.controller('listeSignalement', ['$scope','$http','$location'
+        function($scope,$http,$location) {
 
 
-        ]);
+            $scope.afficheListeSignalement=function(){
+                        $http.get('/signalement/getSignalementt?id='+$location.search().id+'').then(function (response) {
+                          $scope.x = response.data;
+                        });
+            }
+
+$scope.afficheListeSignalement();
+
+
+        }]);
 
 
 
@@ -202,35 +187,16 @@
                                 <div class="col-sm-12">
                                     <div class="white-box">
 
-                                        <h3 class="box-title">Liste des signalements :</h3>
-                                        <p class="box-title">{{ deleteComplete }}</p>
+                                        <h3 class="box-title">Signalements :</h3>
                                         <p class="text-muted"></p>
                                         <div class="table-responsive">
-                                            <table class="table text-nowrap">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="border-top-0">Id</th>
-                                                        <th class="border-top-0">Date du signalement</th>
-                                                        <th class="border-top-0">Description</th>
-                                                        <th class="border-top-0">Type</th>
-                                                        <th class="border-top-0">Longitude</th>
-                                                        <th class="border-top-0">Latitude</th>
-                                                        <th class="border-top-0">actions</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr ng-repeat="x in signalement">
-                                                        <td>{{x.id}}</td>
-                                                        <td>{{x.dateSignalement | date:'dd/MM/yyyy'}}</td>
-                                                        <td>{{x.description}}</td>
-                                                        <td>{{x.type.designation}}</td>
-                                                        <td>{{x.longitude}}</td>
-                                                        <td>{{x.latitude}}</td>
-                                                        <td><form action={{'voirPlus?id='+x.id}} method="post"><button type="submit"class="btn btn-primary">Voir Plus</button></form></td>
-                                                        <td><button type="button" class="btn btn-danger" ng-click="deleteSignalement(x)" >Supprimer</button></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <p><img src="src/main/resources/static/images/"+x.urlImage+"0"+"."+x.extension+"" /></p>
+                                            <p>Description : {{x.description}}</p>
+                                            <p>Date de signalement : {{x.dateSignalement | date:'dd/MM/yyyy'}}</p>
+                                            <p>Type de problemes : {{x.type.designation}}</p>
+                                            <p>Longitude : {{x.longitude}}</p>
+                                            <p>Latitude : {{x.latitude}}</p>
+
                                         </div>
                                     </div>
                                 </div>

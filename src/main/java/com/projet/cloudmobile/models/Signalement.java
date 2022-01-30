@@ -2,7 +2,6 @@ package com.projet.cloudmobile.models;
 
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -29,10 +28,12 @@ public class Signalement {
     private double longitude ;
     private double latitude;
     private String etat;
+    private String urlImage;
+    private String extension;
 
 
 
-    public Signalement(Long id, TypeSignalement type, Utilisateur utilisateur, Date dateSignalement, String description, double longitude, double latitude, String etat) {
+    public Signalement(Long id, TypeSignalement type, Utilisateur utilisateur, Date dateSignalement, String description, double longitude, double latitude, String etat, String urlImage, String extension) {
         this.id = id;
         this.type = type;
         this.utilisateur = utilisateur;
@@ -41,6 +42,8 @@ public class Signalement {
         this.longitude = longitude;
         this.latitude = latitude;
         this.etat = etat;
+        this.urlImage = urlImage;
+        this.extension = extension;
     }
 
     public Signalement(TypeSignalement type, Utilisateur utilisateur, Date dateSignalement, String description, double longitude, double latitude, String etat) {
@@ -117,4 +120,19 @@ public class Signalement {
     public void setEtat(String etat){this.etat=etat;}
 
 
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
+
+    public String getExtension() {
+        return extension;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
 }

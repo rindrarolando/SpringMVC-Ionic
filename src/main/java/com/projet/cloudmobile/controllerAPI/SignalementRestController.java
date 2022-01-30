@@ -4,14 +4,13 @@ import com.projet.cloudmobile.dao.SignalementDao;
 import com.projet.cloudmobile.dao.TokenDao;
 import com.projet.cloudmobile.models.Signalement;
 import com.projet.cloudmobile.models.SignalementRegion;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @RestController
 @RequestMapping("/signalement")
@@ -432,6 +431,32 @@ public class SignalementRestController {
         }catch(Exception e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @CrossOrigin
+    @PostMapping("/insertSignalement")
+    public boolean insertfile(@RequestParam(value="descripiton") String description, @RequestParam(value="etat") String etat, @RequestParam(value="idtype") String idtype, @RequestParam(value="idutilisateur") String idutilisateur, @RequestParam(value="file") List<MultipartFile> file){
+
+        //Mamindra le sary anaty /Users/macbook/Desktop/S5/Hehe/Projet-Cloud-mobile/src/main/resources/static/images/
+        SignalementDao s = new SignalementDao();
+        //GET LAST ID INSERTED
+        Long ID = s.getLastID();
+        //GET DATE NOW
+        long millis = System.currentTimeMillis();
+        Date dtn = new java.sql.Date(millis);
+        //GET LONGITUDE AND LATITUDE AND STORE THE FILE
+        double[] valera = s.storeFileAll(file);
+        double longitude = valera[0];
+        double latitude = valera[1];
+        //GET THE EXTENSION OF THE FILE
+        String extension = FilenameUtils.getExtension(file.get(0).getOriginalFilename());
+
+        //CHANGEMENT DE NOM
+        String urlImg = "signalement"+ID+"Url";
+
+
+        s.insertSignalement(idtype,idutilisateur,dtn,description,longitude,latitude,etat,urlImg,extension);
+        return true;
     }
 
 }

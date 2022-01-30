@@ -23,272 +23,303 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src"https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script type="text/javascript">
-        var appname = angular.module('myApp', []);
 
-        appname.controller('statControl', ['$scope','$http',
-        function($scope,$http) {
+var appname = angular.module('myApp', []);
 
-          $scope.afficherRegion=function(){
-            $http.get('/region/getRegions').then(function (response) {
-              $scope.lregions=response.data;
-            });
-          }
-
-            $scope.afficherRegion();
-
-          $scope.loadData=function(){
-                $http.get('/signalement/statEtat1').then(function (response) {
-                $scope.nombre1=response.data;
-                $scope.problemes1="Route abime";
-             });
-          }
-            $scope.loadData();
-
-           $scope.loadData2=function(){
-                  $http.get('/signalement/statEtat2').then(function (response) {
-                  $scope.nombre2=response.data;
-                 $scope.problemes2="Accident de la route";
-             });
-           }
-            $scope.loadData2();
-           $scope.loadData3=function(){
-                $http.get('/signalement/statEtat3').then(function (response) {
-                $scope.nombre3=response.data;
-                $scope.problemes3="Ordures";
-             });
-           }
-            $scope.loadData3();
-           $scope.loadDat=function(){
-                           $http.get('/signalement/statEtat1N').then(function (response) {
-                           $scope.nouveau1=response.data;
-
-                        });
-                     }
-        $scope.loadDat();
-                      $scope.loadDat2=function(){
-                             $http.get('/signalement/statEtat2N').then(function (response) {
-                             $scope.nouveau2=response.data;
-
-                        });
-                      }
-        $scope.loadDat2()
-                      $scope.loadDat3=function(){
-                           $http.get('/signalement/statEtat3N').then(function (response) {
-                           $scope.nouveau3=response.data;
-
-                        });
-                      }
-        $scope.loadDat3();
-                    $scope.loadDt=function(){
-                           $http.get('/signalement/statEtat1E').then(function (response) {
-                           $scope.enCours1=response.data;
-
-                        });
-                     }
-        $scope.loadDt();
-                      $scope.loadDt2=function(){
-                             $http.get('/signalement/statEtat2E').then(function (response) {
-                             $scope.enCours2=response.data;
-
-                        });
-                      }
-        $scope.loadDt2();
-                      $scope.loadDt3=function(){
-                           $http.get('/signalement/statEtat3E').then(function (response) {
-                           $scope.enCours3=response.data;
-
-                        });
-                      }
-        $scope.loadDt3();
-                      $scope.getStatistics=function(){
-                             $http.get('/signalementregion/stat?id='+$scope.idregion+'').then(function (response) {
-                             $scope.nbr=response.data;
-
-                             });
-                      }
-                    //START REAL STAT
-        $scope.getNouveau=function(){        //GRAPHIQUE TYPE_SIGNALEMENT
-                                      $http.get('/signalement/statistique/region/nouveau').then(function (response) {
-                                      json = response.data;
-                                        var chartjsData = [];
-                                              for (var i = 0; i < json.length; i++) {
-                                                 chartjsData.push(json[i].total);
-                                              }
-                                        return chartjsData;
-
-                                      });
-                                    }
-
-                $scope.getTermine=function(){        //GRAPHIQUE TYPE_SIGNALEMENT
-                                              $http.get('/signalement/statistique/region/termine').then(function (response) {
-                                              json = response.data;
-                                                var chartjsData = [];
-                                                      for (var i = 0; i < json.length; i++) {
-                                                         chartjsData.push(json[i].total);
-                                                      }
-                                                return chartjsData;
-
-                                              });
-                                            }
+appname.controller('statControl', ['$scope','$http',
+function($scope,$http) {
 
 
-                  $scope.getChartReg=function(){        //GRAPHIQUE TYPE_SIGNALEMENT
-                    $http.get('/signalement/statistique/region/encours').then(function (response) {
-                    json = response.data;
-                    var chartjsData2 = $scope.getNouveau();
-                    var chartjsData3 = $scope.getTermine;
-                      var chartjsData = [];
-                            for (var i = 0; i < json.length; i++) {
-                               chartjsData.push(json[i].total);
-                            }
-
-                            var chartjsLabels = [];
-                            for (var i = 0; i < json.length; i++) {
-                               chartjsLabels.push(json[i].type);
-                            }
-
-                      const ctx = document.getElementById('graphRegion').getContext('2d');
-                                      var data = {
-                                          labels: chartjsLabels,
-                                          datasets: [
-                                              {
-                                              label: 'En cours',
-                                              borderColor: '#d8f4ff',
-                                              data: chartjsData,
-                                              fill: true,
-                                              tension: 0.1
-                                              },
-                                              {
-                                               label: 'Nouveau',
-                                               borderColor: "#110f48",
-                                               data: chartjsData2,
-                                               fill: true,
-                                               tension: 0.1
-                                              },
-                                              {
-                                               label: 'Termine',
-                                               borderColor: "#f8f8fa",
-                                               data: chartjsData3,
-                                               fill: true,
-                                               tension: 0.1
-                                              }
-                                          ]
-                                      }
-                                      var options = {
-                                          responsive: true,
-                                      }
+$scope.loadData=function(){
+      $http.get('/signalement/statEtat1').then(function (response) {
+      $scope.nombre1=response.data;
+      $scope.problemes1="Route abime";
+   });
+}
 
 
-                                      var config = {
-                                          type: 'line',
-                                          data: data,
-                                          options: options
-                                      }
-                                      var graphRegion = new Chart(ctx, config)
+ $scope.loadData2=function(){
+        $http.get('/signalement/statEtat2').then(function (response) {
+        $scope.nombre2=response.data;
+       $scope.problemes2="Accident de la route";
+   });
+ }
 
-                    });
-                  }
-                  $scope.getChartReg();
+ $scope.loadData3=function(){
+      $http.get('/signalement/statEtat3').then(function (response) {
+      $scope.nombre3=response.data;
+      $scope.problemes3="Ordures";
+   });
+ }
 
+ $scope.loadDat=function(){
+      $http.get('/signalement/statEtat1N').then(function (response) {
+      $scope.nouveau1=response.data;
 
+      });
+ }
 
+ $scope.loadDat2=function(){
+      $http.get('/signalement/statEtat2N').then(function (response) {
+      $scope.nouveau2=response.data;
 
+      });
+ }
 
+ $scope.loadDat3=function(){
+      $http.get('/signalement/statEtat3N').then(function (response) {
+      $scope.nouveau3=response.data;
 
-                  //Chart graphRegion en line
-                  $scope.getChart=function(){
-                              $http.get('/signalement/statistique/type').then(function (response) {
+      });
+ }
 
-                              json = response.data;
+ $scope.loadDt=function(){
+        $http.get('/signalement/statEtat1E').then(function (response) {
+        $scope.enCours1=response.data;
 
+     });
+ }
 
-                                var chartjsData = [];
-                                      for (var i = 0; i < json.length; i++) {
-                                         chartjsData.push(json[i].total);
-                                      }
+   $scope.loadDt2=function(){
+          $http.get('/signalement/statEtat2E').then(function (response) {
+          $scope.enCours2=response.data;
 
+     });
+ }
 
+   $scope.loadDt3=function(){
+        $http.get('/signalement/statEtat3E').then(function (response) {
+        $scope.enCours3=response.data;
 
-                                var chartjsLabels = [];
-                                    for (var i = 0; i < json.length; i++) {
-                                         chartjsLabels.push(json[i].region);
-                                      }
+     });
+ }
 
-                                const ctx = document.getElementById('graph1').getContext('2d');
-                                                var data = {
-                                                    labels: chartjsLabels,
-                                                    datasets: [
-                                                        {
-                                                        label: 'Statistiques des Problemes a Madagascar',
-                                                        backgroundColor: '#d8f4ff',
-                                                        data: chartjsData
-                                                        }
-                                                    ]
-                                                }
-                                                var options = {
-                                                    responsive: true,
-                                                }
+//GRAPHIQUE PAR TYPE
 
+$scope.getChart=function(){
+   $http.get('/signalement/statistique/type').then(function (response) {
+    json = response.data;
+    var chartjsData = [];
+    for (var i = 0; i < json.length; i++) {
+        chartjsData.push(json[i].total);
+    }
 
-                                                var config = {
-                                                    type: 'pie',
-                                                    data: data,
-                                                    options: options
-                                                }
-                                                var graph1 = new Chart(ctx, config)
+    var chartjsLabels = [];
+    for (var i = 0; i < json.length; i++) {
+        chartjsLabels.push(json[i].type);
+    }
+    const ctx = document.getElementById('graph1').getContext('2d');
+        var data = {
+                    labels: chartjsLabels,
+                    datasets: [
+                    {
+                      label: 'Statistiques des Problemes a Madagascar',
+                      backgroundColor: ['#d8f4ff',"#110f48","#f8f8fa"],
+                      data: chartjsData
+                    }
+                    ]
+        }
 
-                              });
-
-                            }
-                            $scope.getChart();
-
-                            //GRAPHIQUE Utilisateur
-                            $scope.getGraphUtil=function(){
-                                        $http.get('/signalement/statistique/utilisateur').then(function (response) {
-                                        json = response.data;
-                                          var chartjsData = [];
-                                                for (var i = 0; i < json.length; i++) {
-                                                   chartjsData.push(json[i].total);
-                                                }
-
-                                                var chartjsLabels = [];
-                                                for (var i = 0; i < json.length; i++) {
-                                                   chartjsLabels.push(json[i].name);
-                                                }
-
-                                          const ctx = document.getElementById('graphUser').getContext('2d');
-                                                          var data = {
-                                                              labels: chartjsLabels,
-                                                              datasets: [
-                                                                  {
-                                                                  label: 'Utilisateur les plus actifs',
-                                                                  backgroundColor: "#f8f8fa",
-                                                                  data: chartjsData
-                                                                  }
-                                                              ]
-                                                          }
-                                                          var options = {
-                                                              responsive: true,
-                                                          }
-
-
-                                                          var config = {
-                                                              type: 'line',
-                                                              data: data,
-                                                              options: options
-                                                          }
-                                                          var graphUser = new Chart(ctx, config)
-
-                                        });
-                                      }
-                                      $scope.getGraphUtil();
-                    //END REAL STAT
-
-
+        var options = {
+                       responsive: true,
         }
 
 
-        ]);
+        var config = {
+                       type: 'pie',
+                       data: data,
+                       options: options
+        }
+        var graph1 = new Chart(ctx, config)
+
+});
+
+}
+          $scope.getChart();
+
+//GRAPHIQUE Utilisateur
+
+$scope.getGraphUtil=function(){
+            $http.get('/signalement/statistique/utilisateur').then(function (response) {
+            json = response.data;
+              var chartjsData = [];
+                    for (var i = 0; i < json.length; i++) {
+                       chartjsData.push(json[i].total);
+                    }
+
+                    var chartjsLabels = [];
+                    for (var i = 0; i < json.length; i++) {
+                       chartjsLabels.push(json[i].name);
+                    }
+
+              const ctx = document.getElementById('graphUser').getContext('2d');
+                              var data = {
+                                  labels: chartjsLabels,
+                                  datasets: [
+                                      {
+                                      label: 'Utilisateur les plus actifs',
+                                      backgroundColor: "#f8f8fa",
+                                      data: chartjsData
+                                      }
+                                  ]
+                              }
+                              var options = {
+                                  responsive: true,
+                              }
+
+
+                              var config = {
+                                  type: 'line',
+                                  data: data,
+                                  options: options
+                              }
+                              var graphUser = new Chart(ctx, config)
+
+            });
+          }
+
+   $scope.getGraphUtil();
+
+
+//GRAPHIQUE Nouveau region
+
+
+ $scope.regionNouveau=function(){
+             $http.get('/signalement/statistique/region/nouveau').then(function (response) {
+             json = response.data;
+               var chartjsData = [];
+                     for (var i = 0; i < json.length; i++) {
+                        chartjsData.push(json[i].total);
+                     }
+
+                     var chartjsLabels = [];
+                     for (var i = 0; i < json.length; i++) {
+                        chartjsLabels.push(json[i].region);
+                     }
+
+               const ctx = document.getElementById('graphRegionNouv').getContext('2d');
+                               var data = {
+                                   labels: chartjsLabels,
+                                   datasets: [
+                                       {
+                                       label: 'Evolution des problemes reporter sans traitement',
+                                       backgroundColor: "#110f48",
+                                       data: chartjsData
+                                       }
+                                   ]
+                               }
+                               var options = {
+                                   responsive: true,
+                               }
+
+
+                               var config = {
+                                   type: 'line',
+                                   data: data,
+                                   options: options
+                               }
+                               var graphRegionNouv = new Chart(ctx, config)
+
+             });
+           }
+           $scope.regionNouveau();
+
+ //GRAPHIQUE EN cours region
+
+ $scope.regionEnCours=function(){
+        $http.get('/signalement/statistique/region/encours').then(function (response) {
+        json = response.data;
+          var chartjsData = [];
+                for (var i = 0; i < json.length; i++) {
+                   chartjsData.push(json[i].total);
+                }
+
+                var chartjsLabels = [];
+                for (var i = 0; i < json.length; i++) {
+                   chartjsLabels.push(json[i].region);
+                }
+
+          const ctx = document.getElementById('graphRegionEncours').getContext('2d');
+                          var data = {
+                              labels: chartjsLabels,
+                              datasets: [
+                                  {
+                                  label: 'Evolution des problemes reporter en cours traitement',
+                                  backgroundColor: "#f8f8fa",
+                                  data: chartjsData
+                                  }
+                              ]
+                          }
+                          var options = {
+                              responsive: true,
+                          }
+
+
+                          var config = {
+                              type: 'line',
+                              data: data,
+                              options: options
+                          }
+                          var graphRegionEncours = new Chart(ctx, config)
+
+        });
+      }
+      $scope.regionEnCours();
+
+//GRAPHIQUE Termine region
+
+ $scope.regionTermine=function(){
+        $http.get('/signalement/statistique/region/termine').then(function (response) {
+        json = response.data;
+          var chartjsData = [];
+                for (var i = 0; i < json.length; i++) {
+                   chartjsData.push(json[i].total);
+                }
+
+                var chartjsLabels = [];
+                for (var i = 0; i < json.length; i++) {
+                   chartjsLabels.push(json[i].region);
+                }
+
+          const ctx = document.getElementById('graphRegionTermine').getContext('2d');
+                          var data = {
+                              labels: chartjsLabels,
+                              datasets: [
+                                  {
+                                  label: 'Evolution des problemes reporter qui sont terminés',
+                                  backgroundColor: "#d8f4ff",
+                                  data: chartjsData
+                                  }
+                              ]
+                          }
+                          var options = {
+                              responsive: true,
+                          }
+
+
+                          var config = {
+                              type: 'line',
+                              data: data,
+                              options: options
+                          }
+                          var graphRegionTermine = new Chart(ctx, config)
+
+        });
+      }
+      $scope.regionTermine();
+      $scope.loadData();
+      $scope.loadData2();
+      $scope.loadData3();
+      $scope.loadDat();
+      $scope.loadDat2()
+      $scope.loadDat3();
+      $scope.loadDt();
+      $scope.loadDt2();
+      $scope.loadDt3();
+
+    //fin
+
+ }]);
 
     </script>
    <link href="css/style.min.css" rel="stylesheet">
@@ -433,18 +464,29 @@
                                 <div class="col-sm-12">
                                     <div class="white-box">
                                         
-                                        <h3 class="box-title">Statistique global  :</h3>
-                                                <p>Statistiques des problemes et type a Madagascar: </p>
+                                        <h3 class="box-title">STATISTIQUE GLOBAL EN GRAPHIQUE :</h3>
+                                                <p>Statistiques des problemes selon leurs type à Madagascar: </p>
+
                                                 <p><canvas id="graph1" width="10" height="5"></canvas></p>
+
+                                                <p><span style="color: red">Remarques avec le graphique en pie :</span></p>
+
                                                 <p class="text-muted"> Dans les {{problemes1}} il y a {{nombre1}} problemes dont {{enCours1}} qui sont En cours de traitement et {{nouveau1}} nouveaux signalements</p>
                                                 <p class="text-muted"> Dans les {{problemes2}} il y a {{nombre2}} problemes dont {{enCours2}} qui sont En cours de traitement et {{nouveau2}} nouveaux signalements</p>
                                                 <p class="text-muted"> Dans les {{problemes3}} il y a {{nombre3}} problemes dont {{enCours3}} qui sont En cours de traitement et {{nouveau3}} nouveaux signalements</p>
 
-                                                <p>Statistiques par region et problemes: </p>
-                                                <p><canvas id="graphRegion" width="10" height="5"></canvas></p>
+                                                <p>Statistiques par region et des problemes Nouveaux: </p>
+                                                <p><canvas id="graphRegionNouv" width="10" height="5"></canvas></p>
+
+                                                <p>Statistiques par region et des problemes En cours: </p>
+                                                <p><canvas id="graphRegionEncours" width="10" height="5"></canvas></p>
+
+                                                <p>Statistiques par region et des problemes termine: </p>
+                                                <p><canvas id="graphRegionTermine" width="10" height="5"></canvas></p>
 
                                                 <p>Statistiques the top 10 best user: </p>
                                                 <p><canvas id="graphUser" width="10" height="5"></canvas></p>
+
 
 
                                         <div class="form-group mb-4">

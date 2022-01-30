@@ -59,4 +59,15 @@ public class SignalementController {
             return "/";
         }
     }
+
+    @RequestMapping("/voirPlus")
+    public String voir(HttpServletRequest request,@RequestParam(value = "id")String id){
+        request.setAttribute("id",1);
+        HttpSession session = request.getSession();
+        if(session.getAttribute("admin")!=null){
+            return "plus";
+        }else {
+            return "/";
+        }
+    }
 }

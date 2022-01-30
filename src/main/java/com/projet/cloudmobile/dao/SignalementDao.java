@@ -3,16 +3,28 @@ package com.projet.cloudmobile.dao;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.projet.cloudmobile.connection.Rescue;
+import com.projet.cloudmobile.exception.StorageException;
+import com.projet.cloudmobile.exception.StorageProperties;
 import com.projet.cloudmobile.models.*;
-import org.springframework.data.jpa.repository.Query;
+import javaxt.io.Image;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sun.misc.Signal;
 
 import javax.persistence.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
+import java.util.List;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
@@ -393,5 +405,112 @@ public class SignalementDao {
             return null;
         }
     }
+
+    public Long getLastID(){
+        Long ID = Long.valueOf(0);
+        try {
+            Connection c = Rescue.connectToDatabase();
+            Statement stmt = c.createStatement();
+            ResultSet res = stmt.executeQuery("select max(id) as last from signalement");
+            while(res.next()){
+
+                ID = res.getLong("last");
+            }
+            return ID;
+        }catch (Exception e){
+            return ID;
+        }
+    }
+
+    public String store(MultipartFile file,int suffixe) {
+        StorageProperties properties = new StorageProperties();
+        Path rootLocation = Paths.get(properties.getLocation());
+
+        Long ID = this.getLastID();
+
+        try {
+            if (file.isEmpty()) {
+                throw new StorageException("Failed to store empty file.");
+            }
+
+            String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+
+            //CHANGEMENT DE NOM
+            String uploadedFileName = "signalement"+ID+"Url"+suffixe+ "." + extension;
+            //FIN DE CHANGEMENT DE NOM
+
+            Path destinationFile = rootLocation.resolve(
+                            Paths.get(uploadedFileName))
+                    .normalize().toAbsolutePath();
+
+            try (InputStream inputStream = file.getInputStream()) {
+                Files.copy(inputStream, destinationFile,
+                        StandardCopyOption.REPLACE_EXISTING);
+
+                final String baseUrl =
+                        ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+
+                return uploadedFileName;
+            }
+        }
+        catch (IOException e) {
+            throw new StorageException("Failed to store file.", e);
+        }
+    }
+
+    public double[] storeFileAll(List<MultipartFile> file){
+
+        SignalementDao s = new SignalementDao();
+        String nomImage="";
+        for (int i = 0; i < file.size(); i++) {
+
+            nomImage = s.store(file.get(i),i);
+
+        }
+
+        String url = "src/main/resources/static/images/"+nomImage;
+        double[] longAndLat = this.getMeToo(url);
+
+        return longAndLat;
+    }
+
+    public double[] getMeToo(String urlImage){
+        Image img = new Image(urlImage);
+        double[] value = img.getGPSCoordinate();
+        if(value != null){
+            return value;
+        }
+        else{
+            double[] values = null;
+            assert false;
+            values[0] = 47.53033055555555;
+            values[1] = -18.979833333333332;
+            return values;
+        }
+
+    }
+
+    @Transactional
+    public void insertSignalement(String idtype,String idutilisateur,Date dtn,String description,double longitude,double latitude,String etat,String urlImg,String extension){
+        tx.begin();
+        int t = Integer.parseInt(idtype);
+        int u = Integer.parseInt(idutilisateur);
+        String query = "insert into signalement(id,datesignalement,description,etat,latitude,longitude,idtype,idutilisateur,urlImage,extension) values (DEFAULT,:dtn,:description,:etat,:latitude,:longitude,:type,:util,:url,:ext)";
+        Query jpqlQuery = em.createNativeQuery(query)
+                .setParameter("dtn",dtn)
+                .setParameter("description",description)
+                .setParameter("etat",etat)
+                .setParameter("latitude",latitude)
+                .setParameter("longitude",longitude)
+                .setParameter("type",t)
+                .setParameter("util",u)
+                .setParameter("url",urlImg)
+                .setParameter("ext",extension);
+        em.joinTransaction();
+        jpqlQuery.executeUpdate();
+
+        tx.commit();
+    }
+
 
 }
