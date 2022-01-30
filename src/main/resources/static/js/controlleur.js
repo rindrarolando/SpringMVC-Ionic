@@ -36,14 +36,16 @@ function($scope,$http,$location,$window) {
             console.log($scope.region);
           });
     });
-    $http.get('http://localhost:8080/region/getRegions').then(function (response) {
+    $http.get('http://localhost:8080/region/getRegions',{
+        headers : {'token':$args}
+    }).then(function (response) {
             $scope.lregions=response.data;
     });
   }
   $scope.attribuerRegion=function(){
   console.log("id signalement ="+$location.search().id);
   console.log("id region ="+$scope.idregion);
-  $http.get('http://localhost:8080/signalementregion/attribuer?idSignalement='+$location.search().id+"&idRegion="+$scope.idregion).then(function (response) {
+  $http.get('http://localhost:8080/signalement/attribuer?idSignalement='+$location.search().id+"&idRegion="+$scope.idregion).then(function (response) {
       });
       $window.location.href = '/NouveauxSignalements';
   }

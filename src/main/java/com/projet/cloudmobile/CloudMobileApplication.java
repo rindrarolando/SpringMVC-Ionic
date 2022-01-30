@@ -1,5 +1,6 @@
 package com.projet.cloudmobile;
 
+import com.projet.cloudmobile.dao.SignalementDao;
 import com.projet.cloudmobile.dao.TokenDao;
 import com.projet.cloudmobile.models.Administrateur;
 import com.projet.cloudmobile.models.Tokenadmin;

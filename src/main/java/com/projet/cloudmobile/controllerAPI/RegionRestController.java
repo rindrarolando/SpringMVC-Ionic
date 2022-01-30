@@ -16,7 +16,7 @@ import java.util.List;
 public class RegionRestController {
     @CrossOrigin
     @GetMapping("/getRegions")
-    public List<Region> getAllRegions(@RequestHeader("token") String token){
+    public List<Region> getAllRegions(){
         return new RegionDao().getAllRegions();
     }
 

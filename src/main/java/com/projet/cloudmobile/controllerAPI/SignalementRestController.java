@@ -3,6 +3,7 @@ package com.projet.cloudmobile.controllerAPI;
 import com.projet.cloudmobile.dao.SignalementDao;
 import com.projet.cloudmobile.dao.TokenDao;
 import com.projet.cloudmobile.models.Signalement;
+import com.projet.cloudmobile.models.SignalementRegion;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -287,11 +288,11 @@ public class SignalementRestController {
 
     @CrossOrigin
     @GetMapping("/signalementRegion")
-    public ResponseEntity<List<Signalement>> getSignalementByRegion(@RequestHeader("token")String token,@RequestParam(value="id")String id){
+    public ResponseEntity<List<SignalementRegion>> getSignalementByRegion(@RequestHeader("token")String token, @RequestParam(value="id")String id){
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<List<Signalement>>(new SignalementDao().getSignalementByRegion(Integer.parseInt(id)), HttpStatus.ACCEPTED);
+                return new ResponseEntity<List<SignalementRegion>>(new SignalementDao().getSignalementByRegion(Integer.parseInt(id)), HttpStatus.ACCEPTED);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
