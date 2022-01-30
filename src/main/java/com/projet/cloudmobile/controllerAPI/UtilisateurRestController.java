@@ -42,7 +42,7 @@ public class UtilisateurRestController {
     }
 
     @CrossOrigin
-    @GetMapping("/inscription")
+    @PostMapping("/inscription")
     public ResponseEntity makeInscription(@RequestParam("username")String username, @RequestParam("password")String password, @RequestParam("email")String email){
        UtilisateurDao u = new UtilisateurDao();
        if(UtilisateurDao.check(username,password,email)==true){
@@ -54,7 +54,7 @@ public class UtilisateurRestController {
     }
 
     @CrossOrigin
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity loginUtilisateur(@RequestParam("email")String email ,@RequestParam("password")String password) throws Exception {
         UtilisateurDao u = new UtilisateurDao();
         if(u.checkLoginInformations(email, password)==true){
