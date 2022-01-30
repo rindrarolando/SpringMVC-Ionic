@@ -24,8 +24,10 @@
    <link href="css/style.min.css" rel="stylesheet">
     <base href="tables.jsp" />
 </head>
-
-<body ng-app="myapp" ng-controller="tablesControl">
+<%
+String token = (String)request.getSession().getAttribute("token");
+%>
+<body ng-app="myapp" ng-controller="tablesControl" data-ng-init="getData('<%=token%>')">
    
     <div class="preloader">
         <div class="lds-ripple">

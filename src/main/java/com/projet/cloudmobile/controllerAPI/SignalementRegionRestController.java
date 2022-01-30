@@ -32,6 +32,7 @@ public class SignalementRegionRestController {
         return s.getStatReg(Long.valueOf(id));
     }
 
+
     @CrossOrigin
     @GetMapping("/SignalementByFilter")
     public List<Signalement> getSignalementByUtil(@RequestParam(value = "idRegion")String idRegion , @RequestParam(value = "idType")String idType , @RequestParam(value = "etat")String etat , @RequestParam(value = "debut")String debut , @RequestParam(value = "fin")String fin) throws ParseException {
@@ -45,6 +46,13 @@ public class SignalementRegionRestController {
         return new SignalementRegionDao().getSignalementByFilter(Long.valueOf(idRegion) ,Long.valueOf(idType) ,etat , d ,f);
 
 
+    }
+
+    @CrossOrigin
+    @GetMapping("/region")
+    public List<Signalement> getSignalementByRegion(@RequestParam(value = "id")String id) {
+        SignalementDao s = new SignalementDao();
+        return s.getSignalementByRegion(Integer.parseInt(id));
     }
 
 }

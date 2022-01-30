@@ -2,6 +2,7 @@ package com.projet.cloudmobile.controllerAPI;
 
 import com.projet.cloudmobile.dao.RegionDao;
 import com.projet.cloudmobile.dao.SignalementDao;
+import com.projet.cloudmobile.dao.TokenDao;
 import com.projet.cloudmobile.dao.UtilisateurDao;
 import com.projet.cloudmobile.models.Region;
 import com.projet.cloudmobile.models.Signalement;
@@ -19,9 +20,17 @@ import java.util.List;
 public class UtilisateurRestController {
     @CrossOrigin
     @GetMapping("/getUtilisateurs")
-    public List<Utilisateur> getUtilisateurs(){
-        UtilisateurDao u = new UtilisateurDao();
-        return u.getAllUtilisateur();
+    public  ResponseEntity<List<Utilisateur>> getUtilisateurs(@RequestHeader("token")String token){
+        TokenDao dao = new TokenDao();
+        try{
+            if(dao.isAdminToken(token)==true) {
+                return new ResponseEntity<List<Utilisateur>>(new UtilisateurDao().getAllUtilisateur(), HttpStatus.ACCEPTED);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @CrossOrigin

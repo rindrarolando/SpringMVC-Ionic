@@ -26,10 +26,9 @@
    <base href="ESSAi.html" />
 </head>
 <%
-    HttpSession session = request.getSession();
-    String token = session.getAttribute("token");
+String token = (String)request.getSession().getAttribute("token");
 %>
-<body ng-app="myapp" ng-controller="listeSignControl" >
+<body ng-app="myapp" ng-controller="listeSignControl" data-ng-init="getSignalements('<%=token%>')" >
    
     <div class="preloader">
         <div class="lds-ripple">

@@ -8,12 +8,14 @@ appname.controller('listeSignControl', ['$scope','$http',
 function($scope,$http) {
   $scope.getSignalements=function($args){
     $http.get('http://localhost:8080/signalement/getNewSignalement',{
-        headers : {'token':'Basic 60a584b2119b9981549147e91d1a78a03c0d6cd6=='}
+        headers : {'token':$args}
     }).then(function (response) {
       $scope.data=response.data; 
     });
   }
-
+  $scope.test=function($args){
+    console.log($args);
+  }
 }
 
 ]);
@@ -22,9 +24,11 @@ function($scope,$http) {
 
 appname.controller('testControl', ['$scope','$http','$location','$window',
 function($scope,$http,$location,$window) {
-  $scope.getSignalement=function(){
+  $scope.getSignalement=function($args){
 
-    $http.get('http://localhost:8080/signalement/getSignalement?id='+$location.search().id+'').then(function (response) {
+    $http.get('http://localhost:8080/signalement/getSignalement?id='+$location.search().id+'', {
+        headers : {'token':$args}
+    }).then(function (response) {
       $scope.signalement=response.data;
       var marker = L.marker([$scope.signalement.latitude, $scope.signalement.longitude]).addTo(macarte);
       $http.get('https://nominatim.openstreetmap.org/reverse?format=json&lat='+$scope.signalement.latitude+'&lon='+$scope.signalement.longitude+'&zoom=18&addressdetails=1&fbclid=IwAR30BvNdX9B3P-mKUnh6H2bOv2KjXDngOnXosNHbvyX_8Y5Ddd-Vlih0zqc').then(function (response) {
@@ -48,32 +52,39 @@ function($scope,$http,$location,$window) {
 appname.controller('tablesControl', ['$scope','$http','$location',
 function($scope,$http,$location) {
 
-  $scope.getRegions=function(){
-    $http.get('http://localhost:8080/region/getRegions').then(function (response) {
+  $scope.getRegions=function($args){
+    $http.get('http://localhost:8080/region/getRegions',{
+        headers : {'token':$args}
+    }).then(function (response) {
       $scope.regions=response.data;
       console.log($scope.regions);
     });
   }
-  $scope.getUtilisateurs=function(){
-      $http.get('http://localhost:8080/utilisateur/getUtilisateurs').then(function (response) {
+  $scope.getUtilisateurs=function($args){
+      $http.get('http://localhost:8080/utilisateur/getUtilisateurs',
+      {
+        headers : {'token':$args}
+      }).then(function (response) {
         $scope.utilisateurs=response.data;
         console.log($scope.utilisateurs);
       });
     }
-    $scope.getTypeSignalements=function(){
-        $http.get('http://localhost:8080/typesignalement/getTypeSignalements').then(function (response) {
+    $scope.getTypeSignalements=function($args){
+        $http.get('http://localhost:8080/typesignalement/getTypeSignalements',{
+            headers : {'token':$args}
+        }).then(function (response) {
           $scope.typeSignalements=response.data;
           console.log($scope.typeSignalements);
         });
       }
-  $scope.getData=function(){
-    $scope.getRegions();
-    $scope.getUtilisateurs();
-    $scope.getTypeSignalements();
+  $scope.getData=function($args){
+    $scope.getRegions($args);
+    $scope.getUtilisateurs($args);
+    $scope.getTypeSignalements($args);
   }
 
 
-  $scope.getData();
+
 }
 
 ]);
