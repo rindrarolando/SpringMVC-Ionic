@@ -17,6 +17,15 @@ public class Tokenregion {
     private Date date_expiration;
     private String role;
 
+    public Tokenregion(int id, Region region, String token, Date date_creation, Date date_expiration, String role) {
+        this.id = id;
+        this.region = region;
+        this.token = token;
+        this.date_creation = date_creation;
+        this.date_expiration = date_expiration;
+        this.role = role;
+    }
+
     public int getId() {
         return id;
     }
