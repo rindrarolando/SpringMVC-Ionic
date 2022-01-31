@@ -191,7 +191,7 @@ String token = (String)request.getSession().getAttribute("token");
                             <ol class="breadcrumb ms-auto">
 
                             </ol>
-                            <a href="https://www.wrappixel.com/templates/ampleadmin/" target="_blank"
+                            <a href="/logout"
                                 class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">Se deconnecter</a>
                         </div>
                     </div>
