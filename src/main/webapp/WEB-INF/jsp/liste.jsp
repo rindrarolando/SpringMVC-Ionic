@@ -1,7 +1,9 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
+<%
+String token = (String)request.getSession().getAttribute("token");
+%>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -28,8 +30,10 @@
         function($scope,$http) {
 
 //Afficher la liste des signalement
-          $scope.afficheListeSignalement=function(){
-            $http.get('/signalement/getSignalements').then(function (response) {
+          $scope.afficheListeSignalement=function($args){
+            $http.get('/signalement/getSignalements',{
+                                                            headers : {'token':$args}
+                                                        }).then(function (response) {
               $scope.signalement = response.data;
             });
           }
@@ -44,8 +48,10 @@
           //}
 
 //Effacer un signalement par son ID
-          $scope.editSignalement=function(sign){
-            $http.get('/signalement/deleteSignalement?id='+sign.id+'').then(function (response) {
+          $scope.deleteSignalement=function(sign,$args){
+            $http.get('/signalement/deleteSignalement?id='+sign.id+'',{
+                   headers : {'token':$args}
+            }).then(function (response) {
               $scope.deleteComplete = response.data;
             });
           }
@@ -62,7 +68,7 @@
    <base href="ESSAi.html" />
 </head>
 
-<body ng-app="myapp" ng-controller="listeSignalement">
+<body ng-app="myapp" ng-controller="listeSignalement" data-ng-init="afficheListeSignalement('<%=token%>')" >
 
     <div class="preloader">
         <div class="lds-ripple">
@@ -227,7 +233,7 @@
                                                         <td>{{x.longitude}}</td>
                                                         <td>{{x.latitude}}</td>
                                                         <td><form action={{'voirPlus?id='+x.id}} method="post"><button type="submit"class="btn btn-primary">Voir Plus</button></form></td>
-                                                        <td><button type="button" class="btn btn-danger" ng-click="deleteSignalement(x)" >Supprimer</button></td>
+                                                        <td><button type="button" class="btn btn-danger" ng-click="deleteSignalement(x,'<%=token%>')" >Supprimer</button></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

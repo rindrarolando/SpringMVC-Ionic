@@ -1,7 +1,9 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
+<%
+String token = (String)request.getSession().getAttribute("token");
+%>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -30,65 +32,83 @@ appname.controller('statControl', ['$scope','$http',
 function($scope,$http) {
 
 
-$scope.loadData=function(){
-      $http.get('/signalement/statEtat1').then(function (response) {
+$scope.loadData=function($args){
+      $http.get('/signalement/statEtat1',{
+            headers : {'token':$args}
+        }).then(function (response) {
       $scope.nombre1=response.data;
       $scope.problemes1="Route abime";
    });
 }
 
 
- $scope.loadData2=function(){
-        $http.get('/signalement/statEtat2').then(function (response) {
+ $scope.loadData2=function($args){
+        $http.get('/signalement/statEtat2',{
+            headers : {'token':$args}
+        }).then(function (response) {
         $scope.nombre2=response.data;
        $scope.problemes2="Accident de la route";
    });
  }
 
- $scope.loadData3=function(){
-      $http.get('/signalement/statEtat3').then(function (response) {
+ $scope.loadData3=function($args){
+      $http.get('/signalement/statEtat3',{
+            headers : {'token':$args}
+        }).then(function (response) {
       $scope.nombre3=response.data;
       $scope.problemes3="Ordures";
    });
  }
 
- $scope.loadDat=function(){
-      $http.get('/signalement/statEtat1N').then(function (response) {
+ $scope.loadDat=function($args){
+      $http.get('/signalement/statEtat1N',{
+            headers : {'token':$args}
+        }).then(function (response) {
       $scope.nouveau1=response.data;
 
       });
  }
 
- $scope.loadDat2=function(){
-      $http.get('/signalement/statEtat2N').then(function (response) {
+ $scope.loadDat2=function($args){
+      $http.get('/signalement/statEtat2N',{
+            headers : {'token':$args}
+        }).then(function (response) {
       $scope.nouveau2=response.data;
 
       });
  }
 
- $scope.loadDat3=function(){
-      $http.get('/signalement/statEtat3N').then(function (response) {
+ $scope.loadDat3=function($args){
+      $http.get('/signalement/statEtat3N',{
+            headers : {'token':$args}
+        }).then(function (response) {
       $scope.nouveau3=response.data;
 
       });
  }
 
- $scope.loadDt=function(){
-        $http.get('/signalement/statEtat1E').then(function (response) {
+ $scope.loadDt=function($args){
+        $http.get('/signalement/statEtat1E',{
+            headers : {'token':$args}
+        }).then(function (response) {
         $scope.enCours1=response.data;
 
      });
  }
 
-   $scope.loadDt2=function(){
-          $http.get('/signalement/statEtat2E').then(function (response) {
+   $scope.loadDt2=function($args){
+          $http.get('/signalement/statEtat2E',{
+                headers : {'token':$args}
+          }).then(function (response) {
           $scope.enCours2=response.data;
 
      });
  }
 
-   $scope.loadDt3=function(){
-        $http.get('/signalement/statEtat3E').then(function (response) {
+   $scope.loadDt3=function($args){
+        $http.get('/signalement/statEtat3E',{
+            headers : {'token':$args}
+        }).then(function (response) {
         $scope.enCours3=response.data;
 
      });
@@ -96,8 +116,10 @@ $scope.loadData=function(){
 
 //GRAPHIQUE PAR TYPE
 
-$scope.getChart=function(){
-   $http.get('/signalement/statistique/type').then(function (response) {
+$scope.getChart=function($args){
+   $http.get('/signalement/statistique/type',{
+      headers : {'token':$args}
+   }).then(function (response) {
     json = response.data;
     var chartjsData = [];
     for (var i = 0; i < json.length; i++) {
@@ -135,12 +157,14 @@ $scope.getChart=function(){
 });
 
 }
-          $scope.getChart();
+
 
 //GRAPHIQUE Utilisateur
 
-$scope.getGraphUtil=function(){
-            $http.get('/signalement/statistique/utilisateur').then(function (response) {
+$scope.getGraphUtil=function($args){
+            $http.get('/signalement/statistique/utilisateur',{
+                headers : {'token':$args}
+            }).then(function (response) {
             json = response.data;
               var chartjsData = [];
                     for (var i = 0; i < json.length; i++) {
@@ -178,14 +202,16 @@ $scope.getGraphUtil=function(){
             });
           }
 
-   $scope.getGraphUtil();
+
 
 
 //GRAPHIQUE Nouveau region
 
 
- $scope.regionNouveau=function(){
-             $http.get('/signalement/statistique/region/nouveau').then(function (response) {
+ $scope.regionNouveau=function($args){
+             $http.get('/signalement/statistique/region/nouveau',{
+                 headers : {'token':$args}
+             }).then(function (response) {
              json = response.data;
                var chartjsData = [];
                      for (var i = 0; i < json.length; i++) {
@@ -222,12 +248,14 @@ $scope.getGraphUtil=function(){
 
              });
            }
-           $scope.regionNouveau();
+
 
  //GRAPHIQUE EN cours region
 
- $scope.regionEnCours=function(){
-        $http.get('/signalement/statistique/region/encours').then(function (response) {
+ $scope.regionEnCours=function($args){
+        $http.get('/signalement/statistique/region/encours',{
+            headers : {'token':$args}
+        }).then(function (response) {
         json = response.data;
           var chartjsData = [];
                 for (var i = 0; i < json.length; i++) {
@@ -264,12 +292,14 @@ $scope.getGraphUtil=function(){
 
         });
       }
-      $scope.regionEnCours();
+
 
 //GRAPHIQUE Termine region
 
- $scope.regionTermine=function(){
-        $http.get('/signalement/statistique/region/termine').then(function (response) {
+ $scope.regionTermine=function($args){
+        $http.get('/signalement/statistique/region/termine',{
+            headers : {'token':$args}
+        }).then(function (response) {
         json = response.data;
           var chartjsData = [];
                 for (var i = 0; i < json.length; i++) {
@@ -306,16 +336,16 @@ $scope.getGraphUtil=function(){
 
         });
       }
-      $scope.regionTermine();
-      $scope.loadData();
-      $scope.loadData2();
-      $scope.loadData3();
-      $scope.loadDat();
-      $scope.loadDat2()
-      $scope.loadDat3();
-      $scope.loadDt();
-      $scope.loadDt2();
-      $scope.loadDt3();
+
+
+
+
+
+
+
+
+
+
 
     //fin
 
@@ -326,7 +356,7 @@ $scope.getGraphUtil=function(){
    <base href="ESSAi.html" />
 </head>
 
-<body ng-app="myApp" ng-controller="statControl">
+<body ng-app="myApp" ng-controller="statControl" data-ng-init="regionTermine('<%=token%>');getChart('<%=token%>');getGraphUtil('<%=token%>');regionNouveau('<%=token%>');regionEnCours('<%=token%>');loadDt3('<%=token%>');loadData('<%=token%>');loadData2('<%=token%>');loadData3('<%=token%>');loadDat('<%=token%>');loadDat2('<%=token%>');loadDat3('<%=token%>');loadDt('<%=token%>');loadDt2('<%=token%>');">
    
     <div class="preloader">
         <div class="lds-ripple">

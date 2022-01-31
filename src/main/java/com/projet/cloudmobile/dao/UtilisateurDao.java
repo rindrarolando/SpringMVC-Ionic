@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.security.MessageDigest;
 import java.sql.*;
 import java.text.Normalizer;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
@@ -65,13 +66,12 @@ public class UtilisateurDao {
     }
 
     @Transactional
-    public void insertWithMd5(String username, String password, String email){
+    public void insertWithMd5(String username, String password, String email,String date) throws ParseException {
         tx.begin();
-        long millis = System.currentTimeMillis();
-        Date dtn = new java.sql.Date(millis);
+        Date date1 = java.sql.Date.valueOf(date);
         String query = "insert into utilisateur(id,dtn,email,password,username) values (DEFAULT,:dtn,:email,md5(:password),:username)";
         Query jpqlQuery = em.createNativeQuery(query)
-                .setParameter("dtn",dtn)
+                .setParameter("dtn",date1)
                 .setParameter("email",email)
                 .setParameter("password",password)
                 .setParameter("username",username);
@@ -91,10 +91,10 @@ public class UtilisateurDao {
         }
     }
 
-    public void inscription(String username, String password, String email) {
+    public void inscription(String username, String password, String email,String date) throws ParseException {
         if(UtilisateurDao.check(username,password,email)==true){
             UtilisateurDao u = new UtilisateurDao();
-            u.insertWithMd5(username,password,email);
+            u.insertWithMd5(username,password,email,date);
         }
     }
 

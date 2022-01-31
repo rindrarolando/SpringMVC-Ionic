@@ -1,7 +1,9 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
+<%
+String token = (String)request.getSession().getAttribute("token");
+%>
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 
@@ -22,21 +24,19 @@
     <script src="js/angular.min.js"></script>
     <script src="js/angular-route.js"></script>
     <script type="text/javascript">
-    <script type="text/javascript">
  var appname = angular.module('myapp', []);
 
         appname.controller('listeSignalement', ['$scope','$http','$location'
         function($scope,$http,$location) {
 
 
-            $scope.afficheListeSignalement=function(){
-                        $http.get('/signalement/getSignalementt?id='+$location.search().id+'').then(function (response) {
+            $scope.afficheListeSignalement=function($args){
+                        $http.get('/signalement/getSignalement?id='+$location.search().id+'',{
+                            headers : {'token':$args}
+                        }).then(function (response) {
                           $scope.x = response.data;
                         });
             }
-
-$scope.afficheListeSignalement();
-
 
         }]);
 
@@ -47,7 +47,7 @@ $scope.afficheListeSignalement();
    <base href="ESSAi.html" />
 </head>
 
-<body ng-app="myapp" ng-controller="listeSignalement">
+<body ng-app="myapp" ng-controller="listeSignalement" data-ng-init="afficheListeSignalement('<%=token%>')">
 
     <div class="preloader">
         <div class="lds-ripple">

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -43,14 +44,14 @@ public class UtilisateurRestController {
 
     @CrossOrigin
     @PostMapping("/inscription")
-    public ResponseEntity makeInscription(@RequestParam("username")String username, @RequestParam("password")String password, @RequestParam("email")String email){
-       UtilisateurDao u = new UtilisateurDao();
-       if(UtilisateurDao.check(username,password,email)==true){
-           u.inscription(username,password,email);
-           return new ResponseEntity(HttpStatus.ACCEPTED);
-       }else{
-           return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
-       }
+    public ResponseEntity makeInscription(@RequestParam("username")String username, @RequestParam("password")String password, @RequestParam("email")String email, @RequestParam("date") String date) throws ParseException {
+        UtilisateurDao u = new UtilisateurDao();
+        if(UtilisateurDao.check(username,password,email)==true){
+            u.inscription(username,password,email,date);
+            return new ResponseEntity(HttpStatus.ACCEPTED);
+        }else{
+            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
+        }
     }
 
     @CrossOrigin
