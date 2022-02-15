@@ -6,7 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
+@RequestMapping("/region")
 public class RegionController {
     @RequestMapping("/region/modifier")
     public String modifier(@RequestParam("id")String id,@RequestParam("designation")String designation,@RequestParam("username")String username,@RequestParam("password")String password){
@@ -17,5 +20,11 @@ public class RegionController {
         r.setPassword(password);
         dao.insert(r);
         return "Tables";
+    }
+
+    @RequestMapping("/login")
+    public String login_region(HttpServletRequest request){
+
+        return "loginregion";
     }
 }

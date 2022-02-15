@@ -36,6 +36,81 @@ public class TokenRegionDao {
         }
     }
 
+    public void deleteTokenRegion(String token, int id) throws Exception{
+        Connection conn = null;
+        try {
+
+            conn = Rescue.connectToDatabase();
+            PreparedStatement pst = conn.prepareStatement("DELETE FROM tokenregion WHERE token=? AND idregion=?");
+            pst.setString(1, token);
+            pst.setInt(2,id);
+
+            pst.executeUpdate();
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public boolean isValidTokenRegion(String token) throws Exception{
+        Connection conn = null;
+        PreparedStatement pst = null;
+        ResultSet resultat = null;
+        String requete = null;
+        try{
+            conn = Rescue.connectToDatabase();
+            requete = "SELECT * FROM tokenregion where token=? and date_expiration<current_date";
+            pst = conn.prepareStatement(requete);
+            pst.setString(1, token);
+            resultat = pst.executeQuery();
+
+            if(resultat.next()){
+                return true;
+            }else {
+                return false;
+            }
+        }catch(Exception ex) {
+            return false;
+        }finally{
+            if(conn!=null) {
+                conn.close();
+            }
+            if(pst!=null) {
+                pst.close();
+            }
+        }
+    }
+
+    public boolean isRegionToken(String token) throws SQLException {
+        Connection conn = null;
+        PreparedStatement pst = null;
+        ResultSet resultat = null;
+        String requete = null;
+        try{
+            conn = Rescue.connectToDatabase();
+            requete = "SELECT * FROM tokenregion where token=? and role=?";
+            pst = conn.prepareStatement(requete);
+            pst.setString(1, token);
+            pst.setString(2,"region");
+            resultat = pst.executeQuery();
+
+            if(resultat.next()){
+                return true;
+            }else {
+                return false;
+            }
+        }catch(Exception ex) {
+            return false;
+        }finally{
+            if(conn!=null) {
+                conn.close();
+            }
+            if(pst!=null) {
+                pst.close();
+            }
+        }
+    }
+
     public Tokenregion getTokenRegion(String token){
         Tokenregion token_result = null;
         try {

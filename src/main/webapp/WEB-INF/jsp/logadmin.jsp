@@ -1,4 +1,3 @@
-<c:set var="base" value="${pageContext.request.localName}"/>
 <!doctype html>
 <html lang="en">
   <head>
@@ -30,6 +29,7 @@
 		      		<span class="fa fa-user-o"></span>
 		      	</div>
 		      	<h3 class="text-center mb-4">Admininistrateur</h3>
+
 				<form method="GET" action="/login" class="login-form">
 		      		<div class="form-group">
 		      			<input type="text" class="form-control rounded-left" placeholder="Identifiant" name="identifiant" required>
@@ -40,6 +40,7 @@
                     <div class="form-group">
                         <button type="submit" class="form-control btn btn-primary rounded submit px-3">connexion</button>
                     </div>
+                    <a href="/region/login">Se connecter en tant que région</a>
                     <div class="form-group d-md-flex">
                         <%
                             if(request.getParameter("error")!=null){ %>
@@ -54,9 +55,9 @@
 	</section>
 
 	<script src="loginadmin/js/jquery.min.js"></script>
-  <script src="loginadmin/js/popper.js"></script>
-  <script src="loginadmin/js/bootstrap.min.js"></script>
-  <script src="loginadmin/js/main.js"></script>
+    <script src="loginadmin/js/popper.js"></script>
+    <script src="loginadmin/js/bootstrap.min.js"></script>
+    <script src="loginadmin/js/main.js"></script>
 
 	</body>
 </html>
