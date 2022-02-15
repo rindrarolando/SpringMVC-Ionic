@@ -22,7 +22,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<List<Signalement>>(new SignalementDao().getAllSignalement(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<List<Signalement>>(new SignalementDao().getAllSignalement(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -37,7 +37,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<Signalement>(new SignalementDao().getSignalement(Long.valueOf(id)), HttpStatus.ACCEPTED);
+                return new ResponseEntity<Signalement>(new SignalementDao().getSignalement(Long.valueOf(id)), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -53,7 +53,7 @@ public class SignalementRestController {
         try{
             if(dao.isAdminToken(token)==true) {
                 new SignalementDao().remove(Long.valueOf(id));
-                return new ResponseEntity(HttpStatus.ACCEPTED);
+                return new ResponseEntity(HttpStatus.OK);
             }else{
                 return new ResponseEntity(HttpStatus.UNAUTHORIZED);
             }
@@ -69,7 +69,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<List<Signalement>>(new SignalementDao().getNewSignalement(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<List<Signalement>>(new SignalementDao().getNewSignalement(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -84,7 +84,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<Long>(new SignalementDao().getStatEtat1(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat1(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -98,7 +98,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<Long>(new SignalementDao().getStatEtat2(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat2(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -113,7 +113,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<Long>(new SignalementDao().getStatEtat3(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat3(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -128,7 +128,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<Long>(new SignalementDao().getStatEtat1N(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat1N(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -143,7 +143,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<Long>(new SignalementDao().getStatEtat2N(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat2N(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -158,7 +158,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<Long>(new SignalementDao().getStatEtat3N(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat3N(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -173,7 +173,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<Long>(new SignalementDao().getStatEtat1E(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat1E(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -188,7 +188,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<Long>(new SignalementDao().getStatEtat2E(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat2E(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -203,7 +203,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<Long>(new SignalementDao().getStatEtat3E(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat3E(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -218,7 +218,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<Long>(new SignalementDao().getStatEtat1T(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat1T(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -233,7 +233,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<Long>(new SignalementDao().getStatEtat2T(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat2T(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -248,7 +248,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<Long>(new SignalementDao().getStatEtat3T(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<Long>(new SignalementDao().getStatEtat3T(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -262,7 +262,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<List<Signalement>>(new SignalementDao().getSignalementByUtil(username), HttpStatus.ACCEPTED);
+                return new ResponseEntity<List<Signalement>>(new SignalementDao().getSignalementByUtil(username), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -277,7 +277,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<List<Signalement>>(new SignalementDao().getStatEtat(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<List<Signalement>>(new SignalementDao().getStatEtat(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -292,7 +292,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<List<SignalementRegion>>(new SignalementDao().getSignalementByRegion(Integer.parseInt(id)), HttpStatus.ACCEPTED);
+                return new ResponseEntity<List<SignalementRegion>>(new SignalementDao().getSignalementByRegion(Integer.parseInt(id)), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -307,7 +307,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueRegion(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueRegion(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -322,7 +322,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueRegion1(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueRegion1(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -336,7 +336,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueRegion2(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueRegion2(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -350,7 +350,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueRegion3(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueRegion3(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -367,7 +367,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueType(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueType(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -381,7 +381,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueTypeCas1(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueTypeCas1(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -395,7 +395,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueTypeCas2(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueTypeCas2(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -409,7 +409,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueTypeCas3(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueTypeCas3(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -425,7 +425,7 @@ public class SignalementRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueUtil(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<ArrayList<HashMap<String, Object>>>(new SignalementDao().getStatistiqueUtil(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }

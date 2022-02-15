@@ -2,8 +2,11 @@ package com.projet.cloudmobile;
 
 import com.projet.cloudmobile.dao.SignalementDao;
 import com.projet.cloudmobile.dao.TokenDao;
+import com.projet.cloudmobile.dao.TokenUserDao;
+import com.projet.cloudmobile.dao.UtilisateurDao;
 import com.projet.cloudmobile.models.Administrateur;
 import com.projet.cloudmobile.models.Tokenadmin;
+import com.projet.cloudmobile.models.Utilisateur;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;

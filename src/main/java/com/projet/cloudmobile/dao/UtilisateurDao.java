@@ -136,11 +136,12 @@ public class UtilisateurDao {
         }
     }
 
-    public void insertTokenUser(Utilisateur user) throws SQLException {
+    public String insertTokenUser(Utilisateur user) throws SQLException {
         Connection conn = null;
+        String token = null;
         try {
             UtilisateurDao dao = new UtilisateurDao();
-            String token = dao.createToken(user.getId());
+            token = dao.createToken(user.getId());
             java.sql.Date creation = java.sql.Date.valueOf(LocalDate.now());
             java.sql.Date expiration = java.sql.Date.valueOf(LocalDate.now().plusDays(3));
             String role = "utilisateur";
@@ -155,9 +156,12 @@ public class UtilisateurDao {
             pst.setDate(4,expiration);
             pst.setString(5,role);
             pst.executeUpdate();
+
         } catch (Exception e) {
             conn.rollback();
+            return null;
         }
+        return token;
     }
 
     @Transactional

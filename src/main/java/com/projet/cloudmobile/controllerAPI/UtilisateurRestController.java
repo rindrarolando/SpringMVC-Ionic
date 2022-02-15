@@ -25,7 +25,7 @@ public class UtilisateurRestController {
         TokenDao dao = new TokenDao();
         try{
             if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<List<Utilisateur>>(new UtilisateurDao().getAllUtilisateur(), HttpStatus.ACCEPTED);
+                return new ResponseEntity<List<Utilisateur>>(new UtilisateurDao().getAllUtilisateur(), HttpStatus.OK);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -44,11 +44,11 @@ public class UtilisateurRestController {
 
     @CrossOrigin
     @PostMapping("/inscription")
-    public ResponseEntity makeInscription(@RequestParam("username")String username, @RequestParam("password")String password, @RequestParam("email")String email, @RequestParam("date") String date) throws ParseException {
+    public ResponseEntity makeInscription(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email, @RequestParam("date") String date) throws ParseException {
         UtilisateurDao u = new UtilisateurDao();
         if(UtilisateurDao.check(username,password,email)==true){
             u.inscription(username,password,email,date);
-            return new ResponseEntity(HttpStatus.ACCEPTED);
+            return new ResponseEntity(HttpStatus.OK);
         }else{
             return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
         }
@@ -56,14 +56,15 @@ public class UtilisateurRestController {
 
     @CrossOrigin
     @PostMapping("/login")
-    public ResponseEntity loginUtilisateur(@RequestParam("email")String email ,@RequestParam("password")String password) throws Exception {
+    public ResponseEntity<String> loginUtilisateur(@RequestParam("email") String email ,@RequestParam("password") String password) throws Exception {
+        String token = null;
         UtilisateurDao u = new UtilisateurDao();
         if(u.checkLoginInformations(email, password)==true){
             Utilisateur user = u.login(email, password);
-            u.insertTokenUser(user);
-            return new ResponseEntity<>(HttpStatus.OK);
+            token = u.insertTokenUser(user);
+            return new ResponseEntity<String>(token,HttpStatus.OK);
         }else{
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
     }
 
