@@ -11,7 +11,7 @@
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-	<link rel="stylesheet" href="logregion/css/style.css">
+	<link rel="stylesheet" href="/logregion/css/style.css">
 
 	</head>
 	<body>
@@ -54,10 +54,10 @@
 		</div>
 	</section>
 
-    <script src="logregion/js/jquery.min.js"></script>
-    <script src="logregion/js/popper.js"></script>
-    <script src="logregion/js/bootstrap.min.js"></script>
-    <script src="logregion/js/main.js"></script>
+    <script src="/logregion/js/jquery.min.js"></script>
+    <script src="/logregion/js/popper.js"></script>
+    <script src="/logregion/js/bootstrap.min.js"></script>
+    <script src="/logregion/js/main.js"></script>
 
 	</body>
 </html>

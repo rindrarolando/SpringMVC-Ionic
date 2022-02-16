@@ -1,12 +1,19 @@
 package com.projet.cloudmobile.controllerVIEW;
 
+import com.projet.cloudmobile.dao.AdministrateurDao;
 import com.projet.cloudmobile.dao.RegionDao;
+import com.projet.cloudmobile.dao.TokenDao;
+import com.projet.cloudmobile.dao.TokenRegionDao;
+import com.projet.cloudmobile.models.Administrateur;
 import com.projet.cloudmobile.models.Region;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 
 @Controller
 @RequestMapping("/region")
@@ -22,9 +29,56 @@ public class RegionController {
         return "Tables";
     }
 
-    @RequestMapping("/login")
-    public String login_region(HttpServletRequest request){
+    @RequestMapping("/")
+    public String login_region(HttpServletRequest request) throws Exception{
+        HttpSession session = request.getSession();
+        if(session.getAttribute("region")==null) {
+            return "loginregion";
+        }else{
+            Region region =(Region) session.getAttribute("region");
+            TokenRegionDao dao = new TokenRegionDao();
+            if(dao.isValidTokenRegion((String) session.getAttribute("token_region"))==true){
+                return "redirect:/region/test_region";
+            }else{
+                dao.deleteTokenRegion((String) session.getAttribute("token_region"), region.getId());
+                session.removeAttribute("token_region");
+                String token = dao.insertTokenRegion(region);
+                session.setAttribute("token_region",token);
+                return "redirect:/region/test_region";
+            }
+        }
+    }
 
-        return "loginregion";
+    @RequestMapping(value= "/login" , method = RequestMethod.POST)
+    public String traitement_login(HttpServletRequest request) throws Exception {
+        HttpSession session = request.getSession(true);
+        String username = request.getParameter("username");
+        String mdp = request.getParameter("mdp");
+        RegionDao dao = new RegionDao();
+        TokenRegionDao tokdao= new TokenRegionDao();
+        if(dao.checkLoginRegion(username,mdp)!=null){
+            Region region = dao.checkLoginRegion(username,mdp);
+            String token_region = tokdao.insertTokenRegion(region);
+            session.setAttribute("region", region);
+            session.setAttribute("token_region",token_region);
+            return "redirect:/region/test_region";
+        }else{
+            return "redirect:/region/?error=1";
+        }
+    }
+
+    @RequestMapping("/test_region")
+    public String acceuil_test(){
+        return "test_region";
+    }
+
+    @RequestMapping("/logout")
+    public String deconnexion(HttpServletRequest request) throws Exception {
+        HttpSession session = request.getSession();
+        Region region = (Region) session.getAttribute("region");
+        TokenRegionDao dao = new TokenRegionDao();
+        dao.deleteTokenRegion((String) session.getAttribute("token_region"), region.getId());
+        session.invalidate();
+        return "redirect:/region/";
     }
 }

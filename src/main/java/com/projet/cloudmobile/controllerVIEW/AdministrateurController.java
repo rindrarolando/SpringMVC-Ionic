@@ -7,6 +7,7 @@ import com.projet.cloudmobile.models.Tokenadmin;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -37,7 +38,7 @@ public class AdministrateurController {
             if(dao.isValidTokenAdmin((String) session.getAttribute("token"))==true){
                 return "redirect:/listeSignalement";
             }else{
-                dao.deleteTokenAdmin((String) session.getAttribute("admin"), admin.getId());
+                dao.deleteTokenAdmin((String) session.getAttribute("token"), admin.getId());
                 session.removeAttribute("token");
                 String token = dao.insertTokenAdmin(admin);
                 session.setAttribute("token",token);
@@ -46,7 +47,7 @@ public class AdministrateurController {
         }
     }
 
-    @GetMapping("/login")
+    @RequestMapping(value= "/login", method = RequestMethod.POST)
     public String traitementLogin(HttpServletRequest request){
         HttpSession session = request.getSession(true);
         String id = request.getParameter("identifiant");
