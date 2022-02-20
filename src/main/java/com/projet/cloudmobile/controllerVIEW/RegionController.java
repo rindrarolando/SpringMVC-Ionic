@@ -61,15 +61,15 @@ public class RegionController {
             String token_region = tokdao.insertTokenRegion(region);
             session.setAttribute("region", region);
             session.setAttribute("token_region",token_region);
-            return "redirect:/region/test_region";
+            return "redirect:/region/indexRegion";
         }else{
             return "redirect:/region/?error=1";
         }
     }
 
-    @RequestMapping("/test_region")
-    public String acceuil_test(){
-        return "test_region";
+    @RequestMapping("/indexRegion")
+    public String accueil(){
+        return "indexRegion";
     }
 
     @RequestMapping("/logout")
