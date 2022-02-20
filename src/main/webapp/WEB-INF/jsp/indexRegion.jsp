@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +13,7 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
         <style type="text/css">
-            #map{ /* la carte DOIT avoir une hauteur sinon elle n'apparaît pas */
+            #map{
                 height:400px;
             }
         </style>
@@ -22,9 +25,10 @@
     <script src="js/controlleur.js"></script> 
     <script src="js/angular-route.js"></script>
     
-    <title>Loruki | Cloud Hosting For Everyone</title>
+    <title>Region</title>
 </head>
-<body ng-app="myapp" ng-controller="testControl">
+<%String token = (String)request.getSession().getAttribute("token"); %>
+<body ng-app="myapp" ng-controller="regionControl">
     <!-- Navbar -->
     <div class="navbars">
         <div class="container flex">
@@ -121,7 +125,7 @@
                     <li><a href="docs.html">Docs</a></li>
                 </ul>
             </nav>
-            
+
         </div>
     </footer>
 </body>

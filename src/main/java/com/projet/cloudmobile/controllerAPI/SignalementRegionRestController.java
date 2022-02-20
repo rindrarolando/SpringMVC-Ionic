@@ -53,9 +53,9 @@ public class SignalementRegionRestController {
     @CrossOrigin
     @GetMapping("/getSignalementByRegion")
     public ResponseEntity<List<SignalementRegion>> getSignalementByRegion(@RequestHeader("token") String token, @RequestParam("id") String idRegion){
-        TokenDao dao = new TokenDao();
+        TokenRegionDao dao = new TokenRegionDao();
         try{
-            if(dao.isAdminToken(token)==true) {
+            if(dao.isValidTokenRegion(token)==true) {
                 return new ResponseEntity<List<SignalementRegion>>(new SignalementDao().getSignalementByRegion(Integer.parseInt(idRegion)), HttpStatus.ACCEPTED);
             }else{
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

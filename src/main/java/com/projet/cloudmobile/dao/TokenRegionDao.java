@@ -59,11 +59,12 @@ public class TokenRegionDao {
         String requete = null;
         try{
             conn = Rescue.connectToDatabase();
-            requete = "SELECT * FROM tokenregion where token=? and date_expiration<current_date";
+            requete = "SELECT * FROM tokenregion where token=? and date_expiration>current_date";
             pst = conn.prepareStatement(requete);
             pst.setString(1, token);
-            resultat = pst.executeQuery();
 
+            resultat = pst.executeQuery();
+            System.out.println(pst);
             if(resultat.next()){
                 return true;
             }else {
