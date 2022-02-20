@@ -1,4 +1,5 @@
 <%@page import="java.util.List"%>
+<%@page import="com.projet.cloudmobile.models.Region"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <link rel="stylesheet" href="css/utilities.css">
     <link rel="stylesheet" href="css/stylegrid.css">
+    <link rel="stylesheet" href="css/markcolors.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
@@ -17,33 +19,32 @@
                 height:400px;
             }
         </style>
-        <style>
-            img.accident { filter: hue-rotate(210deg); }
-            img.glissement { filter: hue-rotate(120deg); }
-        </style>
     <script src="js/angular.min.js"></script> 
-    <script src="js/controlleur.js"></script> 
+    <script src="js/controlleurRegion.js"></script>
     <script src="js/angular-route.js"></script>
     
-    <title>Region</title>
+     <title>Region</title>
 </head>
-<%String token = (String)request.getSession().getAttribute("token"); %>
-<body ng-app="myapp" ng-controller="regionControl">
-    <!-- Navbar -->
+<%String token = (String)request.getSession().getAttribute("token_region");
+Region r = (Region)request.getSession().getAttribute("region");
+String id = request.getParameter("id"); out.println(id);
+ %>
+<base href="/" />
+<body ng-app="myapp" ng-controller="regionControl" data-ng-init="getSignalements('<%=token%>','<%=r.getId()%>')">
     <div class="navbars">
         <div class="container flex">
-            <h1 class="logo">Amoron'i Mania</h1>
+            <h1 class="logo"><%=r.getDesignation()%></h1>
             <nav>
                 <ul>
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="features.html">Signalements en cours</a></li>
-                    <li><a href="docs.html">Signalements terminés</a></li>
+                    <li><a href="index.html" target="_self">Accueil</a></li>
+                    <li><a href="features.html" target="_self">Signalements en cours</a></li>
+                    <li><a href="docs.html" target="_self">Signalements terminés</a></li>
+                    <li><a href="region/logout" target="_self">Se deconnecter</a></li>
                 </ul>
             </nav>
         </div>
     </div>
-    
-    <!-- Showcase -->
+
     <section class="showcase">
         <div class="container grid">
             
@@ -80,9 +81,6 @@
                 var lat = -20.473666806709673;
                 var lon = 46.54870880857691;
                 var macarte = null;
-                var villes = {
-                '<a href="lol.php">ok</a>': { "lat": -20.1, "lon": 46.4 }
-                };
 
                 function initMap() {
                 macarte = L.map('map').setView([lat, lon], 8);
@@ -92,12 +90,8 @@
                 minZoom: 5,
                 maxZoom: 20
                 }).addTo(macarte);
-                for (ville in villes) {
-                        var marker = L.marker([villes[ville].lat, villes[ville].lon]).addTo(macarte);
-                        marker._icon.classList.add("accident");
-                        marker.bindPopup(ville);
-                    }       
-                            
+
+
                 }
                 window.onload = function(){
                 initMap(); 

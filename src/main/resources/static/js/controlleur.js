@@ -182,6 +182,37 @@ function($scope,$http,$location) {
 
 ]);
 
+appname.controller('regionControl', ['$scope','$http','$location','$window',
+function($scope,$http,$location,$window) {
+  $scope.getSignalements=function($args,$id){
+
+    $http.get('http://localhost:8085/signalementregion/getSignalementByRegion?id='+$id+'', {
+        headers : {'token':$args}
+    }).then(function (response) {
+
+    var villes = {
+        '<a href="lol.php">ok</a>': { "lat": -20.1, "lon": 46.4 }
+     };
+    for (ville in villes) {
+        var marker = L.marker([villes[ville].lat, villes[ville].lon]).addTo(macarte);
+        marker._icon.classList.add("accident");
+        marker.bindPopup(ville);
+     }
+
+      $scope.signalement=response.data;
+      //var marker = L.marker([$scope.signalement.latitude, $scope.signalement.longitude]).addTo(macarte);
+      console.log($scope.signalement);
+    });
+
+  }
+  $scope.attribuerRegion=function(){
+  console.log("id signalement ="+$location.search().id);
+  console.log("id region ="+$scope.idregion);
+  $http.get('http://localhost:8080/signalement/attribuer?idSignalement='+$location.search().id+"&idRegion="+$scope.idregion).then(function (response) {
+      });
+      $window.location.href = '/NouveauxSignalements';
+  }
+}]);
 
 
 

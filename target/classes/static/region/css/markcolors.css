@@ -1,0 +1,6 @@
+img.accident { filter: hue-rotate(210deg); }
+img.glissement { filter: hue-rotate(120deg); }
+img.coupure { filter: hue-rotate(60deg); }
+img.inondation { filter: hue-rotate(120deg); }
+img.route { filter: hue-rotate(240deg); }
+img.ordures { filter: hue-rotate(330deg); }

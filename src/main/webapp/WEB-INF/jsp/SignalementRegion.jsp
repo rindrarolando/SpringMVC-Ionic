@@ -1,3 +1,7 @@
+<%@page import="java.util.List"%>
+<%@page import="com.projet.cloudmobile.models.Region"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,15 +22,22 @@
             img.glissement { filter: hue-rotate(120deg); }
         </style>
     <script src="js/angular.min.js"></script> 
-    <script src="js/controlleur.js"></script> 
+    <script src="js/controlleurRegion.js"></script>
     <script src="js/angular-route.js"></script>
     <title>Loruki | Cloud Hosting For Everyone</title>
+
 </head>
-<body>
+
+<%String token = (String)request.getSession().getAttribute("token_region");
+Region r = (Region)request.getSession().getAttribute("region");
+String id = request.getParameter("id");
+ %>
+<base href="/" />
+<body ng-app="myapp" ng-controller="regionControl" data-ng-init="getSignalement('<%=token%>')">
     <!-- Navbar -->
     <div class="navbars">
         <div class="container flex">
-            <h1 class="logo">Region</h1>
+            <h1 class="logo"><%=r.getDesignation()%></h1>
             <nav>
                 <ul>
                     <li><a href="index.html">Accueil</a></li>
@@ -47,52 +58,19 @@
                     <!-- Ici s'affichera la carte -->
                 </div>
                 <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
-                <script type="text/javascript"> 
-                    var lat = -20.473666806709673;
-                    var lon = 46.54870880857691;
-                    var macarte = null;
-                    var villes = {
-                    '<a href="lol.php">ok</a>': { "lat": -20.1, "lon": 46.4 }
-                    };
-    
-                    function initMap() {
-                    macarte = L.map('map').setView([lat, lon], 8);
-                    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            
-                    attribution: 'données © OpenStreetMap/ODbL - rendu OSM France',
-                    minZoom: 5,
-                    maxZoom: 20
-                    }).addTo(macarte);
-                    for (ville in villes) {
-                            var marker = L.marker([villes[ville].lat, villes[ville].lon]).addTo(macarte);
-                            marker._icon.classList.add("accident");
-                            marker.bindPopup(ville);
-                        }       
-                                
-                    }
-                    window.onload = function(){
-                    initMap(); 
-                    };
-        </script>
+
             </div>
 
             <div class="card">
                 <h2>A propos du signalement</h2>
-                
-
-
-                <h3>Date</h3>
-                
-
+                <h3>Date : </h3>
+                <p>{{signalement.dateSignalement}}</p>
                 <h3>Description</h3>
-                
-
+                <p>{{signalement.description}}</p>
                 <h3>Coordonnes</h3>
-                
+                <p>{{signalement.latitude}}, {{signalement.longitude}}</p>
                 <h3>Utilisateur</h3>
-
-                <h3>Region</h3>
-
+                <p>{{signalement.utilisateur.username}}</p>
                 <button type="button" class="btn btn-success">Marquer comme resolu</button>
 
             </div>

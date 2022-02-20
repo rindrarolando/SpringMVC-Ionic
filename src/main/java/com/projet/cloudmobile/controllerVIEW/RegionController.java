@@ -1,15 +1,13 @@
 package com.projet.cloudmobile.controllerVIEW;
 
-import com.projet.cloudmobile.dao.AdministrateurDao;
-import com.projet.cloudmobile.dao.RegionDao;
-import com.projet.cloudmobile.dao.TokenDao;
-import com.projet.cloudmobile.dao.TokenRegionDao;
+import com.projet.cloudmobile.dao.*;
 import com.projet.cloudmobile.models.Administrateur;
 import com.projet.cloudmobile.models.Region;
+import com.projet.cloudmobile.models.Signalement;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -70,6 +68,27 @@ public class RegionController {
     @RequestMapping("/indexRegion")
     public String accueil(){
         return "indexRegion";
+    }
+
+    @RequestMapping("signalement")
+    public String signalement(HttpServletRequest request,@RequestParam(value = "id")String id){
+        request.setAttribute("id",id);
+        return "SignalementRegion";
+    }
+
+    @CrossOrigin
+    @GetMapping("/getSignalement")
+    public ResponseEntity<Signalement> getSignalement(@RequestHeader("token") String token, @RequestParam(value = "id")String id){
+        TokenRegionDao dao = new TokenRegionDao();
+        try{
+            if(dao.isRegionToken(token)==true) {
+                return new ResponseEntity<Signalement>(new SignalementDao().getSignalement(Long.valueOf(id)), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @RequestMapping("/logout")

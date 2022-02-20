@@ -97,32 +97,32 @@ String token = (String)request.getSession().getAttribute("token");
 
                             <li class="sidebar-item">
                             <form action="/Tables?region=1" method="post">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?region=1"
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?region=1" target="_self"
                                     aria-expanded="false">
                                     <i class="fa fa-table" aria-hidden="true"></i>
                                     <span class="hide-menu">Regions</span>
                                 </a>
                             </form>
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables"
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables" target="_self"
                                     aria-expanded="false">
                                     <i class="fa fa-table" aria-hidden="true"></i>
                                     <span class="hide-menu">Utilisateur</span>
                                 </a>
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?typeSignalement=1"
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?typeSignalement=1" target="_self"
                                     aria-expanded="false">
                                     <i class="fa fa-table" aria-hidden="true"></i>
                                     <span class="hide-menu">Type de signalement</span>
                                 </a>
                             </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/stat"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/stat" target="_self"
                             aria-expanded="false">
                                 <i class="fa fa-table" aria-hidden="true"></i>
                                 <span class="hide-menu">Statistiques</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/listeSignalement"
+                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/listeSignalement" target="_self"
                              aria-expanded="false">
                                 <i class="fa fa-table" aria-hidden="true"></i>
                                 <span class="hide-menu">Liste des signalements</span>
