@@ -7,6 +7,8 @@
 
     <persistence-unit name="connection" >
 
+        <class>com.projet.cloudmobile.models.Notification</class>
+        <class>com.projet.cloudmobile.models.Notification</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" /> <!-- DB Driver -->
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/basecloud" /> <!-- BD Mane -->
