@@ -119,6 +119,10 @@ public class SignalementDao {
         return em.createQuery("select c from Signalement c where c.etat='Nouveau'").getResultList();
     }
 
+    public List<Signalement> getSignalementEnCours(String id){
+        return em.createQuery("select c from Signalement c join SignalementRegion e on c.id = e.id where c.etat='En cours' and e.region.id="+id).getResultList();
+    }
+
     public List<SignalementRegion> getSignalementByRegion(int id){
         return em.createQuery("select c from SignalementRegion c where c.region.id="+id).getResultList();
     }

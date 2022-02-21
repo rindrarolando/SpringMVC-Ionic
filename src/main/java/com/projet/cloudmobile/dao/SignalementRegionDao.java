@@ -28,6 +28,18 @@ public class SignalementRegionDao {
         return em.createQuery("select e from SignalementRegion e").getResultList();
     }
 
+    public List<SignalementRegion> getSignalementEnCours(String id){
+        return em.createQuery("select e from SignalementRegion e where e.signalement.etat = 'En cours' and e.region.id = "+id).getResultList();
+    }
+
+    public List<SignalementRegion> getSignalementTermines(String id){
+        return em.createQuery("select e from SignalementRegion e where e.signalement.etat = 'Etat' and e.region.id = "+id).getResultList();
+    }
+
+    public List<SignalementRegion> getSignalementFiltre(String id, String etat, String date){
+        return em.createQuery("select e from SignalementRegion e where e.signalement.etat = '"+etat+"' and e.signalement.dateSignalement = '"+date+"' and e.region.id = "+id).getResultList();
+    }
+
     public SignalementRegion getSignalementRegion(Long id){
         SignalementRegion r = em.find(SignalementRegion.class,id);
         if (r == null) {

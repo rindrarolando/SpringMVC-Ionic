@@ -40,9 +40,10 @@ String id = request.getParameter("id");
             <h1 class="logo"><%=r.getDesignation()%></h1>
             <nav>
                 <ul>
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="features.html">Signalements en cours</a></li>
-                    <li><a href="docs.html">Signalements terminés</a></li>
+                    <li><a href="region/indexRegion" target="_self">Accueil</a></li>
+                    <li><a href="region/listeSignalementRegion?enCours=1" target="_self">Signalements en cours</a></li>
+                    <li><a href="region/listeSignalementRegion?termine=1" target="_self">Signalements terminés</a></li>
+                    <li><a href="logout" target="_self">Se deconnecter</a></li>
                 </ul>
             </nav>
         </div>

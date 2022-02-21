@@ -27,7 +27,7 @@
 </head>
 <%String token = (String)request.getSession().getAttribute("token_region");
 Region r = (Region)request.getSession().getAttribute("region");
-String id = request.getParameter("id"); out.println(id);
+
  %>
 <base href="/" />
 <body ng-app="myapp" ng-controller="regionControl" data-ng-init="getSignalements('<%=token%>','<%=r.getId()%>')">
@@ -36,9 +36,9 @@ String id = request.getParameter("id"); out.println(id);
             <h1 class="logo"><%=r.getDesignation()%></h1>
             <nav>
                 <ul>
-                    <li><a href="index.html" target="_self">Accueil</a></li>
-                    <li><a href="features.html" target="_self">Signalements en cours</a></li>
-                    <li><a href="docs.html" target="_self">Signalements terminés</a></li>
+                    <li><a href="indexRegion" target="_self">Accueil</a></li>
+                    <li><a href="region/listeSignalementRegion?enCours=1" target="_self">Signalements en cours</a></li>
+                    <li><a href="region/listeSignalementRegion?termine=1" target="_self">Signalements terminés</a></li>
                     <li><a href="region/logout" target="_self">Se deconnecter</a></li>
                 </ul>
             </nav>
@@ -73,7 +73,9 @@ String id = request.getParameter("id"); out.println(id);
     <!-- Stats -->
     <section class="stats">
         <div class="container">
+
             <div id="map">
+
                 <!-- Ici s'affichera la carte -->
             </div>
             <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
@@ -100,9 +102,35 @@ String id = request.getParameter("id"); out.println(id);
         </div>
     </section>
 
-   
+   <br>
 
-    
+<section class="languages">
+        <h2 class="md text-center my-2">
+            Liste des signalements
+        </h2>
+        <div class="container flex">
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">First</th>
+                  <th scope="col">Last</th>
+                  <th scope="col">Handle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
+
+    </section>
 
     <!-- Footer -->
     <footer class="footer bg-dark py-5">

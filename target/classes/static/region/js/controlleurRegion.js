@@ -14,18 +14,10 @@ function($scope,$http,$location,$window) {
         headers : {'token':$args}
     }).then(function (response) {
 
-    var villes = {
-        '<a href="lol.php">ok</a>': { "lat": -20.1, "lon": 46.4 }
-     };
-    for (ville in villes) {
-        var marker = L.marker([villes[ville].lat, villes[ville].lon]).addTo(macarte);
-        marker._icon.classList.add("glissement");
-        marker.bindPopup(ville);
-    }
-        console.log('ok');
       $scope.signalement=response.data;
+
       for(ville in $scope.signalement){
-        console.log($scope.signalement[ville].signalement.latitude);
+
         var marker = L.marker([$scope.signalement[ville].signalement.latitude, $scope.signalement[ville].signalement.longitude]).addTo(macarte);
         if($scope.signalement[ville].signalement.type.id==1)marker._icon.classList.add("route");
         else if($scope.signalement[ville].signalement.type.id==2)marker._icon.classList.add("accident");
@@ -38,6 +30,60 @@ function($scope,$http,$location,$window) {
     });
 
   }
+
+    $scope.getSignalementsEnCours=function($args,$id){
+
+          $http.get('http://localhost:8080/region/getSignalementEnCours?id='+$id+'', {
+              headers : {'token':$args}
+          }).then(function (response) {
+
+
+            $scope.signalement=response.data;
+            console.log($scope.signalement)
+            for(ville in $scope.signalement){
+
+              var marker = L.marker([$scope.signalement[ville].signalement.latitude, $scope.signalement[ville].signalement.longitude]).addTo(macarte);
+              if($scope.signalement[ville].signalement.type.id==1)marker._icon.classList.add("route");
+              else if($scope.signalement[ville].signalement.type.id==2)marker._icon.classList.add("accident");
+              else if($scope.signalement[ville].signalement.type.id==3)marker._icon.classList.add("ordures");
+              else if($scope.signalement[ville].signalement.type.id==4)marker._icon.classList.add("glissement");
+              else if($scope.signalement[ville].signalement.type.id==5)marker._icon.classList.add("inondation");
+              else if($scope.signalement[ville].signalement.type.id==6)marker._icon.classList.add("coupure");
+              marker.bindPopup('<a href="region/signalement?id='+$scope.signalement[ville].signalement.id+'" target="_self">'+$scope.signalement[ville].signalement.description+'</a>');
+            }
+          });
+
+        }
+
+        $scope.getSignalementsTermines=function($args,$id){
+
+                  $http.get('http://localhost:8080/region/getSignalementsTermines?id='+$id+'', {
+                      headers : {'token':$args}
+                  }).then(function (response) {
+
+
+                    $scope.signalementTermine=response.data;
+                    console.log($scope.signalementTermine)
+                    for(ville in $scope.signalementTermine){
+
+                      var marker = L.marker([$scope.signalementTermine[ville].signalement.latitude, $scope.signalementTermine[ville].signalement.longitude]).addTo(macarte2);
+                      if($scope.signalementTermine[ville].signalement.type.id==1)marker._icon.classList.add("route");
+                      else if($scope.signalementTermine[ville].signalement.type.id==2)marker._icon.classList.add("accident");
+                      else if($scope.signalementTermine[ville].signalement.type.id==3)marker._icon.classList.add("ordures");
+                      else if($scope.signalementTermine[ville].signalement.type.id==4)marker._icon.classList.add("glissement");
+                      else if($scope.signalementTermine[ville].signalement.type.id==5)marker._icon.classList.add("inondation");
+                      else if($scope.signalementTermine[ville].signalement.type.id==6)marker._icon.classList.add("coupure");
+                      marker.bindPopup('<a href="region/signalement?id='+$scope.signalementTermine[ville].signalement.id+'" target="_self">'+$scope.signalementTermine[ville].signalement.description+'</a>');
+                    }
+                  });
+
+                }
+
+        $scope.getEtatSignalements=function($args,$id){
+            $scope.getSignalementsEnCours($args,$id);
+            $scope.getSignalementsTermines($args,$id);
+        }
+
   $scope.attribuerRegion=function(){
   console.log("id signalement ="+$location.search().id);
   console.log("id region ="+$scope.idregion);

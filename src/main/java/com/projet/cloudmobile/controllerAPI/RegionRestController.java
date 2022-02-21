@@ -1,11 +1,9 @@
 package com.projet.cloudmobile.controllerAPI;
 
-import com.projet.cloudmobile.dao.RegionDao;
-import com.projet.cloudmobile.dao.SignalementDao;
-import com.projet.cloudmobile.dao.TokenDao;
-import com.projet.cloudmobile.dao.TokenRegionDao;
+import com.projet.cloudmobile.dao.*;
 import com.projet.cloudmobile.models.Region;
 import com.projet.cloudmobile.models.Signalement;
+import com.projet.cloudmobile.models.SignalementRegion;
 import com.projet.cloudmobile.models.Tokenregion;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -43,6 +41,36 @@ public class RegionRestController {
             return new ResponseEntity(HttpStatus.OK);
         }else{
             return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    @CrossOrigin
+    @GetMapping("/getSignalementEnCours")
+    public ResponseEntity<List<SignalementRegion>> getSignalementsEnCours(@RequestHeader("token") String token, @RequestParam("id")String id){
+        TokenRegionDao dao = new TokenRegionDao();
+        try{
+            if(dao.isValidTokenRegion(token)==true) {
+                return new ResponseEntity<List<SignalementRegion>>(new SignalementRegionDao().getSignalementEnCours(id), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin
+    @GetMapping("/getSignalementsTermines")
+    public ResponseEntity<List<SignalementRegion>> getSignalementsTermines(@RequestHeader("token") String token, @RequestParam("id")String id){
+        TokenRegionDao dao = new TokenRegionDao();
+        try{
+            if(dao.isValidTokenRegion(token)==true) {
+                return new ResponseEntity<List<SignalementRegion>>(new SignalementRegionDao().getSignalementTermines(id), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }

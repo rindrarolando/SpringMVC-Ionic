@@ -1,3 +1,7 @@
+<%@page import="java.util.List"%>
+<%@page import="com.projet.cloudmobile.models.*"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,31 +12,37 @@
     <link rel="stylesheet" href="css/stylegrid.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
         <style type="text/css">
-            #map{ /* la carte DOIT avoir une hauteur sinon elle n'apparaît pas */
+            #map{
                 height:400px;
             }
         </style>
-        <style>
-            img.accident { filter: hue-rotate(210deg); }
-            img.glissement { filter: hue-rotate(120deg); }
-        </style>
+
+        <link rel="stylesheet" href="css/markcolors.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="js/angular.min.js"></script> 
-    <script src="js/controlleur.js"></script> 
+    <script src="js/controlleurRegion.js"></script>
     <script src="js/angular-route.js"></script>
+
 
     <title>Loruki | Cloud Hosting For Everyone</title>
 </head>
-<body ng-app="myapp" ng-controller="testControl">
+
+<%String token = (String)request.getSession().getAttribute("token_region");
+Region r = (Region)request.getSession().getAttribute("region");
+String id = request.getParameter("id"); out.println(id);
+%>
+<base href="/" />
+<body ng-app="myapp" ng-controller="regionControl" data-ng-init="getEtatSignalements('<%=token%>','<%=r.getId()%>')">
     <!-- Navbar -->
     <div class="navbars">
         <div class="container flex">
             <h1 class="logo">Region.</h1>
             <nav>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="features.html">Features</a></li>
-                    <li><a href="docs.html">Docs</a></li>
+                    <li><a href="region/indexRegion" target="_self">Accueil</a></li>
+                    <li><a href="region/listeSignalementRegion?enCours=1" target="_self">Signalements en cours</a></li>
+                    <li><a href="region/listeSignalementRegion?termine=1" target="_self">Signalements termines</a></li>
+                    <li><a href="region/logout" target="_self">Deconnexion</a></li>
                 </ul>
             </nav>
         </div>
@@ -44,77 +54,118 @@
     <section class="features-sub-head bg-light py-3">
 
         <div class="container grid">
+
+        <%if(request.getParameter("enCours")!=null){%>
             <h3>Liste des signalements en cours</h3> 
             
             <table class="table">
                 <thead class="thead-dark">
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Etat</th>
+                    <th scope="col">Utilisateur</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
+                 <tr ng-repeat="x in signalement">
+                     <td>{{x.signalement.id}}</td>
+                     <td>{{x.signalement.description}}</td>
+                     <td>{{x.signalement.etat}}</td>
+                     <td>{{x.utilisateur.username}}</td>
+                     <td><form action={{'region/signalement?id='+x.id}} method="post"><button type="submit"class="btn btn-primary">Voir details</button></form></td>
+                 </tr>
                 </tbody>
-              </table>  
-                
-        </div>
-    </section>
+              </table>
+               </div>
+                  </section>
 
-    <section class="features-main my-2">
-        <div class="container grid grid-3">
-            <div id="map">
+                  <section class="features-main my-2">
+                      <div class="container grid grid-3">
+                          <div id="map">
 
-            </div>
-            <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
-            <script type="text/javascript"> 
-                var lat = -20.473666806709673;
-                var lon = 46.54870880857691;
-                var macarte = null;
-                var villes = {
-                '<a href="lol.php">ok</a>': { "lat": -20.1, "lon": 46.4 }
-                };
+                          </div>
+                          <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+                          <script type="text/javascript">
+                              var lat = -20.473666806709673;
+                              var lon = 46.54870880857691;
+                              var macarte = null;
 
-                function initMap() {
-                macarte = L.map('map').setView([lat, lon], 8);
-                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        
-                attribution: 'données © OpenStreetMap/ODbL - rendu OSM France',
-                minZoom: 5,
-                maxZoom: 20
-                }).addTo(macarte);
-                for (ville in villes) {
-                        var marker = L.marker([villes[ville].lat, villes[ville].lon]).addTo(macarte);
-                        marker._icon.classList.add("accident");
-                        marker.bindPopup(ville);
-                    }       
-                            
-                }
-                window.onload = function(){
-                initMap(); 
-                };
-    </script>
-        </div>
-    </section>
+
+                              function initMap() {
+                              macarte = L.map('map').setView([lat, lon], 8);
+                              L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+
+                              attribution: 'données © OpenStreetMap/ODbL - rendu OSM France',
+                              minZoom: 5,
+                              maxZoom: 20
+                              }).addTo(macarte);
+
+
+                              }
+                              window.onload = function(){
+                              initMap();
+                              };
+                  </script>
+                      </div>
+                  </section>
+          <%}%>
+          <%if(request.getParameter("termine")!=null){%>
+                      <h3>Liste des signalements termines</h3>
+
+                      <table class="table">
+                                      <thead class="thead-dark">
+                                        <tr>
+                                          <th scope="col">Id</th>
+                                          <th scope="col">Description</th>
+                                          <th scope="col">Etat</th>
+                                          <th scope="col">Utilisateur</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                       <tr ng-repeat="x in signalementTermine">
+                                           <td>{{x.signalement.id}}</td>
+                                           <td>{{x.signalement.description}}</td>
+                                           <td>{{x.signalement.etat}}</td>
+                                           <td>{{x.utilisateur.username}}</td>
+                                           <td><form action={{'region/signalement?id='+x.id}} method="post"><button type="submit"class="btn btn-primary">Voir details</button></form></td>
+                                       </tr>
+                                      </tbody>
+                                    </table>
+                                    </div>
+                                                      </section>
+
+                                                      <section class="features-main my-2">
+                                                          <div class="container grid grid-3">
+                                                              <div id="map">
+
+                                                              </div>
+                                                              <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
+                                                              <script type="text/javascript">
+                                                                  var lat = -20.473666806709673;
+                                                                  var lon = 46.54870880857691;
+                                                                  var macarte2 = null;
+
+
+                                                                  function initMap() {
+                                                                  macarte2 = L.map('map').setView([lat, lon], 8);
+                                                                  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+
+                                                                  attribution: 'données © OpenStreetMap/ODbL - rendu OSM France',
+                                                                  minZoom: 5,
+                                                                  maxZoom: 20
+                                                                  }).addTo(macarte2);
+
+
+                                                                  }
+                                                                  window.onload = function(){
+                                                                  initMap();
+                                                                  };
+                                                      </script>
+                                                          </div>
+                                                      </section>
+                    <%}%>
+
     
     <!-- Footer -->
     <footer class="footer bg-dark py-5">

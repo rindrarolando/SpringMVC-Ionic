@@ -70,6 +70,11 @@ public class RegionController {
         return "indexRegion";
     }
 
+    @RequestMapping("/listeSignalementRegion")
+    public String listeSignalements(){
+        return "ListeSignalementRegion";
+    }
+
     @RequestMapping("signalement")
     public String signalement(HttpServletRequest request,@RequestParam(value = "id")String id){
         request.setAttribute("id",id);
