@@ -52,8 +52,8 @@ function($scope,$http,$location,$window) {
             headers : {'token':$args}
         }).then(function (response) {
         $scope.signalement = response.data;
-        var lat = signalement.latitude;
-        var lon = signalement.longitude;
+        var lat = $scope.signalement.latitude;
+        var lon = $scope.signalement.longitude;
                             var macarte = null;
                 function initMap() {
                 macarte = L.map('map').setView([lat, lon], 8);
