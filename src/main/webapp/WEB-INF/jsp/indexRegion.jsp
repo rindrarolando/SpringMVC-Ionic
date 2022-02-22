@@ -114,15 +114,16 @@ Region r = (Region)request.getSession().getAttribute("region");
     <footer class="footer bg-dark py-5">
         <div class="container grid grid-3">
             <div>
-                <h1>Region
+                <h1><%=r.getDesignation()%>
                 </h1>
-                <p>Copyright &copy; 2020</p>
+                <p>Copyright &copy; 2022</p>
             </div>
             <nav>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="features.html">Features</a></li>
-                    <li><a href="docs.html">Docs</a></li>
+                    <li><a href="indexRegion" target="_self">Accueil</a></li>
+                    <li><a href="region/listeSignalementRegion?enCours=1" target="_self">Signalements en cours</a></li>
+                    <li><a href="region/listeSignalementRegion?termine=1" target="_self">Signalements terminés</a></li>
+                    <li><a href="region/recherche" target="_self">Recherche</a></li>
                 </ul>
             </nav>
 

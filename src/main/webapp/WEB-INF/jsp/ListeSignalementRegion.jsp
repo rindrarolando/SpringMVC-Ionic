@@ -23,24 +23,25 @@
     <script src="js/angular-route.js"></script>
 
 
-    <title>Loruki | Cloud Hosting For Everyone</title>
+    <title>Region</title>
 </head>
 
 <%String token = (String)request.getSession().getAttribute("token_region");
 Region r = (Region)request.getSession().getAttribute("region");
-String id = request.getParameter("id"); out.println(id);
+String id = request.getParameter("id");
 %>
 <base href="/" />
 <body ng-app="myapp" ng-controller="regionControl" data-ng-init="getEtatSignalements('<%=token%>','<%=r.getId()%>')">
     <!-- Navbar -->
     <div class="navbars">
         <div class="container flex">
-            <h1 class="logo">Region.</h1>
+            <h1 class="logo"><%=r.getDesignation()%></h1>
             <nav>
                 <ul>
                     <li><a href="region/indexRegion" target="_self">Accueil</a></li>
                     <li><a href="region/listeSignalementRegion?enCours=1" target="_self">Signalements en cours</a></li>
                     <li><a href="region/listeSignalementRegion?termine=1" target="_self">Signalements termines</a></li>
+                    <li><a href="region/recherche" target="_self">Recherche</a></li>
                     <li><a href="region/logout" target="_self">Deconnexion</a></li>
                 </ul>
             </nav>
@@ -170,15 +171,16 @@ String id = request.getParameter("id"); out.println(id);
     <footer class="footer bg-dark py-5">
         <div class="container grid grid-3">
             <div>
-                <h1>Region
+                <h1><%=r.getDesignation()%>
                 </h1>
                 <p>Copyright &copy; 2022</p>
             </div>
             <nav>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="features.html">Features</a></li>
-                    <li><a href="docs.html">Docs</a></li>
+                    <li><a href="indexRegion" target="_self">Accueil</a></li>
+                    <li><a href="region/listeSignalementRegion?enCours=1" target="_self">Signalements en cours</a></li>
+                    <li><a href="region/listeSignalementRegion?termine=1" target="_self">Signalements terminés</a></li>
+                    <li><a href="region/recherche" target="_self">Recherche</a></li>
                 </ul>
             </nav>
             
