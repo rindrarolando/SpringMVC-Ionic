@@ -73,4 +73,19 @@ public class RegionRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @CrossOrigin
+    @GetMapping("/rechercheSignalement")
+    public ResponseEntity<List<SignalementRegion>> getRechercheSignalement(@RequestHeader("token") String token,@RequestParam("id")String id, @RequestParam("date")String date,@RequestParam("type")String type,@RequestParam("etat")String etat){
+        TokenRegionDao dao = new TokenRegionDao();
+        try{
+            if(dao.isValidTokenRegion(token)==true) {
+                return new ResponseEntity<List<SignalementRegion>>(new SignalementRegionDao().getSignalementFiltre(id,etat,date,type), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

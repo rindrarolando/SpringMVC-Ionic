@@ -29,7 +29,7 @@ Region r = (Region)request.getSession().getAttribute("region");
 
  %>
 <base href="/" />
-<body ng-app="myapp" ng-controller="regionControl" data-ng-init="getSignalements('<%=token%>','<%=r.getId()%>')">
+<body ng-app="myapp" ng-controller="regionControl">
     <div class="navbars">
         <div class="container flex">
             <h1 class="logo"><%=r.getDesignation()%></h1>
@@ -38,27 +38,51 @@ Region r = (Region)request.getSession().getAttribute("region");
                     <li><a href="indexRegion" target="_self">Accueil</a></li>
                     <li><a href="region/listeSignalementRegion?enCours=1" target="_self">Signalements en cours</a></li>
                     <li><a href="region/listeSignalementRegion?termine=1" target="_self">Signalements terminés</a></li>
-                    <li><a href="region/recherche" target="_self">Recherche</a></li>
-                    <li><a href="logout" target="_self">Se deconnecter</a></li>
+                    <li><a href="region/logout" target="_self">Se deconnecter</a></li>
                 </ul>
             </nav>
         </div>
     </div>
 
+    <section class="showcase">
+        <div class="container grid">
 
+
+            <div class="showcase-form card">
+                <h2>Recherche filtrée</h2>
+                 <form>
+                    <div class="form-group">
+                        <input type="date" ng-model="date" class="form-control">
+                      </div>
+                      <select class="form-control" ng-model="etat">
+                        <option value="En">En cours</option>
+                        <option value="Termine">Termine</option>
+                      </select>
+                      <select class="form-control" ng-model="type">
+                        <option value="1">Route abîmée</option>
+                        <option value="2">Accident de la route</option>
+                        <option value="3">Ordures</option>
+                        <option value="4">Glissement de terrain</option>
+                        <option value="5">Inondation</option>
+                        <option value="6">Coupure de courant</option>
+                      </select>
+                    <button ng-click="test('<%=token%>','<%=r.getId()%>')" class="btn btn-primary">Ajouter</button>
+
+                </form>
+            </div>
+        </div>
+    </section>
 
     <!-- Stats -->
     <section class="stats">
         <div class="container">
-            <h2 class="md text-center my-2">
-                        Liste des signalements de la region <%=r.getDesignation()%>
-                    </h2>
+
             <div id="map">
 
                 <!-- Ici s'affichera la carte -->
             </div>
             <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw==" crossorigin=""></script>
-            <script type="text/javascript">
+            <script type="text/javascript"> 
                 var lat = -20.473666806709673;
                 var lon = 46.54870880857691;
                 var macarte = null;
@@ -66,7 +90,7 @@ Region r = (Region)request.getSession().getAttribute("region");
                 function initMap() {
                 macarte = L.map('map').setView([lat, lon], 8);
                 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-
+        
                 attribution: 'données © OpenStreetMap/ODbL - rendu OSM France',
                 minZoom: 5,
                 maxZoom: 20
@@ -75,7 +99,7 @@ Region r = (Region)request.getSession().getAttribute("region");
 
                 }
                 window.onload = function(){
-                initMap();
+                initMap(); 
                 };
     </script>
         </div>
@@ -84,7 +108,9 @@ Region r = (Region)request.getSession().getAttribute("region");
    <br>
 
 <section class="languages">
-
+        <h2 class="md text-center my-2">
+            Liste des signalements
+        </h2>
         <div class="container flex">
             <table class="table">
               <thead class="thead-dark">
@@ -96,12 +122,13 @@ Region r = (Region)request.getSession().getAttribute("region");
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="x in signalement">
+                <tr ng-repeat="x in signalementTermine">
                     <td>{{x.signalement.id}}</td>
                     <td>{{x.signalement.description}}</td>
                     <td>{{x.signalement.etat}}</td>
                     <td>{{x.utilisateur.username}}</td>
                     <td><form action={{'region/signalement?id='+x.id}} method="post"><button type="submit"class="btn btn-primary">Voir details</button></form></td>
+
                 </tr>
               </tbody>
             </table>

@@ -33,11 +33,15 @@ public class SignalementRegionDao {
     }
 
     public List<SignalementRegion> getSignalementTermines(String id){
-        return em.createQuery("select e from SignalementRegion e where e.signalement.etat = 'Etat' and e.region.id = "+id).getResultList();
+        return em.createQuery("select e from SignalementRegion e where e.signalement.etat = 'Termine' and e.region.id = "+id).getResultList();
     }
 
-    public List<SignalementRegion> getSignalementFiltre(String id, String etat, String date){
-        return em.createQuery("select e from SignalementRegion e where e.signalement.etat = '"+etat+"' and e.signalement.dateSignalement = '"+date+"' and e.region.id = "+id).getResultList();
+    public List<SignalementRegion> getSignalementFiltre(String id, String etat, String date,String type){
+        return em.createQuery("select e from SignalementRegion e where e.signalement.etat like '"+etat+"%' and e.signalement.dateSignalement = '"+date+"' and e.signalement.type.id='"+type+"' and e.region.id = "+id).getResultList();
+    }
+
+    public String test(String id, String etat, String date,String type){
+        return em.createQuery("select e from SignalementRegion e where e.signalement.etat like '"+etat+"%' and e.signalement.dateSignalement = '"+date+"' and e.signalement.type.id='"+type+"' and e.region.id = "+id).getResultList().toString();
     }
 
     public SignalementRegion getSignalementRegion(Long id){
