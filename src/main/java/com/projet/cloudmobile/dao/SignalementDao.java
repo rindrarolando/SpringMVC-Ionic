@@ -127,6 +127,8 @@ public class SignalementDao {
         return em.createQuery("select c from SignalementRegion c where c.region.id="+id).getResultList();
     }
 
+
+
     public List<Signalement> getSignalementByUtil(String name){
         String names = name;
         List<Signalement>  sig = null;
@@ -163,6 +165,16 @@ public class SignalementDao {
                     + id);
         }
         return r;
+    }
+
+    @Transactional
+    public void updateSignalement(String id){
+        Long l = Long.parseLong(id);
+        Signalement s = getSignalement(l);
+        s.setEtat("Terminé");
+        tx.begin();
+        em.persist(s);
+        tx.commit();
     }
 
     @Transactional

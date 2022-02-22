@@ -45,6 +45,22 @@ public class RegionRestController {
     }
 
     @CrossOrigin
+    @PostMapping("/update")
+    public ResponseEntity update(@RequestHeader("token") String token, @RequestParam("id")String id) throws SQLException {
+        TokenRegionDao dao = new TokenRegionDao();
+        try {
+            if(dao.isValidTokenRegion(token)){
+                new SignalementDao().updateSignalement(id);
+                return new ResponseEntity(HttpStatus.OK);
+            }else{
+                return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin
     @GetMapping("/getSignalementEnCours")
     public ResponseEntity<List<SignalementRegion>> getSignalementsEnCours(@RequestHeader("token") String token, @RequestParam("id")String id){
         TokenRegionDao dao = new TokenRegionDao();

@@ -120,7 +120,7 @@ Region r = (Region)request.getSession().getAttribute("region");
             </div>
             <nav>
                 <ul>
-                    <li><a href="indexRegion" target="_self">Accueil</a></li>
+                    <li><a href="region/indexRegion" target="_self">Accueil</a></li>
                     <li><a href="region/listeSignalementRegion?enCours=1" target="_self">Signalements en cours</a></li>
                     <li><a href="region/listeSignalementRegion?termine=1" target="_self">Signalements terminés</a></li>
                     <li><a href="region/recherche" target="_self">Recherche</a></li>
