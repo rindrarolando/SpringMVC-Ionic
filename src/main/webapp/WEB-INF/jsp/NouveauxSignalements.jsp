@@ -91,7 +91,7 @@ String token = (String)request.getSession().getAttribute("token");
                         <li class="sidebar-item pt-2">
 
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/NouveauxSignalements"
-                            aria-expanded="false">
+                            aria-expanded="false" target="_self">
                                 <i class="fas fa-bug" aria-hidden="true"></i>
                                 <span class="hide-menu">Nouveaux Signalements</span>
                             </a>
@@ -99,32 +99,32 @@ String token = (String)request.getSession().getAttribute("token");
                             <li class="sidebar-item">
                             <form action="/Tables?region=1" method="post">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?region=1"
-                                    aria-expanded="false">
+                                    aria-expanded="false" target="_self">
                                     <i class="fa fa-table" aria-hidden="true"></i>
                                     <span class="hide-menu">Regions</span>
                                 </a>
                             </form>
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?utilisateur=1"
-                                    aria-expanded="false">
+                                    aria-expanded="false" target="_self">
                                     <i class="fa fa-table" aria-hidden="true"></i>
-                                    <span class="hide-menu">Utilisateur</span>
+                                    <span class="hide-menu" >Utilisateur</span>
                                 </a>
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?typeSignalement=1"
-                                    aria-expanded="false">
+                                    aria-expanded="false" target="_self">
                                     <i class="fa fa-table" aria-hidden="true"></i>
                                     <span class="hide-menu">Type de signalement</span>
                                 </a>
                             </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/stat"
-                            aria-expanded="false">
+                            aria-expanded="false" target="_self">
                                 <i class="fa fa-table" aria-hidden="true"></i>
                                 <span class="hide-menu">Statistiques</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/listeSignalement"
-                             aria-expanded="false">
+                             aria-expanded="false" target="_self">
                                 <i class="fa fa-table" aria-hidden="true"></i>
                                 <span class="hide-menu">Liste des signalements</span>
                              </a>
@@ -150,7 +150,7 @@ String token = (String)request.getSession().getAttribute("token");
                             <ol class="breadcrumb ms-auto">
                                
                             </ol>
-                            <a href="/logout"
+                            <a href="/logout" target="_self"
                                 class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">Se deconnecter</a>
                         </div>
                     </div>
@@ -168,7 +168,7 @@ String token = (String)request.getSession().getAttribute("token");
                                     <div class="white-box">
                                         
                                         <h3 class="box-title">Les nouveaux signalements :</h3>
-                                        <p class="text-muted">Add class <code>.table</code></p>
+
                                         <div class="table-responsive">
                                             <table class="table text-nowrap">
                                                 <thead>

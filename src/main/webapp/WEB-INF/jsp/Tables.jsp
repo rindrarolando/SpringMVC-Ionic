@@ -89,7 +89,7 @@ String token = (String)request.getSession().getAttribute("token");
                         <li class="sidebar-item pt-2">
 
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/NouveauxSignalements"
-                            aria-expanded="false">
+                            aria-expanded="false" target="_self">
                                 <i class="fas fa-bug" aria-hidden="true"></i>
                                 <span class="hide-menu">Nouveaux Signalements</span>
                             </a>
@@ -97,32 +97,32 @@ String token = (String)request.getSession().getAttribute("token");
                             <li class="sidebar-item">
                             <form action="/Tables?region=1" method="post">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?region=1" target="_self"
-                                    aria-expanded="false">
+                                    aria-expanded="false" target="_self">
                                     <i class="fa fa-table" aria-hidden="true"></i>
                                     <span class="hide-menu">Regions</span>
                                 </a>
                             </form>
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables" target="_self"
-                                    aria-expanded="false">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?utilisateur=1" target="_self"
+                                    aria-expanded="false" target="_self">
                                     <i class="fa fa-table" aria-hidden="true"></i>
                                     <span class="hide-menu">Utilisateur</span>
                                 </a>
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/Tables?typeSignalement=1" target="_self"
-                                    aria-expanded="false">
+                                    aria-expanded="false" target="_self">
                                     <i class="fa fa-table" aria-hidden="true"></i>
                                     <span class="hide-menu">Type de signalement</span>
                                 </a>
                             </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/stat" target="_self"
-                            aria-expanded="false">
+                            aria-expanded="false" target="_self">
                                 <i class="fa fa-table" aria-hidden="true"></i>
                                 <span class="hide-menu">Statistiques</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
                              <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/listeSignalement" target="_self"
-                             aria-expanded="false">
+                             aria-expanded="false" target="_self">
                                 <i class="fa fa-table" aria-hidden="true"></i>
                                 <span class="hide-menu">Liste des signalements</span>
                              </a>
@@ -147,7 +147,7 @@ String token = (String)request.getSession().getAttribute("token");
                             <ol class="breadcrumb ms-auto">
                                
                             </ol>
-                            <a href="https://www.wrappixel.com/templates/ampleadmin/" target="_blank"
+                            <a href="/logout" target="_self"
                                 class="btn btn-danger  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">Se deconnecter</a>
                         </div>
                     </div>
@@ -211,8 +211,7 @@ String token = (String)request.getSession().getAttribute("token");
                                                         <td>{{x.password}}</td>
                                                         <td>{{x.email}}</td>
                                                         <td>{{x.dtn}}</td>
-                                                        <td><form action="ESSAI2.html?id={{x.id}}" method="post"><button type="submit"class="btn btn-primary">Attribuer</button></form></td>
-                                                        <td><button type="button" class="btn btn-danger">Supprimer</button></td>
+
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -234,8 +233,7 @@ String token = (String)request.getSession().getAttribute("token");
                                                     <tr ng-repeat="x in typeSignalement">
                                                         <td>{{x.id}}</td>
                                                         <td>{{x.designation}}</td>
-                                                        <td><form action="ESSAI2.html?id={{x.id}}" method="post"><button type="submit"class="btn btn-primary">Attribuer</button></form></td>
-                                                        <td><button type="button" class="btn btn-danger">Supprimer</button></td>
+
                                                     </tr>
                                                 </tbody>
                                             </table>
