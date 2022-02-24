@@ -2,7 +2,6 @@ package com.projet.cloudmobile.controllerAPI;
 
 import com.projet.cloudmobile.dao.*;
 import com.projet.cloudmobile.models.*;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,6 +57,25 @@ public class RegionRestController {
                 return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
             }
         } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin
+    @PostMapping("/test/update")
+    public ResponseEntity update( @RequestParam("id")String id) throws SQLException {
+        TokenRegionDao dao = new TokenRegionDao();
+        try {
+
+                //new SignalementDao().updateSignalement(id);
+                Signalement s = new SignalementDao().getSignalement(Long.parseLong(id));
+                LocalDateTime rightNow = LocalDateTime.now();
+                Notification n = new Notification(s.getUtilisateur().getId().intValue(),s.getDescription(),rightNow);
+                new NotificationDao().insertNotification(n);
+                return new ResponseEntity(HttpStatus.OK);
+
+
+            }catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

@@ -30,6 +30,17 @@ public class NotificationRestController {
         }
     }
 
+    @PostMapping("/test/insert")
+    public String insert_notification(@RequestBody Notification notification) throws Exception {
+
+        try {
+            repository.save(notification);
+            return "NETY LTY EH";
+        }catch (Exception e){
+            return "TSY NETY LTY EH";
+        }
+    }
+
     @RequestMapping("/getNotification")
     public ResponseEntity<ArrayList<Notification>> getNotifUser(@RequestParam int id,@RequestHeader String token) throws Exception {
         ArrayList<Notification> list = new ArrayList<>();
@@ -38,6 +49,18 @@ public class NotificationRestController {
             list = repository.getNotificationUser(id);
             return new ResponseEntity<>(list, HttpStatus.OK);
         }else{
+            return new ResponseEntity<>(null,HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    @RequestMapping("/test/getNotification")
+    public ResponseEntity<ArrayList<Notification>> getNotifUser(@RequestParam int id) throws Exception {
+        ArrayList<Notification> list = new ArrayList<>();
+
+        try{
+            list = repository.getNotificationUser(id);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        }catch(Exception e){
             return new ResponseEntity<>(null,HttpStatus.UNAUTHORIZED);
         }
     }
