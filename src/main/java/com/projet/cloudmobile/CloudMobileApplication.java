@@ -16,11 +16,7 @@ public class CloudMobileApplication{
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(CloudMobileApplication.class, args);
 		//EntityManagerFactory emf = Persistence.createEntityManagerFactory( "connection");
-		LocalDateTime now = LocalDateTime.now();
-		Notification notif = new Notification(1,"Test androany alakamisy",now);
-		NotificationRepository repository;
-		new NotificationDao().insertNotification(notif);
-		System.out.println("tafa ny web atsika eh");
+
 	}
 
 }

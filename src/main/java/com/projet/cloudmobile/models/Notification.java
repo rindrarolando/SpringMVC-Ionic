@@ -21,19 +21,19 @@ public class Notification implements Serializable {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss[.SSS][.SS][.S]")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime date;
+    private String date;
 
     public Notification(){
 
     }
 
-    public Notification(Integer iduser, String description, LocalDateTime date) {
+    public Notification(Integer iduser, String description, String date) {
         this.iduser = iduser;
         this.description = description;
         this.date = date;
     }
 
-    public Notification(Integer id, Integer iduser, String description, LocalDateTime date) {
+    public Notification(Integer id, Integer iduser, String description, String date) {
         this.id = id;
         this.iduser = iduser;
         this.description = description;
@@ -64,11 +64,11 @@ public class Notification implements Serializable {
         this.description = description;
     }
 
-    public LocalDateTime getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
