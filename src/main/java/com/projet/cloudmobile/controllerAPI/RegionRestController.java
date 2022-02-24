@@ -1,16 +1,14 @@
 package com.projet.cloudmobile.controllerAPI;
 
 import com.projet.cloudmobile.dao.*;
-import com.projet.cloudmobile.models.Region;
-import com.projet.cloudmobile.models.Signalement;
-import com.projet.cloudmobile.models.SignalementRegion;
-import com.projet.cloudmobile.models.Tokenregion;
+import com.projet.cloudmobile.models.*;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -50,7 +48,11 @@ public class RegionRestController {
         TokenRegionDao dao = new TokenRegionDao();
         try {
             if(dao.isValidTokenRegion(token)){
-                new SignalementDao().updateSignalement(id);
+                //new SignalementDao().updateSignalement(id);
+                Signalement s = new SignalementDao().getSignalement(Long.parseLong(id));
+                LocalDateTime rightNow = LocalDateTime.now();
+                Notification n = new Notification(s.getUtilisateur().getId().intValue(),s.getDescription(),rightNow);
+                new NotificationDao().insertNotification(n);
                 return new ResponseEntity(HttpStatus.OK);
             }else{
                 return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);

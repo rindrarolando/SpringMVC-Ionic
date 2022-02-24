@@ -82,7 +82,7 @@ String id = request.getParameter("id");
     <footer class="footer bg-dark py-5">
         <div class="container grid grid-3">
             <div>
-                <h1><%r.getDesignation%>
+                <h1><%=r.getDesignation()%>
                 </h1>
                 <p>Copyright &copy; 2022</p>
             </div>

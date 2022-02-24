@@ -68,9 +68,7 @@ String token = (String)request.getSession().getAttribute("token");
 
                             <img src="plugins/images/back.png" style="height:25px"alt="homepage" />
                         </b>
-
                     </a>
-
                     <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none"
                         href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
                 </div>

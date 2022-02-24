@@ -35,7 +35,7 @@ Region r = (Region)request.getSession().getAttribute("region");
             <h1 class="logo"><%=r.getDesignation()%></h1>
             <nav>
                 <ul>
-                    <li><a href="indexRegion" target="_self">Accueil</a></li>
+                    <li><a href="region/indexRegion" target="_self">Accueil</a></li>
                     <li><a href="region/listeSignalementRegion?enCours=1" target="_self">Signalements en cours</a></li>
                     <li><a href="region/listeSignalementRegion?termine=1" target="_self">Signalements terminés</a></li>
                     <li><a href="region/recherche" target="_self">Recherche</a></li>
@@ -89,10 +89,9 @@ Region r = (Region)request.getSession().getAttribute("region");
             <table class="table">
               <thead class="thead-dark">
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">First</th>
-                  <th scope="col">Last</th>
-                  <th scope="col">Handle</th>
+                  <th scope="col">Id</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Etat</th>
                 </tr>
               </thead>
               <tbody>
