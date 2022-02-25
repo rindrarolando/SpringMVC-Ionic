@@ -53,11 +53,11 @@ public class RegionRestController {
         TokenRegionDao dao = new TokenRegionDao();
         try {
             if(dao.isValidTokenRegion(token)){
-                //new SignalementDao().updateSignalement(id);
-                Signalement s = new SignalementDao().getSignalement(Long.parseLong(id));
-                LocalDateTime rightNow = LocalDateTime.now();
-                Notification n = new Notification(s.getUtilisateur().getId().intValue(),s.getDescription(),rightNow.toString());
-                new NotificationDao().insertNotification(n);
+                new SignalementDao().updateSignalement(id);
+                //Signalement s = new SignalementDao().getSignalement(Long.parseLong(id));
+                //LocalDateTime rightNow = LocalDateTime.now();
+                //Notification n = new Notification(s.getUtilisateur().getId().intValue(),s.getDescription(),rightNow.toString());
+                //new NotificationDao().insertNotification(n);
                 return new ResponseEntity(HttpStatus.OK);
             }else{
                 return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
