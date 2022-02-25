@@ -193,6 +193,26 @@ public class UtilisateurDao {
         }
     }
 
+    public Utilisateur getUsersById(int id){
+        Utilisateur user = null;
+        try {
+            Connection c = Rescue.connectToDatabase();
+            Statement stmt = c.createStatement();
+            ResultSet res = stmt.executeQuery("select * from utilisateur where id='"+id+"'");
+            while(res.next()){
+                int i = res.getInt("id");
+                String username = res.getString("username");
+                String password = res.getString("password");
+                String mail = res.getString("email");
+                Date date = res.getDate("dtn");
+                user = new Utilisateur((long) i,username,password,mail,date);
+            }
+            return user;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
     public String createToken(Long id) throws Exception{
         String token = null;
         java.sql.Date timest = java.sql.Date.valueOf(LocalDate.now());

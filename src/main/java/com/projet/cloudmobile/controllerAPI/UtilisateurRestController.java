@@ -5,6 +5,7 @@ import com.projet.cloudmobile.dao.SignalementDao;
 import com.projet.cloudmobile.dao.TokenDao;
 import com.projet.cloudmobile.dao.UtilisateurDao;
 import com.projet.cloudmobile.models.Region;
+import com.projet.cloudmobile.models.Response;
 import com.projet.cloudmobile.models.Signalement;
 import com.projet.cloudmobile.models.Utilisateur;
 import org.springframework.http.HttpEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -44,27 +46,42 @@ public class UtilisateurRestController {
 
     @CrossOrigin
     @PostMapping("/inscription")
-    public ResponseEntity makeInscription(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email, @RequestParam("date") String date) throws ParseException {
+    public Response makeInscription(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("email") String email, @RequestParam("date") String date) throws ParseException {
         UtilisateurDao u = new UtilisateurDao();
+        Response response = new Response();
         if(UtilisateurDao.check(username,password,email)==true){
             u.inscription(username,password,email,date);
-            return new ResponseEntity(HttpStatus.OK);
+            response.setStatus("200");
+            response.setMessage("Inscription reussie");
+
+            return response;
         }else{
-            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
+            response.setStatus("400");
+            response.setMessage("Inscripiton impossible");
+            return response;
         }
     }
 
     @CrossOrigin
     @PostMapping("/login")
-    public ResponseEntity<String> loginUtilisateur(@RequestParam("email") String email ,@RequestParam("password") String password) throws Exception {
+    public Response loginUtilisateur(@RequestParam("email") String email ,@RequestParam("password") String password) throws Exception {
         String token = null;
         UtilisateurDao u = new UtilisateurDao();
+        Response response = new Response();
+
         if(u.checkLoginInformations(email, password)==true){
             Utilisateur user = u.login(email, password);
             token = u.insertTokenUser(user);
-            return new ResponseEntity<String>(token,HttpStatus.OK);
+            response.setStatus("200");
+            response.setMessage("Inscription reussie");
+            response.setDatas(token);
+
+            return response;
         }else{
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            response.setStatus("401");
+            response.setMessage("Mot de passe ou email incorrect");
+            //response.setDatas(token);
+            return response;
         }
     }
 

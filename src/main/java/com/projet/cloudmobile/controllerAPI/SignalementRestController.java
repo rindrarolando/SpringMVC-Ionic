@@ -32,6 +32,36 @@ public class SignalementRestController {
     }
 
     @CrossOrigin
+    @GetMapping("/utilisateurs/getSignalements")
+    public ResponseEntity<List<Signalement>> getSignalementUtil(@RequestHeader("token") String token){
+        TokenUserDao dao = new TokenUserDao();
+        try{
+            if(dao.isValidTokenUser(token)==true) {
+                return new ResponseEntity<List<Signalement>>(new SignalementDao().getAllSignalement(), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin
+    @GetMapping("/SignalementByUtil")
+    public ResponseEntity<List<Signalement>> getSignalementByUtil(@RequestHeader("token")String token,@RequestParam(value = "username")String username){
+        TokenUserDao dao = new TokenUserDao();
+        try{
+            if(dao.isValidTokenUser(token)==true) {
+                return new ResponseEntity<List<Signalement>>(new SignalementDao().getSignalementByUtil(username), HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+        }catch(Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin
     @GetMapping("/getSignalement")
     public ResponseEntity<Signalement> getSignalement(@RequestHeader("token") String token,@RequestParam(value = "id")String id){
         TokenDao dao = new TokenDao();
@@ -257,19 +287,7 @@ public class SignalementRestController {
         }
     }
 
-    @GetMapping("/SignalementByUtil")
-    public ResponseEntity<List<Signalement>> getSignalementByUtil(@RequestHeader("token")String token,@RequestParam(value = "username")String username){
-        TokenDao dao = new TokenDao();
-        try{
-            if(dao.isAdminToken(token)==true) {
-                return new ResponseEntity<List<Signalement>>(new SignalementDao().getSignalementByUtil(username), HttpStatus.OK);
-            }else{
-                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-            }
-        }catch(Exception e){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+
 
     @CrossOrigin
     @GetMapping("/statistiqueEtat")
@@ -436,7 +454,7 @@ public class SignalementRestController {
 
     @CrossOrigin
     @PostMapping("/insertSignalement")
-    public ResponseEntity<Boolean> insertfile(@RequestHeader("token")String token,@RequestParam(value="descripiton") String description, @RequestParam(value="etat") String etat, @RequestParam(value="idtype") String idtype, @RequestParam(value="idutilisateur") String idutilisateur, @RequestParam(value="file") List<MultipartFile> file) throws Exception {
+    public ResponseEntity<Boolean> insertfile(@RequestHeader("token")String token,@RequestParam(value="descripiton",required = false) String description, @RequestParam(value="etat",required = false) String etat, @RequestParam(value="idtype",required = false) String idtype, @RequestParam(value="idutilisateur",required = false) String idutilisateur, @RequestParam(value="file",required = false) MultipartFile file) throws Exception {
         TokenUserDao dao = new TokenUserDao();
         if(dao.isValidTokenUser(token)==true){
             //Mamindra le sary anaty /Users/macbook/Desktop/S5/Hehe/Projet-Cloud-mobile/src/main/resources/static/images/
@@ -451,7 +469,7 @@ public class SignalementRestController {
             double longitude = valera[0];
             double latitude = valera[1];
             //GET THE EXTENSION OF THE FILE
-            String extension = FilenameUtils.getExtension(file.get(0).getOriginalFilename());
+            String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 
             //CHANGEMENT DE NOM
             String urlImg = "signalement"+ID+"Url";

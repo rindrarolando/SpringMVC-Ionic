@@ -60,7 +60,7 @@ public class TokenUserDao {
         String requete = null;
         try{
             conn = Rescue.connectToDatabase();
-            requete = "SELECT * FROM tokenuser where token=? and date_expiration<current_date";
+            requete = "SELECT * FROM tokenuser where token=? and date_expiration>current_date";
             pst = conn.prepareStatement(requete);
             pst.setString(1, token);
             resultat = pst.executeQuery();

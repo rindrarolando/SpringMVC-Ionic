@@ -133,7 +133,7 @@ public class SignalementDao {
         String names = name;
         List<Signalement>  sig = null;
         sig = em
-                .createQuery("select c from Signalement c where c.utilisateur.username = :names", Signalement.class)
+                .createQuery("select c from Signalement c where c.utilisateur.email = :names", Signalement.class)
                 .setParameter("names", names)
                 .getResultList();
         return sig;
@@ -445,18 +445,18 @@ public class SignalementDao {
         Long ID = this.getLastID();
 
         try {
-            if (file.isEmpty()) {
+           /* if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file.");
-            }
+            }*/
 
-            String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+            //String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 
             //CHANGEMENT DE NOM
-            String uploadedFileName = "signalement"+ID+"Url"+suffixe+ "." + extension;
+           // String uploadedFileName = "signalement"+ID+"Url"+suffixe+ "." + extension;
             //FIN DE CHANGEMENT DE NOM
 
             Path destinationFile = rootLocation.resolve(
-                            Paths.get(uploadedFileName))
+                            Paths.get(file.toString()))
                     .normalize().toAbsolutePath();
 
             try (InputStream inputStream = file.getInputStream()) {
@@ -466,7 +466,7 @@ public class SignalementDao {
                 final String baseUrl =
                         ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
 
-                return uploadedFileName;
+                return file.toString();
             }
         }
         catch (IOException e) {
@@ -474,15 +474,15 @@ public class SignalementDao {
         }
     }
 
-    public double[] storeFileAll(List<MultipartFile> file){
+    public double[] storeFileAll(MultipartFile file){
 
         SignalementDao s = new SignalementDao();
         String nomImage="";
-        for (int i = 0; i < file.size(); i++) {
+        //for (int i = 0; i < file.size(); i++) {
+            int suffixes = this.getLastID().intValue();
+            nomImage = s.store(file,suffixes);
 
-            nomImage = s.store(file.get(i),i);
-
-        }
+        //}
 
         String url = "src/main/resources/static/images/"+nomImage;
         double[] longAndLat = this.getMeToo(url);
@@ -497,7 +497,7 @@ public class SignalementDao {
             return value;
         }
         else{
-            double[] values = null;
+            double[] values = new double[2];
             assert false;
             values[0] = 47.53033055555555;
             values[1] = -18.979833333333332;
