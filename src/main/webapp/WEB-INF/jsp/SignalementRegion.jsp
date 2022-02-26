@@ -43,7 +43,7 @@ String id = request.getParameter("id");
                     <li><a href="region/listeSignalementRegion?enCours=1" target="_self">Signalements en cours</a></li>
                     <li><a href="region/listeSignalementRegion?termine=1" target="_self">Signalements terminés</a></li>
                     <li><a href="region/recherche" target="_self">Recherche</a></li>
-                    <li><a href="logout" target="_self">Se deconnecter</a></li>
+                    <li><a href="/region/logout" target="_self">Se deconnecter</a></li>
                 </ul>
             </nav>
         </div>
