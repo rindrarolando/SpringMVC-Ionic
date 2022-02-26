@@ -445,18 +445,18 @@ public class SignalementDao {
         Long ID = this.getLastID();
 
         try {
-           /* if (file.isEmpty()) {
+            if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file.");
-            }*/
+            }
 
-            //String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+            String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 
             //CHANGEMENT DE NOM
-           // String uploadedFileName = "signalement"+ID+"Url"+suffixe+ "." + extension;
+            String uploadedFileName = "signalement"+ID+"Url"+suffixe+ ".jpeg";
             //FIN DE CHANGEMENT DE NOM
 
             Path destinationFile = rootLocation.resolve(
-                            Paths.get(file.toString()))
+                            Paths.get(uploadedFileName))
                     .normalize().toAbsolutePath();
 
             try (InputStream inputStream = file.getInputStream()) {
@@ -466,7 +466,7 @@ public class SignalementDao {
                 final String baseUrl =
                         ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
 
-                return file.toString();
+                return uploadedFileName;
             }
         }
         catch (IOException e) {

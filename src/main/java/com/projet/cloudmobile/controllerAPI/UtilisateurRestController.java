@@ -1,9 +1,6 @@
 package com.projet.cloudmobile.controllerAPI;
 
-import com.projet.cloudmobile.dao.RegionDao;
-import com.projet.cloudmobile.dao.SignalementDao;
-import com.projet.cloudmobile.dao.TokenDao;
-import com.projet.cloudmobile.dao.UtilisateurDao;
+import com.projet.cloudmobile.dao.*;
 import com.projet.cloudmobile.models.Region;
 import com.projet.cloudmobile.models.Response;
 import com.projet.cloudmobile.models.Signalement;
@@ -33,6 +30,22 @@ public class UtilisateurRestController {
             }
         }catch(Exception e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @CrossOrigin
+    @GetMapping("/getID")
+    public  Utilisateur getID(@RequestHeader("token")String token,@RequestParam("email")String email){
+        TokenUserDao dao = new TokenUserDao();
+        Utilisateur u = new Utilisateur();
+        try{
+            if(dao.isValidTokenUser(token)==true) {
+                return new UtilisateurDao().getIDbyEmail(email);
+            }else{
+                return u;
+            }
+        }catch(Exception e){
+            return u;
         }
     }
 
