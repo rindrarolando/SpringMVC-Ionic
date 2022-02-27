@@ -8,6 +8,8 @@ appname.config(['$locationProvider',function($locationProvider) {
 
 appname.controller('regionControl', ['$scope','$http','$location','$window','$filter',
 function($scope,$http,$location,$window,$filter) {
+    var lat = -20.473666806709673;
+    var lon = 46.54870880857691;
   $scope.getSignalements=function($args,$id){
 
     $http.get('http://localhost:8080/signalementregion/getSignalementByRegion?id='+$id+'', {
@@ -28,6 +30,23 @@ function($scope,$http,$location,$window,$filter) {
         marker.bindPopup('<a href="region/signalement?id='+$scope.signalement[ville].signalement.id+'" target="_self">'+$scope.signalement[ville].signalement.description+'</a>');
       }
     });
+
+      var macarte = null;
+
+      function initMap() {
+          macarte = L.map('map').setView([lat, lon], 8);
+          L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+
+              attribution: 'données © OpenStreetMap/ODbL - rendu OSM France',
+              minZoom: 5,
+              maxZoom: 20
+          }).addTo(macarte);
+
+
+      }
+      window.onload = function(){
+          initMap();
+      };
 
   }
 
@@ -119,8 +138,40 @@ function($scope,$http,$location,$window,$filter) {
                               marker.bindPopup('<a href="region/signalement?id='+$scope.signalementTermine[ville].signalement.id+'" target="_self">'+$scope.signalementTermine[ville].signalement.description+'</a>');
                             }
                           });
-
                         }
+        $scope.insertNotification = function($args){
+
+            $http.get('http://localhost:8080/region/getSignalement?id='+$location.search().id+'',{
+                headers : {'token':$args}
+            }).then(function (response) {
+                $id = response.data.id;
+                $dat = new Date();
+                $date =   $filter('date')($dat, "dd-MM-yyyy");
+                $description = response.data.description;
+                $idUser = response.data.utilisateur.id;
+
+                notification = {
+                    "id":$id,
+                    "iduser":$idUser,
+                    "description":$description,
+                    "date":$date
+                }
+
+                $http({
+                    method: 'POST',
+                    url: 'http://localhost:8080/notification/insert',
+                    data: JSON.stringify(notification),
+                    headers : {'token':$args}
+                })
+                    .then(function (success) {
+                        $window.location.href = 'region/indexRegion';
+                    }, function (error) {
+                        console.log(" pas ok");
+                    });
+            });
+        }
+
+
 
 
   $scope.getSignalement=function($args){
@@ -150,11 +201,13 @@ function($scope,$http,$location,$window,$filter) {
   }
   $scope.update=function($args,$id){
 
-    $http.get('http://localhost:8080/region/update?id='+$id,{
+    $http.post('http://localhost:8080/region/update?id='+$id,{
         headers : {'token':$args}
     }).then(function (response) {
+            $scope.insertNotification($args);
+            //
         });
-        $window.location.href = 'region/indexRegion';
+
     }
 
 }]);

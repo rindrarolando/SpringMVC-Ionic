@@ -8,9 +8,11 @@ appname.config(['$locationProvider',function($locationProvider) {
 
 appname.controller('regionControl', ['$scope','$http','$location','$window','$filter',
 function($scope,$http,$location,$window,$filter) {
+    var lat = -20.473666806709673;
+    var lon = 46.54870880857691;
   $scope.getSignalements=function($args,$id){
 
-    $http.get('http://localhost:8080/signalementregion/getSignalementByRegion?id='+$id+'', {
+    $http.get('http://test-dev-ion.herokuapp.com/signalementregion/getSignalementByRegion?id='+$id+'', {
         headers : {'token':$args}
     }).then(function (response) {
 
@@ -29,11 +31,28 @@ function($scope,$http,$location,$window,$filter) {
       }
     });
 
+      var macarte = null;
+
+      function initMap() {
+          macarte = L.map('map').setView([lat, lon], 8);
+          L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+
+              attribution: 'données © OpenStreetMap/ODbL - rendu OSM France',
+              minZoom: 5,
+              maxZoom: 20
+          }).addTo(macarte);
+
+
+      }
+      window.onload = function(){
+          initMap();
+      };
+
   }
 
     $scope.getSignalementsEnCours=function($args,$id){
 
-          $http.get('http://localhost:8080/region/getSignalementEnCours?id='+$id+'', {
+          $http.get('http://test-dev-ion.herokuapp.com/region/getSignalementEnCours?id='+$id+'', {
               headers : {'token':$args}
           }).then(function (response) {
 
@@ -57,7 +76,7 @@ function($scope,$http,$location,$window,$filter) {
 
         $scope.getSignalementsTermines=function($args,$id){
 
-                  $http.get('http://localhost:8080/region/getSignalementsTermines?id='+$id+'', {
+                  $http.get('http://test-dev-ion.herokuapp.com/region/getSignalementsTermines?id='+$id+'', {
                       headers : {'token':$args}
                   }).then(function (response) {
 
@@ -87,7 +106,7 @@ function($scope,$http,$location,$window,$filter) {
   $scope.attribuerRegion=function(){
   console.log("id signalement ="+$location.search().id);
   console.log("id region ="+$scope.idregion);
-  $http.get('http://localhost:8080/signalement/attribuer?idSignalement='+$location.search().id+"&idRegion="+$scope.idregion).then(function (response) {
+  $http.get('http://test-dev-ion.herokuapp.com/signalement/attribuer?idSignalement='+$location.search().id+"&idRegion="+$scope.idregion).then(function (response) {
       });
       $window.location.href = '/NouveauxSignalements';
   }
@@ -100,9 +119,9 @@ function($scope,$http,$location,$window,$filter) {
         $type = $scope.type;
         console.log($date);
         console.log($etat);
-        $url = 'http://localhost:8080/region/recherche?id='+$id+'&date='+$date+'&type='+$type+'&etat='+$etat+'';
+        $url = 'http://test-dev-ion.herokuapp.com/region/recherche?id='+$id+'&date='+$date+'&type='+$type+'&etat='+$etat+'';
         console.log($url);
-        $http.get('http://localhost:8080/region/rechercheSignalement?id='+$id+'&date='+$date+'&type='+$type+'&etat='+$etat+'', {
+        $http.get('http://test-dev-ion.herokuapp.com/region/rechercheSignalement?id='+$id+'&date='+$date+'&type='+$type+'&etat='+$etat+'', {
                               headers : {'token':$args}
                           }).then(function (response) {
                             $scope.signalementTermine=response.data;
@@ -119,13 +138,45 @@ function($scope,$http,$location,$window,$filter) {
                               marker.bindPopup('<a href="region/signalement?id='+$scope.signalementTermine[ville].signalement.id+'" target="_self">'+$scope.signalementTermine[ville].signalement.description+'</a>');
                             }
                           });
-
                         }
+        $scope.insertNotification = function($args){
+
+            $http.get('http://test-dev-ion.herokuapp.com/region/getSignalement?id='+$location.search().id+'',{
+                headers : {'token':$args}
+            }).then(function (response) {
+                $id = response.data.id;
+                $dat = new Date();
+                $date =   $filter('date')($dat, "dd-MM-yyyy");
+                $description = response.data.description;
+                $idUser = response.data.utilisateur.id;
+
+                notification = {
+                    "id":$id,
+                    "iduser":$idUser,
+                    "description":$description,
+                    "date":$date
+                }
+
+                $http({
+                    method: 'POST',
+                    url: 'http://test-dev-ion.herokuapp.com/notification/insert',
+                    data: JSON.stringify(notification),
+                    headers : {'token':$args}
+                })
+                    .then(function (success) {
+                        $window.location.href = 'region/indexRegion';
+                    }, function (error) {
+                        console.log(" pas ok");
+                    });
+            });
+        }
+
+
 
 
   $scope.getSignalement=function($args){
 
-    $http.get('http://localhost:8080/region/getSignalement?id='+$location.search().id+'',{
+    $http.get('http://test-dev-ion.herokuapp.com/region/getSignalement?id='+$location.search().id+'',{
             headers : {'token':$args}
         }).then(function (response) {
         $scope.signalement = response.data;
@@ -133,7 +184,7 @@ function($scope,$http,$location,$window,$filter) {
         var lon = $scope.signalement.longitude;
                             var macarte = null;
                 function initMap() {
-                macarte = L.map('map').setView([lat, lon], 8);
+                macarte = L.map('map').setView([lat, lon], 10);
                                     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
                                     attribution: 'données © OpenStreetMap/ODbL - rendu OSM France',
@@ -150,11 +201,13 @@ function($scope,$http,$location,$window,$filter) {
   }
   $scope.update=function($args,$id){
 
-    $http.get('http://localhost:8080/region/update?id='+$id,{
+    $http.post('http://test-dev-ion.herokuapp.com/region/update?id='+$id,{
         headers : {'token':$args}
     }).then(function (response) {
+            $scope.insertNotification($args);
+            //
         });
-        $window.location.href = 'region/indexRegion';
+
     }
 
 }]);
