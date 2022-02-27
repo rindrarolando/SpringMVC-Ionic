@@ -1,9 +1,7 @@
 package com.projet.cloudmobile.controllerAPI;
 
 import com.projet.cloudmobile.dao.*;
-import com.projet.cloudmobile.interfaces.NotificationRepository;
 import com.projet.cloudmobile.models.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/region")
 public class RegionRestController {
-    @Autowired
-    NotificationRepository repository;
+
 
     @CrossOrigin
     @GetMapping("/getRegions")
@@ -67,51 +64,6 @@ public class RegionRestController {
         }
     }
 
-    @CrossOrigin
-    @PostMapping("/test/update")
-    public ResponseEntity update( @RequestParam("id")String id) throws SQLException {
-        TokenRegionDao dao = new TokenRegionDao();
-        try {
-
-                //new SignalementDao().updateSignalement(id);
-                Signalement s = new SignalementDao().getSignalement(Long.parseLong(id));
-                LocalDateTime rightNow = LocalDateTime.now();
-                Notification n = new Notification(s.getUtilisateur().getId().intValue(),s.getDescription(),rightNow.toString());
-                new NotificationDao().insertNotification(n);
-                return new ResponseEntity(HttpStatus.OK);
-
-
-            }catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PostMapping("/insert")
-    public ResponseEntity insert_notification(@RequestBody Notification notification,@RequestHeader String token) throws Exception {
-        TokenDao admindao = new TokenDao();
-        TokenRegionDao regiondao = new TokenRegionDao();
-        if(admindao.isValidTokenAdmin(token)==true || regiondao.isValidTokenRegion(token)==true){
-            repository.save(notification);
-            return new ResponseEntity(HttpStatus.OK);
-        }else{
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-        }
-    }
-
-    @PostMapping("/test/insert")
-    public ResponseEntity insertNotification(@RequestHeader String token,@RequestParam("idUser") String idUser,@RequestParam("description")String description) throws Exception {
-        TokenRegionDao dao = new TokenRegionDao();
-        LocalDateTime date = LocalDateTime.now();
-
-        Integer id = Integer.parseInt(idUser);
-        Notification n = new Notification(100,1,description,date.toString());
-        if(dao.isValidTokenRegion(token)){
-            repository.save(n);
-            return new ResponseEntity(HttpStatus.OK);
-        }else{
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-        }
-    }
 
     @CrossOrigin
     @GetMapping("/getSignalementEnCours")

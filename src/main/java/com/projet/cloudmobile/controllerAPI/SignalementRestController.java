@@ -475,7 +475,7 @@ public class SignalementRestController {
             String urlImg = "signalement"+ID+"Url";
 
 
-            s.insertSignalement(idtype,idutilisateur,dtn,description,longitude,latitude,etat,urlImg,extension);
+            s.insertSignalement(idtype,idutilisateur,dtn,description,longitude,latitude,etat,urlImg,"jpeg");
             return new ResponseEntity<>(true,HttpStatus.OK);
         }else{
             return new ResponseEntity<>(null,HttpStatus.UNAUTHORIZED);
