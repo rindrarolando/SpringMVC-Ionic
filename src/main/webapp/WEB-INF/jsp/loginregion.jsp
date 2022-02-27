@@ -42,7 +42,7 @@
                     <div class="form-group">
                         <button type="submit" class="form-control btn btn-primary rounded submit px-3">connexion</button>
                     </div>
-                    <a href="/">Se connecter en tant que administrateur</a>
+                    <a href="/loginadministrateur">Se connecter en tant que administrateur</a>
                     <div class="form-group d-md-flex">
                         <%
                             if(request.getParameter("error")!=null){ %>

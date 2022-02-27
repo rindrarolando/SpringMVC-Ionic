@@ -36,13 +36,13 @@ public class RegionController {
             Region region =(Region) session.getAttribute("region");
             TokenRegionDao dao = new TokenRegionDao();
             if(dao.isValidTokenRegion((String) session.getAttribute("token_region"))==true){
-                return "redirect:/region/test_region";
+                return "redirect:/region/indexRegion";
             }else{
                 dao.deleteTokenRegion((String) session.getAttribute("token_region"), region.getId());
                 session.removeAttribute("token_region");
                 String token = dao.insertTokenRegion(region);
                 session.setAttribute("token_region",token);
-                return "redirect:/region/test_region";
+                return "redirect:/region/indexRegion";
             }
         }
     }

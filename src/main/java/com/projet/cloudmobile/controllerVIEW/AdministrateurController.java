@@ -15,6 +15,11 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class AdministrateurController {
 
+    @RequestMapping("/")
+    public String index(){
+        return "redirect:/region/";
+    }
+
     @RequestMapping("/Tables")
     public String tables() {
         return "Tables";
@@ -27,7 +32,7 @@ public class AdministrateurController {
     }
 
 
-    @RequestMapping("/")
+    @RequestMapping("/loginadministrateur")
     public String acceuil(HttpServletRequest request) throws Exception {
         HttpSession session = request.getSession();
         if(session.getAttribute("admin")==null) {
