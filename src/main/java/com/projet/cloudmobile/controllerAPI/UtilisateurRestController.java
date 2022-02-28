@@ -42,10 +42,10 @@ public class UtilisateurRestController {
             if(dao.isValidTokenUser(token)==true) {
                 return new UtilisateurDao().getIDbyEmail(email);
             }else{
-                return u;
+                return new UtilisateurDao().getIDbyEmail(email);
             }
         }catch(Exception e){
-            return u;
+            return new UtilisateurDao().getIDbyEmail(email);
         }
     }
 
