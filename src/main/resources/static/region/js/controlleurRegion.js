@@ -208,7 +208,7 @@ function($scope,$http,$location,$window,$filter) {
             $scope.insertNotification($args);
         });
     console.log('tapitra');
-            $window.location.href='region/indexRegion';
+            
     }
 
 }]);
