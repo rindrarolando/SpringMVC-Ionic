@@ -72,8 +72,9 @@ String id = request.getParameter("id");
                 <p>{{signalement.latitude}}, {{signalement.longitude}}</p>
                 <h3>Utilisateur</h3>
                 <p>{{signalement.utilisateur.username}}</p>
-                <button ng-click="update('<%=token%>',{{signalement.id}})"type="button" class="btn btn-success">Marquer comme resolu</button>
-
+                <h3>Image</h3>
+                <img ng-src="../images/signalement{{signalement.id}}Url{{signalement.id}}.jpg"></img>
+                <button ng-click="update('<%=token%>',signalement.id)"type="button" class="btn btn-success">Marquer comme resolu</button>
             </div>
         </div>
     </section>
