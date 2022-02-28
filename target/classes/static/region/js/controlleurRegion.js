@@ -12,7 +12,7 @@ function($scope,$http,$location,$window,$filter) {
     var lon = 46.54870880857691;
   $scope.getSignalements=function($args,$id){
 
-    $http.get('http://test-dev-ion.herokuapp.com/signalementregion/getSignalementByRegion?id='+$id+'', {
+    $http.get('https://spring-ion.herokuapp.com/signalementregion/getSignalementByRegion?id='+$id+'', {
         headers : {'token':$args}
     }).then(function (response) {
 
@@ -52,7 +52,7 @@ function($scope,$http,$location,$window,$filter) {
 
     $scope.getSignalementsEnCours=function($args,$id){
 
-          $http.get('http://test-dev-ion.herokuapp.com/region/getSignalementEnCours?id='+$id+'', {
+          $http.get('https://spring-ion.herokuapp.com/region/getSignalementEnCours?id='+$id+'', {
               headers : {'token':$args}
           }).then(function (response) {
 
@@ -76,7 +76,7 @@ function($scope,$http,$location,$window,$filter) {
 
         $scope.getSignalementsTermines=function($args,$id){
 
-                  $http.get('http://test-dev-ion.herokuapp.com/region/getSignalementsTermines?id='+$id+'', {
+                  $http.get('https://spring-ion.herokuapp.com/region/getSignalementsTermines?id='+$id+'', {
                       headers : {'token':$args}
                   }).then(function (response) {
 
@@ -106,7 +106,7 @@ function($scope,$http,$location,$window,$filter) {
   $scope.attribuerRegion=function(){
   console.log("id signalement ="+$location.search().id);
   console.log("id region ="+$scope.idregion);
-  $http.get('http://test-dev-ion.herokuapp.com/signalement/attribuer?idSignalement='+$location.search().id+"&idRegion="+$scope.idregion).then(function (response) {
+  $http.get('https://spring-ion.herokuapp.com/signalement/attribuer?idSignalement='+$location.search().id+"&idRegion="+$scope.idregion).then(function (response) {
       });
       $window.location.href = '/NouveauxSignalements';
   }
@@ -119,9 +119,9 @@ function($scope,$http,$location,$window,$filter) {
         $type = $scope.type;
         console.log($date);
         console.log($etat);
-        $url = 'http://test-dev-ion.herokuapp.com/region/recherche?id='+$id+'&date='+$date+'&type='+$type+'&etat='+$etat+'';
+        $url = 'https://spring-ion.herokuapp.com/region/recherche?id='+$id+'&date='+$date+'&type='+$type+'&etat='+$etat+'';
         console.log($url);
-        $http.get('http://test-dev-ion.herokuapp.com/region/rechercheSignalement?id='+$id+'&date='+$date+'&type='+$type+'&etat='+$etat+'', {
+        $http.get('https://spring-ion.herokuapp.com/region/rechercheSignalement?id='+$id+'&date='+$date+'&type='+$type+'&etat='+$etat+'', {
                               headers : {'token':$args}
                           }).then(function (response) {
                             $scope.signalementTermine=response.data;
@@ -141,7 +141,7 @@ function($scope,$http,$location,$window,$filter) {
                         }
         $scope.insertNotification = function($args){
 
-            $http.get('http://test-dev-ion.herokuapp.com/region/getSignalement?id='+$location.search().id+'',{
+            $http.get('https://spring-ion.herokuapp.com/region/getSignalement?id='+$location.search().id+'',{
                 headers : {'token':$args}
             }).then(function (response) {
                 $id = response.data.id;
@@ -159,7 +159,7 @@ function($scope,$http,$location,$window,$filter) {
 
                 $http({
                     method: 'POST',
-                    url: 'http://test-dev-ion.herokuapp.com/notification/insert',
+                    url: 'https://spring-ion.herokuapp.com/notification/insert',
                     data: JSON.stringify(notification),
                     headers : {'token':$args}
                 })
@@ -176,7 +176,7 @@ function($scope,$http,$location,$window,$filter) {
 
   $scope.getSignalement=function($args){
 
-    $http.get('http://test-dev-ion.herokuapp.com/region/getSignalement?id='+$location.search().id+'',{
+    $http.get('https://spring-ion.herokuapp.com/region/getSignalement?id='+$location.search().id+'',{
             headers : {'token':$args}
         }).then(function (response) {
         $scope.signalement = response.data;
@@ -201,7 +201,7 @@ function($scope,$http,$location,$window,$filter) {
   }
   $scope.update=function($args,$id){
 
-    $http.post('http://test-dev-ion.herokuapp.com/region/update?id='+$id,{
+    $http.post('https://spring-ion.herokuapp.com/region/update?id='+$id,{
         headers : {'token':$args}
     }).then(function (response) {
             $scope.insertNotification($args);

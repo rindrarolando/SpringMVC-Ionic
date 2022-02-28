@@ -12,7 +12,7 @@ public class CloudMobileApplication{
 
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(CloudMobileApplication.class, args);
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory( "connection");
+		//EntityManagerFactory emf = Persistence.createEntityManagerFactory( "connection");
 
 	}
 
