@@ -203,11 +203,11 @@ function($scope,$http,$location,$window,$filter) {
 
           $http({
               method: 'POST',
-              url: 'http://localhost:8080/region/update?id='+$id,
+              url: 'https://spring-ion.herokuapp.com/region/update?id='+$id,
               headers : {'token':$args}
           })
           .then(function (response) {
-              $scope.insertNotification($args);
+              //$scope.insertNotification($args);
           });
       }
 
