@@ -100,7 +100,7 @@ Region r = (Region)request.getSession().getAttribute("region");
                     <td>{{x.signalement.description}}</td>
                     <td>{{x.signalement.etat}}</td>
                     <td>{{x.utilisateur.username}}</td>
-                    <td><form action={{'region/signalement?id='+x.id}} method="post"><button type="submit"class="btn btn-primary">Voir details</button></form></td>
+                    <td><form action={{'region/signalement?id='+x.signalement.id}} method="post"><button type="submit"class="btn btn-primary">Voir details</button></form></td>
                 </tr>
               </tbody>
             </table>
