@@ -6,9 +6,9 @@ import java.sql.Statement;
 
 public class Rescue {
 
-    static String url="jdbc:postgresql://ec2-3-224-157-224.compute-1.amazonaws.com:5432/dcpib1t8jth58k";
-    static String user="cfkbextluneeyz";
-    static String password="cd54ebb16c7b0a98d9b07698c56fdf83d17a4f120985bc4339dde5455ebc8b9d";
+    static String url="jdbc:postgresql://ec2-3-227-15-75.compute-1.amazonaws.com:5432/d94mdnn40hksii";
+    static String user="tikvojgnnszhur";
+    static String password="16c2954095f5da500573be77c53062975101443590a0fbe5cd8cccc7df2ad99d";
     
     public static Connection connectToDatabase(){
         try{
