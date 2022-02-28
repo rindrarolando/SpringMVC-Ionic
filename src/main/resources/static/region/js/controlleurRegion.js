@@ -199,7 +199,7 @@ function($scope,$http,$location,$window,$filter) {
                 var marker = L.marker([$scope.signalement.latitude,$scope.signalement.longitude]).addTo(macarte);
         });
   }
-  scope.update=function($args,$id){
+  $scope.update=function($args,$id){
 
           $http({
               method: 'POST',
