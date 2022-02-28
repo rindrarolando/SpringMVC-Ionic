@@ -7,7 +7,7 @@ appname.config(['$locationProvider',function($locationProvider) {
 appname.controller('listeSignControl', ['$scope','$http',
 function($scope,$http) {
   $scope.getSignalements=function($args){
-    $http.get('http://test-dev-ion.herokuapp.com/signalement/getNewSignalement',{
+    $http.get('http://spring-ion.herokuapp.com/signalement/getNewSignalement',{
         headers : {'token':$args}
     }).then(function (response) {
       $scope.data=response.data; 
@@ -26,7 +26,7 @@ appname.controller('testControl', ['$scope','$http','$location','$window',
 function($scope,$http,$location,$window) {
   $scope.getSignalement=function($args){
 
-    $http.get('http://test-dev-ion.herokuapp.com/signalement/getSignalement?id='+$location.search().id+'', {
+    $http.get('http://spring-ion.herokuapp.com/signalement/getSignalement?id='+$location.search().id+'', {
         headers : {'token':$args}
     }).then(function (response) {
       $scope.signalement=response.data;
@@ -36,7 +36,7 @@ function($scope,$http,$location,$window) {
             console.log($scope.region);
           });
     });
-    $http.get('http://test-dev-ion.herokuapp.com/region/getRegions',{
+    $http.get('http://spring-ion.herokuapp.com/region/getRegions',{
         headers : {'token':$args}
     }).then(function (response) {
             $scope.lregions=response.data;
@@ -45,7 +45,7 @@ function($scope,$http,$location,$window) {
   $scope.attribuerRegion=function(){
   console.log("id signalement ="+$location.search().id);
   console.log("id region ="+$scope.idregion);
-  $http.get('http://test-dev-ion.herokuapp.com/signalement/attribuer?idSignalement='+$location.search().id+"&idRegion="+$scope.idregion).then(function (response) {
+  $http.get('http://spring-ion.herokuapp.com/signalement/attribuer?idSignalement='+$location.search().id+"&idRegion="+$scope.idregion).then(function (response) {
       });
       $window.location.href = '/NouveauxSignalements';
   }
@@ -55,7 +55,7 @@ appname.controller('tablesControl', ['$scope','$http','$location',
 function($scope,$http,$location) {
 
   $scope.getRegions=function($args){
-    $http.get('http://test-dev-ion.herokuapp.com/region/getRegions',{
+    $http.get('http://spring-ion.herokuapp.com/region/getRegions',{
         headers : {'token':$args}
     }).then(function (response) {
       $scope.regions=response.data;
@@ -63,7 +63,7 @@ function($scope,$http,$location) {
     });
   }
   $scope.getUtilisateurs=function($args){
-      $http.get('http://test-dev-ion.herokuapp.com/utilisateur/getUtilisateurs',
+      $http.get('http://spring-ion.herokuapp.com/utilisateur/getUtilisateurs',
       {
         headers : {'token':$args}
       }).then(function (response) {
@@ -72,7 +72,7 @@ function($scope,$http,$location) {
       });
     }
     $scope.getTypeSignalements=function($args){
-        $http.get('http://test-dev-ion.herokuapp.com/typesignalement/getTypeSignalements',{
+        $http.get('http://spring-ion.herokuapp.com/typesignalement/getTypeSignalements',{
             headers : {'token':$args}
         }).then(function (response) {
           $scope.typeSignalements=response.data;
@@ -95,18 +95,18 @@ appname.controller('modControl', ['$scope','$http','$location',
 function($scope,$http,$location) {
 
   $scope.getModifierRegion=function(){
-    $http.get('http://test-dev-ion.herokuapp.com/region/modifier?id='+$location.search().id).then(function (response) {
+    $http.get('http://spring-ion.herokuapp.com/region/modifier?id='+$location.search().id).then(function (response) {
               $scope.region=response.data;
               console.log(response.data);
             });
   }
   $scope.getModifierUtilisateur=function(){
-      $http.get('http://test-dev-ion.herokuapp.com/utilisateur/modifier?id='+$location.search().id).then(function (response) {
+      $http.get('http://spring-ion.herokuapp.com/utilisateur/modifier?id='+$location.search().id).then(function (response) {
                 $scope.region=response.data;
               });
     }
     $scope.getModifierType=function(){
-        $http.get('http://test-dev-ion.herokuapp.com/typesignalement/modifier?id='+$location.search().id).then(function (response) {
+        $http.get('http://spring-ion.herokuapp.com/typesignalement/modifier?id='+$location.search().id).then(function (response) {
                   $scope.region=response.data;
                 });
       }
@@ -134,7 +134,7 @@ function($scope,$http,$location) {
       console.log($identifiant);
       console.log($mdp);
 
-      /*$http.get('http://test-dev-ion.herokuapp.com/region/modifier?id='+$id+'&designation='+$designation+"'&username='"+$username+"'&mdp='"+$mdp+"'").then(function (response) {
+      /*$http.get('http://spring-ion.herokuapp.com/region/modifier?id='+$id+'&designation='+$designation+"'&username='"+$username+"'&mdp='"+$mdp+"'").then(function (response) {
             });*/
   }
 
@@ -150,7 +150,7 @@ function($scope,$http,$location) {
         console.log($mdp);
         console.log($dtn);
 
-        /*$http.get('http://test-dev-ion.herokuapp.com/region/modifier?id='+$id+'&designation='+$designation+"'&username='"+$username+"'&mdp='"+$mdp+"'").then(function (response) {
+        /*$http.get('http://spring-ion.herokuapp.com/region/modifier?id='+$id+'&designation='+$designation+"'&username='"+$username+"'&mdp='"+$mdp+"'").then(function (response) {
               });*/
     }
 
@@ -166,7 +166,7 @@ function($scope,$http,$location) {
             console.log($mdp);
             console.log($dtn);
 
-            /*$http.get('http://test-dev-ion.herokuapp.com/utilisateur/modifier?id='+$id+'&designation='+$designation+"'&username='"+$username+"'&mdp='"+$mdp+"'").then(function (response) {
+            /*$http.get('http://spring-ion.herokuapp.com/utilisateur/modifier?id='+$id+'&designation='+$designation+"'&username='"+$username+"'&mdp='"+$mdp+"'").then(function (response) {
                   });*/
         }
 
@@ -186,7 +186,7 @@ appname.controller('regionControl', ['$scope','$http','$location','$window',
 function($scope,$http,$location,$window) {
   $scope.getSignalements=function($args,$id){
 
-    $http.get('http://test-dev-ion.herokuapp.com/signalementregion/getSignalementByRegion?id='+$id+'', {
+    $http.get('http://spring-ion.herokuapp.com/signalementregion/getSignalementByRegion?id='+$id+'', {
         headers : {'token':$args}
     }).then(function (response) {
 
@@ -208,7 +208,7 @@ function($scope,$http,$location,$window) {
   $scope.attribuerRegion=function(){
   console.log("id signalement ="+$location.search().id);
   console.log("id region ="+$scope.idregion);
-  $http.get('http://test-dev-ion.herokuapp.com/signalement/attribuer?idSignalement='+$location.search().id+"&idRegion="+$scope.idregion).then(function (response) {
+  $http.get('http://spring-ion.herokuapp.com/signalement/attribuer?idSignalement='+$location.search().id+"&idRegion="+$scope.idregion).then(function (response) {
       });
       $window.location.href = '/NouveauxSignalements';
   }
