@@ -209,6 +209,7 @@ function($scope,$http,$location,$window,$filter) {
           .then(function (response) {
               $scope.insertNotification($args);
           });
+          $window.location.href='region/indexRegion';
       }
 
 }]);
