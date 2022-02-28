@@ -7,6 +7,7 @@ import com.projet.cloudmobile.exception.StorageException;
 import com.projet.cloudmobile.exception.StorageProperties;
 import com.projet.cloudmobile.models.*;
 import javaxt.io.Image;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import sun.misc.Signal;
 
 import javax.persistence.*;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -442,7 +444,7 @@ public class SignalementDao {
         StorageProperties properties = new StorageProperties();
         Path rootLocation = Paths.get(properties.getLocation());
 
-        Long ID = this.getLastID();
+        Long ID = this.getLastID() + 1;
 
         try {
             if (file.isEmpty()) {
@@ -479,7 +481,7 @@ public class SignalementDao {
         SignalementDao s = new SignalementDao();
         String nomImage="";
         //for (int i = 0; i < file.size(); i++) {
-            int suffixes = this.getLastID().intValue();
+            int suffixes = this.getLastID().intValue() + 1;
             nomImage = s.store(file,suffixes);
 
         //}
@@ -507,11 +509,21 @@ public class SignalementDao {
     }
 
     @Transactional
-    public void insertSignalement(String idtype,String idutilisateur,Date dtn,String description,double longitude,double latitude,String etat,String urlImg,String extension){
+    public void insertSignalement(String idtype,String idutilisateur,Date dtn,String description,double longitude,double latitude,String etat,String urlImg,String extension) throws IOException {
         tx.begin();
         int t = Integer.parseInt(idtype);
         int u = Integer.parseInt(idutilisateur);
-        String query = "insert into signalement(id,datesignalement,description,etat,latitude,longitude,idtype,idutilisateur,urlImage,extension) values (DEFAULT,:dtn,:description,:etat,:latitude,:longitude,:type,:util,:url,:ext)";
+
+        Long ID = this.getLastID() + 1;
+        String namefile= "signalement"+ID+"Url"+ID+".jpeg";
+        String filePath= "src/main/resources/static/images/"+namefile;
+
+        byte[] fileContent = FileUtils.readFileToByteArray(new File(filePath));
+        String encodedString = Base64.getEncoder().encodeToString(fileContent);
+        String encodedStringWithData = "data:image/jpeg;base64,"+encodedString;
+
+
+        String query = "insert into signalement(id,datesignalement,description,etat,latitude,longitude,idtype,idutilisateur,urlImage,extension,encodedString) values (DEFAULT,:dtn,:description,:etat,:latitude,:longitude,:type,:util,:url,:ext,:encodedStrings)";
         Query jpqlQuery = em.createNativeQuery(query)
                 .setParameter("dtn",dtn)
                 .setParameter("description",description)
@@ -521,7 +533,8 @@ public class SignalementDao {
                 .setParameter("type",t)
                 .setParameter("util",u)
                 .setParameter("url",urlImg)
-                .setParameter("ext",extension);
+                .setParameter("ext",extension)
+                .setParameter("encodedStrings",encodedStringWithData);
         em.joinTransaction();
         jpqlQuery.executeUpdate();
 

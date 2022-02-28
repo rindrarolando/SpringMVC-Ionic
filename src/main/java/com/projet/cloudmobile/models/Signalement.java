@@ -11,7 +11,6 @@ import java.util.Date;
 @Table(name = "signalement")
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
-
 public class Signalement {
     @Id
     @Column(columnDefinition = "serial")
@@ -30,6 +29,7 @@ public class Signalement {
     private String etat;
     private String urlImage;
     private String extension;
+    private String encodedString;
 
 
 
@@ -54,6 +54,20 @@ public class Signalement {
         this.longitude = longitude;
         this.latitude = latitude;
         this.etat = etat;
+    }
+
+    public Signalement(Long id, TypeSignalement type, Utilisateur utilisateur, Date dateSignalement, String description, double longitude, double latitude, String etat, String urlImage, String extension, String encodedString) {
+        this.id = id;
+        this.type = type;
+        this.utilisateur = utilisateur;
+        this.dateSignalement = dateSignalement;
+        this.description = description;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.etat = etat;
+        this.urlImage = urlImage;
+        this.extension = extension;
+        this.encodedString = encodedString;
     }
 
     public Signalement() {
@@ -134,5 +148,13 @@ public class Signalement {
 
     public void setExtension(String extension) {
         this.extension = extension;
+    }
+
+    public String getEncodedString() {
+        return encodedString;
+    }
+
+    public void setEncodedString(String encodedString) {
+        this.encodedString = encodedString;
     }
 }

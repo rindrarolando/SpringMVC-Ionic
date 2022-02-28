@@ -460,7 +460,7 @@ public class SignalementRestController {
             //Mamindra le sary anaty /Users/macbook/Desktop/S5/Hehe/Projet-Cloud-mobile/src/main/resources/static/images/
             SignalementDao s = new SignalementDao();
             //GET LAST ID INSERTED
-            Long ID = s.getLastID();
+            Long ID = s.getLastID() + 1;
             //GET DATE NOW
             long millis = System.currentTimeMillis();
             Date dtn = new java.sql.Date(millis);
