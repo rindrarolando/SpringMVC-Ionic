@@ -207,7 +207,7 @@ function($scope,$http,$location,$window,$filter) {
               headers : {'token':$args}
           })
           .then(function (response) {
-              //$scope.insertNotification($args);
+              $scope.insertNotification($args);
           });
       }
 
