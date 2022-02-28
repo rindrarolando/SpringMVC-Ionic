@@ -205,9 +205,9 @@ function($scope,$http,$location,$window,$filter) {
         headers : {'token':$args}
     }).then(function (response) {
             $scope.insertNotification($args);
-            //
         });
 
+            $window.location.href='region/indexRegion';
     }
 
 }]);
