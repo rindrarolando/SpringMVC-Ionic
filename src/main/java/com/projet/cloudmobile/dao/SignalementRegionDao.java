@@ -33,7 +33,7 @@ public class SignalementRegionDao {
     }
 
     public List<SignalementRegion> getSignalementTermines(String id){
-        return em.createQuery("select e from SignalementRegion e where e.signalement.etat = 'Termine' and e.region.id = "+id).getResultList();
+        return em.createQuery("select e from SignalementRegion e where e.signalement.etat = 'Terminé' and e.region.id = "+id).getResultList();
     }
 
     public List<SignalementRegion> getSignalementFiltre(String id, String etat, String date,String type){
