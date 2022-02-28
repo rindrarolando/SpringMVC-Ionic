@@ -199,17 +199,17 @@ function($scope,$http,$location,$window,$filter) {
                 var marker = L.marker([$scope.signalement.latitude,$scope.signalement.longitude]).addTo(macarte);
         });
   }
-  $scope.update=function($args,$id){
-    console.log('tafiditra anaty fonction');
-    $http.post('https://spring-ion.herokuapp.com/region/update?id='+$id,{
-        headers : {'token':$args}
-    }).then(function (response) {
-        console.log('voantso le webservice');
-            $scope.insertNotification($args);
-        });
-    console.log('tapitra');
+  scope.update=function($args,$id){
 
-    }
+          $http({
+              method: 'POST',
+              url: 'http://localhost:8080/region/update?id='+$id,
+              headers : {'token':$args}
+          })
+          .then(function (response) {
+              $scope.insertNotification($args);
+          });
+      }
 
 }]);
 
