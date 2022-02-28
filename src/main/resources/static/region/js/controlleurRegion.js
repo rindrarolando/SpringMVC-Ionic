@@ -159,7 +159,7 @@ function($scope,$http,$location,$window,$filter) {
 
                 $http({
                     method: 'POST',
-                    url: 'http://spring-ion.herokuapp.com/notification/insert',
+                    url: 'https://spring-ion.herokuapp.com/notification/insert',
                     data: JSON.stringify(notification),
                     headers : {'token':$args}
                 })
