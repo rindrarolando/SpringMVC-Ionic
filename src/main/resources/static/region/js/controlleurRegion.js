@@ -200,13 +200,14 @@ function($scope,$http,$location,$window,$filter) {
         });
   }
   $scope.update=function($args,$id){
-
+    console.log('tafiditra anaty fonction');
     $http.post('https://spring-ion.herokuapp.com/region/update?id='+$id,{
         headers : {'token':$args}
     }).then(function (response) {
+        console.log('voantso le webservice');
             $scope.insertNotification($args);
         });
-
+    console.log('tapitra');
             $window.location.href='region/indexRegion';
     }
 
