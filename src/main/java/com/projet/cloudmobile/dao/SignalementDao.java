@@ -24,6 +24,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 import java.util.List;
@@ -190,12 +191,13 @@ public class SignalementDao {
     }
 
     //Resultat = Diana : 70 problemes , Boeny : 30 problemes , sns ..
-    public ArrayList<HashMap<String, Object>> getStatistiqueRegion(){
+    public ArrayList<HashMap<String, Object>> getStatistiqueRegion() throws SQLException {
         ArrayList<HashMap<String, Object>> array = new ArrayList<HashMap<String, Object>>();
-
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select region.designation as region, count(*) as total from signalement join signalementregion on signalementregion.idsignalement = signalement.id join region on region.id = signalementregion.idregion group by region.designation");
             while(res.next()){
 
@@ -212,16 +214,20 @@ public class SignalementDao {
             return array;
         }catch (Exception e){
             return null;
+        }finally {
+            if(c!=null) c.close();
+            if(stmt!=null) stmt.close();
         }
     }
 
     //Resultat = accident 1 : 10 , accident 2 : 20 , accident 3 : 40
-    public ArrayList<HashMap<String, Object>> getStatistiqueType(){
+    public ArrayList<HashMap<String, Object>> getStatistiqueType() throws SQLException {
         ArrayList<HashMap<String, Object>> array = new ArrayList<HashMap<String, Object>>();
-
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select typesignalement.designation as type, count(*) as total from signalement join typesignalement on typesignalement.id = signalement.idtype group by typesignalement.designation");
             while(res.next()){
 
@@ -238,6 +244,9 @@ public class SignalementDao {
             return array;
         }catch (Exception e){
             return null;
+        }finally {
+            if(c!=null) c.close();
+            if(stmt!=null) stmt.close();
         }
     }
 
@@ -246,12 +255,13 @@ public class SignalementDao {
     //en cours : accident 1 = 30 , accident 2 = 10 , sns
     //termine : accident 1 = 30 , accident 2 = 10 , sns
     //En cours
-    public ArrayList<HashMap<String, Object>> getStatistiqueTypeCas1(){
+    public ArrayList<HashMap<String, Object>> getStatistiqueTypeCas1() throws SQLException {
         ArrayList<HashMap<String, Object>> array = new ArrayList<HashMap<String, Object>>();
-
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select typesignalement.designation as type, count(*) as total from signalement join typesignalement on typesignalement.id = signalement.idtype where signalement.etat = 'En cours' group by typesignalement.designation");
             while(res.next()){
 
@@ -268,16 +278,20 @@ public class SignalementDao {
             return array;
         }catch (Exception e){
             return null;
+        }finally {
+            if(c!=null) c.close();
+            if(stmt!=null) stmt.close();
         }
     }
 
     //Nouveau
-    public ArrayList<HashMap<String, Object>> getStatistiqueTypeCas2(){
+    public ArrayList<HashMap<String, Object>> getStatistiqueTypeCas2() throws SQLException {
         ArrayList<HashMap<String, Object>> array = new ArrayList<HashMap<String, Object>>();
-
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select typesignalement.designation as type, count(*) as total from signalement join typesignalement on typesignalement.id = signalement.idtype where signalement.etat = 'Nouveau' group by typesignalement.designation");
             while(res.next()){
 
@@ -294,16 +308,20 @@ public class SignalementDao {
             return array;
         }catch (Exception e){
             return null;
+        }finally {
+            if(c!=null) c.close();
+            if(stmt!=null) stmt.close();
         }
     }
 
     //termine
-    public ArrayList<HashMap<String, Object>> getStatistiqueTypeCas3(){
+    public ArrayList<HashMap<String, Object>> getStatistiqueTypeCas3() throws SQLException {
         ArrayList<HashMap<String, Object>> array = new ArrayList<HashMap<String, Object>>();
-
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+             c = Rescue.connectToDatabase();
+             stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select typesignalement.designation as type, count(*) as total from signalement join typesignalement on typesignalement.id = signalement.idtype where signalement.etat = 'terminé' group by typesignalement.designation");
             while(res.next()){
 
@@ -320,16 +338,20 @@ public class SignalementDao {
             return array;
         }catch (Exception e){
             return null;
+        }finally {
+            if(c!=null) c.close();
+            if(stmt!=null) stmt.close();
         }
     }
 
     //Nouveau
-    public ArrayList<HashMap<String, Object>> getStatistiqueRegion2(){
+    public ArrayList<HashMap<String, Object>> getStatistiqueRegion2() throws SQLException {
         ArrayList<HashMap<String, Object>> array = new ArrayList<HashMap<String, Object>>();
-
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select region.designation as region, count(*) as total from signalement join signalementregion on signalementregion.idsignalement = signalement.id join region on region.id = signalementregion.idregion where signalement.etat = 'Nouveau' group by region.designation");
             while(res.next()){
 
@@ -346,15 +368,19 @@ public class SignalementDao {
             return array;
         }catch (Exception e){
             return null;
+        }finally {
+            if(c!=null) c.close();
+            if(stmt!=null) stmt.close();
         }
     }
     //En cours
-    public ArrayList<HashMap<String, Object>> getStatistiqueRegion1(){
+    public ArrayList<HashMap<String, Object>> getStatistiqueRegion1() throws SQLException {
         ArrayList<HashMap<String, Object>> array = new ArrayList<HashMap<String, Object>>();
-
+        Connection c = null ;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select region.designation as region, count(*) as total from signalement join signalementregion on signalementregion.idsignalement = signalement.id join region on region.id = signalementregion.idregion where signalement.etat = 'En cours' group by region.designation");
             while(res.next()){
 
@@ -371,15 +397,19 @@ public class SignalementDao {
             return array;
         }catch (Exception e){
             return null;
+        }finally {
+            if(c!=null) c.close();
+            if(stmt!=null) stmt.close();
         }
     }
     //Termine
-    public ArrayList<HashMap<String, Object>> getStatistiqueRegion3(){
+    public ArrayList<HashMap<String, Object>> getStatistiqueRegion3() throws SQLException {
         ArrayList<HashMap<String, Object>> array = new ArrayList<HashMap<String, Object>>();
-
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select region.designation as region, count(*) as total from signalement join signalementregion on signalementregion.idsignalement = signalement.id join region on region.id = signalementregion.idregion where signalement.etat = 'terminé' group by region.designation");
             while(res.next()){
 
@@ -396,15 +426,19 @@ public class SignalementDao {
             return array;
         }catch (Exception e){
             return null;
+        }finally {
+            if(c!=null) c.close();
+            if(stmt!=null) stmt.close();
         }
     }
 
-    public ArrayList<HashMap<String, Object>> getStatistiqueUtil(){
+    public ArrayList<HashMap<String, Object>> getStatistiqueUtil() throws SQLException {
         ArrayList<HashMap<String, Object>> array = new ArrayList<HashMap<String, Object>>();
-
+        Connection c= null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select utilisateur.username as name, count(*) as total from signalement join utilisateur on utilisateur.id = signalement.idutilisateur group by utilisateur.username order by total asc limit 10");
             while(res.next()){
 
@@ -421,14 +455,19 @@ public class SignalementDao {
             return array;
         }catch (Exception e){
             return null;
+        }finally {
+            if(c!=null) c.close();
+            if(stmt!=null) stmt.close();
         }
     }
 
-    public Long getLastID(){
+    public Long getLastID() throws SQLException {
         Long ID = Long.valueOf(0);
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select max(id) as last from signalement");
             while(res.next()){
 
@@ -437,10 +476,13 @@ public class SignalementDao {
             return ID;
         }catch (Exception e){
             return ID;
+        }finally {
+            if(c!=null) c.close();
+            if(stmt!=null) stmt.close();
         }
     }
 
-    public String store(MultipartFile file,int suffixe) {
+    public String store(MultipartFile file,int suffixe) throws SQLException {
         StorageProperties properties = new StorageProperties();
         Path rootLocation = Paths.get(properties.getLocation());
 
@@ -476,7 +518,7 @@ public class SignalementDao {
         }
     }
 
-    public double[] storeFileAll(MultipartFile file){
+    public double[] storeFileAll(MultipartFile file) throws SQLException {
 
         SignalementDao s = new SignalementDao();
         String nomImage="";
@@ -509,7 +551,7 @@ public class SignalementDao {
     }
 
     @Transactional
-    public void insertSignalement(String idtype,String idutilisateur,Date dtn,String description,double longitude,double latitude,String etat,String urlImg,String extension) throws IOException {
+    public void insertSignalement(String idtype,String idutilisateur,Date dtn,String description,double longitude,double latitude,String etat,String urlImg,String extension) throws IOException, SQLException {
         tx.begin();
         int t = Integer.parseInt(idtype);
         int u = Integer.parseInt(idutilisateur);

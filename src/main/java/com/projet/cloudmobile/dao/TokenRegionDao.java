@@ -12,8 +12,9 @@ import java.time.LocalDate;
 import java.util.Formatter;
 
 public class TokenRegionDao {
-    public String insertTokenRegion(Region region){
+    public String insertTokenRegion(Region region) throws SQLException {
         Connection conn = null;
+        PreparedStatement pst = null;
         try {
             String token = createToken(region.getId());
             Date creation = Date.valueOf(LocalDate.now());
@@ -21,7 +22,7 @@ public class TokenRegionDao {
             String role = "region";
 
             conn = Rescue.connectToDatabase();
-            PreparedStatement pst = conn.prepareStatement("INSERT INTO tokenregion "
+            pst = conn.prepareStatement("INSERT INTO tokenregion "
                     + "(id,idregion,token,date_creation,date_expiration,role) "
                     + "VALUES ( DEFAULT, ? , ? , ? , ? , ?) ");
             pst.setLong(1, region.getId());
@@ -33,15 +34,23 @@ public class TokenRegionDao {
             return token;
         } catch (Exception e) {
             return null;
+        }finally{
+            if(conn!=null) {
+                conn.close();
+            }
+            if(pst!=null) {
+                pst.close();
+            }
         }
     }
 
     public void deleteTokenRegion(String token, int id) throws Exception{
         Connection conn = null;
+        PreparedStatement pst = null;
         try {
 
             conn = Rescue.connectToDatabase();
-            PreparedStatement pst = conn.prepareStatement("DELETE FROM tokenregion WHERE token=? AND idregion=?");
+            pst = conn.prepareStatement("DELETE FROM tokenregion WHERE token=? AND idregion=?");
             pst.setString(1, token);
             pst.setInt(2,id);
 
@@ -49,6 +58,13 @@ public class TokenRegionDao {
 
         } catch (Exception e) {
             throw e;
+        }finally{
+            if(conn!=null) {
+                conn.close();
+            }
+            if(pst!=null) {
+                pst.close();
+            }
         }
     }
 
@@ -112,11 +128,13 @@ public class TokenRegionDao {
         }
     }
 
-    public Tokenregion getTokenRegion(String token){
+    public Tokenregion getTokenRegion(String token) throws SQLException {
         Tokenregion token_result = null;
+        Connection conn = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            conn = Rescue.connectToDatabase();
+            stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery("select * from tokenregion where token='"+token+"'");
             while(res.next()){
                 int id = res.getInt("id");
@@ -131,6 +149,13 @@ public class TokenRegionDao {
             return token_result;
         }catch (Exception e){
             return null;
+        }finally{
+            if(conn!=null) {
+                conn.close();
+            }
+            if(stmt!=null) {
+                stmt.close();
+            }
         }
     }
 

@@ -12,8 +12,9 @@ import java.time.LocalDate;
 import java.util.Formatter;
 
 public class TokenUserDao {
-    public String insertTokenUser(Utilisateur user){
+    public String insertTokenUser(Utilisateur user) throws SQLException {
         Connection conn = null;
+        PreparedStatement pst = null;
         try {
             String token = createToken(user.getId());
             Date creation = Date.valueOf(LocalDate.now());
@@ -21,7 +22,7 @@ public class TokenUserDao {
             String role = "utilisateur";
 
             conn = Rescue.connectToDatabase();
-            PreparedStatement pst = conn.prepareStatement("INSERT INTO tokenuser "
+            pst = conn.prepareStatement("INSERT INTO tokenuser "
                     + "(id,iduser,token,date_creation,date_expiration,role) "
                     + "VALUES ( DEFAULT, ? , ? , ? , ? , ?) ");
             pst.setLong(1, user.getId());
@@ -33,15 +34,23 @@ public class TokenUserDao {
             return token;
         } catch (Exception e) {
             return null;
+        }finally{
+            if(conn!=null) {
+                conn.close();
+            }
+            if(pst!=null) {
+                pst.close();
+            }
         }
     }
 
     public void deleteTokenUser(String token, int id) throws Exception{
         Connection conn = null;
+        PreparedStatement pst = null;
         try {
 
             conn = Rescue.connectToDatabase();
-            PreparedStatement pst = conn.prepareStatement("DELETE FROM tokenuser WHERE token=? AND iduser=?");
+            pst = conn.prepareStatement("DELETE FROM tokenuser WHERE token=? AND iduser=?");
             pst.setString(1, token);
             pst.setInt(2,id);
 
@@ -49,6 +58,13 @@ public class TokenUserDao {
 
         } catch (Exception e) {
             throw e;
+        }finally{
+            if(conn!=null) {
+                conn.close();
+            }
+            if(pst!=null) {
+                pst.close();
+            }
         }
     }
 
@@ -82,11 +98,13 @@ public class TokenUserDao {
         }
     }
 
-    public Tokenuser getTokenUser(String token){
+    public Tokenuser getTokenUser(String token) throws SQLException {
         Tokenuser token_result = null;
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+             stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select * from tokenuser where token='"+token+"'");
             while(res.next()){
                 int id = res.getInt("id");
@@ -101,6 +119,13 @@ public class TokenUserDao {
             return token_result;
         }catch (Exception e){
             return null;
+        }finally{
+            if(c!=null) {
+                c.close();
+            }
+            if(stmt!=null) {
+                stmt.close();
+            }
         }
     }
 

@@ -28,9 +28,11 @@ public class RegionDao {
 
     public static Region getRegionById(int id) throws Exception{
         Region region = null;
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select * from region where id='"+id+"'");
             while(res.next()){
                 int i = res.getInt("id");
@@ -42,6 +44,9 @@ public class RegionDao {
             return region;
         }catch (Exception e){
             return null;
+        }finally {
+            if(c!=null) c.close();
+            if(stmt!=null) stmt.close();
         }
     }
 

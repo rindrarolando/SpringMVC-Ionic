@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.SQLException;
 
 @Controller
 public class AdministrateurController {
@@ -53,7 +54,7 @@ public class AdministrateurController {
     }
 
     @RequestMapping(value= "/login", method = RequestMethod.POST)
-    public String traitementLogin(HttpServletRequest request){
+    public String traitementLogin(HttpServletRequest request) throws SQLException {
         HttpSession session = request.getSession(true);
         String id = request.getParameter("identifiant");
         String mdp = request.getParameter("mdp");

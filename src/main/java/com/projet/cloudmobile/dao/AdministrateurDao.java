@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 public class AdministrateurDao {
@@ -35,11 +36,13 @@ public class AdministrateurDao {
             tx.commit();
         }
 
-        public Administrateur checkAdmin(String ident , String mdp){
+        public Administrateur checkAdmin(String ident , String mdp) throws SQLException {
             Administrateur admin = null;
+            Connection c = null;
+            Statement stmt = null;
             try {
-                Connection c = Rescue.connectToDatabase();
-                Statement stmt = c.createStatement();
+                c = Rescue.connectToDatabase();
+                stmt = c.createStatement();
                 ResultSet res = stmt.executeQuery("select * from administrateur where identifiant='"+ident
                         +"' and motdepasse=md5('"+mdp+"')");
                 while(res.next()){
@@ -51,14 +54,19 @@ public class AdministrateurDao {
                 return admin;
             }catch (Exception e){
                 return null;
+            }finally {
+                if(c!=null) c.close();
+                if(stmt!=null) stmt.close();
             }
         }
 
-    public static Administrateur getAdminById(int id){
+    public static Administrateur getAdminById(int id) throws SQLException {
         Administrateur admin = null;
+        Connection c = null;
+        Statement stmt= null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select * from administrateur where id='"+id+"'");
             while(res.next()){
                 int i = res.getInt("id");
@@ -69,6 +77,9 @@ public class AdministrateurDao {
             return admin;
         }catch (Exception e){
             return null;
+        }finally {
+            if(c!=null) c.close();
+            if(stmt!=null) stmt.close();
         }
     }
 }

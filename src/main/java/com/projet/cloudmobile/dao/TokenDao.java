@@ -19,16 +19,17 @@ public class TokenDao {
     EntityManager em = emf.createEntityManager();
     EntityTransaction tx = em.getTransaction();
 
-    public String insertTokenAdmin(Administrateur admin){
-        Connection conn = null;
+    public String insertTokenAdmin(Administrateur admin) throws SQLException {
+        Connection c = null;
+        PreparedStatement pst = null;
         try {
             String token = createToken(admin.getId());
             Date creation = Date.valueOf(LocalDate.now());
             Date expiration = Date.valueOf(LocalDate.now().plusDays(3));
             String role = "administrateur";
 
-            conn = Rescue.connectToDatabase();
-            PreparedStatement pst = conn.prepareStatement("INSERT INTO tokenadmin "
+            c = Rescue.connectToDatabase();
+            pst = c.prepareStatement("INSERT INTO tokenadmin "
                     + "(id,idadmin,token,date_creation,date_expiration,role) "
                     + "VALUES ( DEFAULT, ? , ? , ? , ? , ?) ");
             pst.setInt(1, admin.getId());
@@ -40,15 +41,19 @@ public class TokenDao {
             return token;
         } catch (Exception e) {
             return null;
+        }finally {
+            if(c!=null) c.close();
+            if(pst!=null) pst.close();
         }
     }
 
     public void deleteTokenAdmin(String token, int id) throws Exception{
-        Connection conn = null;
+        Connection c = null;
+        PreparedStatement pst = null;
         try {
 
-            conn = Rescue.connectToDatabase();
-            PreparedStatement pst = conn.prepareStatement("DELETE FROM tokenadmin WHERE token=? AND idadmin=?");
+            c = Rescue.connectToDatabase();
+            pst = c.prepareStatement("DELETE FROM tokenadmin WHERE token=? AND idadmin=?");
             pst.setString(1, token);
             pst.setInt(2,id);
 
@@ -56,6 +61,9 @@ public class TokenDao {
 
         } catch (Exception e) {
             throw e;
+        }finally {
+            if(c!=null) c.close();
+            if(pst!=null) pst.close();
         }
     }
 
@@ -118,11 +126,13 @@ public class TokenDao {
         }
     }
 
-    public Tokenadmin getTokenAdmin(String token){
+    public Tokenadmin getTokenAdmin(String token) throws SQLException {
         Tokenadmin token_result = null;
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select * from tokenadmin where token='"+token+"'");
             while(res.next()){
                 int id = res.getInt("id");
@@ -137,6 +147,9 @@ public class TokenDao {
             return token_result;
         }catch (Exception e){
             return null;
+        }finally {
+            if(c!=null) c.close();
+            if(stmt!=null) stmt.close();
         }
     }
 

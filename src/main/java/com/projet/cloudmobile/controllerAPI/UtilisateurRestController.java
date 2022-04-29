@@ -35,7 +35,7 @@ public class UtilisateurRestController {
 
     @CrossOrigin
     @GetMapping("/getID")
-    public  Utilisateur getID(@RequestHeader("token")String token,@RequestParam("email")String email){
+    public  Utilisateur getID(@RequestHeader("token")String token,@RequestParam("email")String email) throws SQLException {
         TokenUserDao dao = new TokenUserDao();
         Utilisateur u = new Utilisateur();
         try{

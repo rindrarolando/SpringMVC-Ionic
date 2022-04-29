@@ -98,11 +98,13 @@ public class UtilisateurDao {
         }
     }
 
-    public Utilisateur login(String email, String password){
+    public Utilisateur login(String email, String password) throws SQLException {
         Utilisateur u = null;
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select * from utilisateur where email='"+email+"' and password=md5('"+password+"')");
             while(res.next()){
                 long id = res.getLong("id");
@@ -117,14 +119,23 @@ public class UtilisateurDao {
             return u;
         }catch (Exception e){
             return null;
+        }finally{
+            if(c!=null) {
+                c.close();
+            }
+            if(stmt!=null) {
+                stmt.close();
+            }
         }
     }
 
-    public boolean checkLoginInformations(String email, String password){
+    public boolean checkLoginInformations(String email, String password) throws SQLException {
         Utilisateur u = null;
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select * from utilisateur where email='"+email+"' and password=md5('"+password+"')");
             if(res.next()){
                 return true;
@@ -133,12 +144,20 @@ public class UtilisateurDao {
             }
         }catch (Exception e){
             return false;
+        }finally{
+            if(c!=null) {
+                c.close();
+            }
+            if(stmt!=null) {
+                stmt.close();
+            }
         }
     }
 
     public String insertTokenUser(Utilisateur user) throws SQLException {
         Connection conn = null;
         String token = null;
+        PreparedStatement pst = null;
         try {
             UtilisateurDao dao = new UtilisateurDao();
             token = dao.createToken(user.getId());
@@ -147,7 +166,7 @@ public class UtilisateurDao {
             String role = "utilisateur";
 
             conn = Rescue.connectToDatabase();
-            PreparedStatement pst = conn.prepareStatement("INSERT INTO tokenuser "
+            pst = conn.prepareStatement("INSERT INTO tokenuser "
                     + "(id,iduser,token,date_creation,date_expiration,role) "
                     + "VALUES ( DEFAULT, ? , ? , ? , ? , ?) ");
             pst.setLong(1, user.getId());
@@ -160,6 +179,13 @@ public class UtilisateurDao {
         } catch (Exception e) {
             conn.rollback();
             return null;
+        }finally{
+            if(conn!=null) {
+                conn.close();
+            }
+            if(pst!=null) {
+                pst.close();
+            }
         }
         return token;
     }
@@ -173,11 +199,13 @@ public class UtilisateurDao {
         tx.commit();
     }
 
-    public static Utilisateur getUserById(int id){
+    public static Utilisateur getUserById(int id) throws SQLException {
         Utilisateur user = null;
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select * from utilisateur where id='"+id+"'");
             while(res.next()){
                 int i = res.getInt("id");
@@ -190,14 +218,23 @@ public class UtilisateurDao {
             return user;
         }catch (Exception e){
             return null;
+        }finally{
+            if(c!=null) {
+                c.close();
+            }
+            if(stmt!=null) {
+                stmt.close();
+            }
         }
     }
 
-    public Utilisateur getUsersById(int id){
+    public Utilisateur getUsersById(int id) throws SQLException {
         Utilisateur user = null;
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select * from utilisateur where id='"+id+"'");
             while(res.next()){
                 int i = res.getInt("id");
@@ -210,14 +247,23 @@ public class UtilisateurDao {
             return user;
         }catch (Exception e){
             return null;
+        }finally{
+            if(c!=null) {
+                c.close();
+            }
+            if(stmt!=null) {
+                stmt.close();
+            }
         }
     }
 
-    public Utilisateur getIDbyEmail(String email){
+    public Utilisateur getIDbyEmail(String email) throws SQLException {
         Utilisateur user = null;
+        Connection c = null;
+        Statement stmt = null;
         try {
-            Connection c = Rescue.connectToDatabase();
-            Statement stmt = c.createStatement();
+            c = Rescue.connectToDatabase();
+            stmt = c.createStatement();
             ResultSet res = stmt.executeQuery("select * from utilisateur where email='"+email+"'");
             while(res.next()){
                 int i = res.getInt("id");
@@ -230,6 +276,13 @@ public class UtilisateurDao {
             return user;
         }catch (Exception e){
             return null;
+        }finally{
+            if(c!=null) {
+                c.close();
+            }
+            if(stmt!=null) {
+                stmt.close();
+            }
         }
     }
 
